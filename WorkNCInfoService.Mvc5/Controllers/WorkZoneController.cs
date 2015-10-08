@@ -167,27 +167,27 @@ namespace WorkNCInfoService.Mvc5.Controllers
             List<WorkNC_Machine> allMachine = new List<WorkNC_Machine>();
             using (WorkNCDbContext context = new WorkNCDbContext())
             {
-                allMachine = context.WorkNC_Machine.Where(n => n.FactoryId.Equals(factoryId)).OrderBy(n => n.Name).ToList();
+                allMachine = context.WorkNC_Machine.Where(n => n.FactoryId==factoryId).OrderBy(n => n.Name).ToList();
             }
             return new JsonResult { Data = allMachine, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public JsonResult GetAllFactory()
-        {
-            using (WorkNCDbContext context = new WorkNCDbContext())
-            {
-                var allFactory = context.WorkNC_Factory.ToList();
-                return Json(allFactory, JsonRequestBehavior.AllowGet);
-            }
-        }
-        public JsonResult GetMachineByIdFactory(int factoryId)
-        {
-            using (WorkNCDbContext context = new WorkNCDbContext())
-            {
-                var allMachine = context.WorkNC_Machine.Where(n => n.FactoryId==factoryId).Select(x=>new {x.MachineId, x.Name }).ToList();
-                return Json(allMachine);
-            }
-        }
+        //public JsonResult GetAllFactory()
+        //{
+        //    using (WorkNCDbContext context = new WorkNCDbContext())
+        //    {
+        //        var allFactory = context.WorkNC_Factory.ToList();
+        //        return Json(allFactory, JsonRequestBehavior.AllowGet);
+        //    }
+        //}
+        //public JsonResult GetMachineByIdFactory(int factoryId)
+        //{
+        //    using (WorkNCDbContext context = new WorkNCDbContext())
+        //    {
+        //        var allMachine = context.WorkNC_Machine.Where(n => n.FactoryId==factoryId).Select(x=>new {x.MachineId, x.Name }).ToList();
+        //        return Json(allMachine);
+        //    }
+        //}
         #endregion
     }
 }

@@ -1,5 +1,5 @@
 ﻿angular.module('MyApp')
-.controller('CascadingController', function ($scope, $http, LocationService) {
+.controller('myController', function ($scope, LocationService) {
     $scope.FactoryId = null;
     $scope.MachineId = null;
     $scope.FactoryList = null;
@@ -39,11 +39,11 @@
 .factory('LocationService', function ($http) {
     var fac = {};
     fac.GetFactory = function () {
-        debugger;
+        
         return $http.get('/WorkZone/GetFactory')
     }
     fac.GetMachine = function (factoryId) {
-        
+        debugger;
         return $http.get('/WorkZone/GetMachine?factoryId='+factoryId)
     }
     return fac;

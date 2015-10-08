@@ -29,6 +29,17 @@ namespace WorkNCInfoService.Mvc5.Controllers
         {
             return View();
         }
+        public PartialViewResult SearchMagine()
+        {
+            List<WorkNC_Factory> listFactory = new List<WorkNC_Factory>();
+            using (WorkNCDbContext context = new WorkNCDbContext())
+            {
+                listFactory = context.WorkNC_Factory.ToList();
+            }
+            ViewBag.Factory = new SelectList(listFactory, "FactoryId", "Name");
+            ViewBag.Factory = new SelectList(db.WorkNC_Factory.OrderBy(n => n.Name), "FactoryId", "Name");
+            return PartialView("_SearchMagine");
+        }
 
         // POST: Machine/Create
         [HttpPost]

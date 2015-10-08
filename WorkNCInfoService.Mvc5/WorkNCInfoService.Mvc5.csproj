@@ -278,6 +278,7 @@
     <Content Include="Views\WorkZone\_Search.cshtml" />
     <Content Include="Views\WorkZoneDetail\List.cshtml" />
     <Content Include="Views\WorkZone\Delete.cshtml" />
+    <Content Include="Views\Machine\_SearchMagine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
