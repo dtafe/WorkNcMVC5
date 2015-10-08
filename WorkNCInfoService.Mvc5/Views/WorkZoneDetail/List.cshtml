@@ -1,0 +1,105 @@
+﻿@model IEnumerable<WorkNCInfoService.Mvc5.Models.WorkModels.WorkNC_WorkZoneDetail>
+
+<table class="table" style="font-size: 12px; border: 1px solid green;">
+    <tr class="td-border" style="background-color: green; color: white;">
+        <th>
+            @Html.DisplayNameFor(model => model.No)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PathType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockAllowance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tolerance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NCFileName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ToolShape)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ToolDia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ToolConerR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HolderName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Spindle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CuttingFeedRate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ApproachFeedRate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr class="td-border">
+        <td class="td-border">
+            @Html.DisplayFor(modelItem => item.No)
+        </td>
+        <td class="td-border">
+            @Html.DisplayFor(modelItem => item.PathType)
+        </td>
+        <td class="td-border">
+            @Html.DisplayFor(modelItem => item.StockAllowance)
+        </td>
+        <td class="td-border">
+            @Html.DisplayFor(modelItem => item.Tolerance)
+        </td>
+        <td class="td-border">
+            @Html.DisplayFor(modelItem => item.NCFileName)
+        </td>
+        <td class="td-border">
+            @Html.DisplayFor(modelItem => item.ToolShape)
+        </td>
+        <td class="td-border">
+            @Html.DisplayFor(modelItem => item.ToolDia)
+        </td>
+        <td class="td-border">
+            @Html.DisplayFor(modelItem => item.ToolConerR)
+        </td>
+        <td class="td-border">
+            @Html.DisplayFor(modelItem => item.HolderName)
+        </td>
+        <td class="td-border">
+            @Html.DisplayFor(modelItem => item.Spindle)
+        </td>
+        <td class="td-border">
+            @Html.DisplayFor(modelItem => item.CuttingFeedRate)
+        </td>
+        <td class="td-border">
+            @Html.DisplayFor(modelItem => item.ApproachFeedRate)
+        </td>
+        <td class="td-border">
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td class="td-border">
+            @Html.ActionLink("Edit", "Edit", new { id = item.WorkZoneDetailId }) 
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
+<style>
+    .textWorkList {
+        font-size: 12px;
+    }
+
+    .td-border {
+        border: 1px solid green;
+    }
+</style>

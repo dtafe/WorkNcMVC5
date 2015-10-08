@@ -1,0 +1,594 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btnAddNew" xml:space="preserve">
+    <value>Add new</value>
+  </data>
+  <data name="btnCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="btnClear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="btnDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="btnEdit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="btnLoad" xml:space="preserve">
+    <value>Load file</value>
+  </data>
+  <data name="btnLoadImage" xml:space="preserve">
+    <value>Load Image</value>
+  </data>
+  <data name="btnSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="btnSearch" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="btnUpload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="cbShowDeleted" xml:space="preserve">
+    <value>Show deleted.</value>
+  </data>
+  <data name="checkfile" xml:space="preserve">
+    <value>Incorrect format file.</value>
+  </data>
+  <data name="CheckName" xml:space="preserve">
+    <value>This {0} is available, please input another name.</value>
+  </data>
+  <data name="header_Factory_Name" xml:space="preserve">
+    <value>Factory Name</value>
+  </data>
+  <data name="header_Factory_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="header_Factory_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="header_image" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="header_Machine_Name" xml:space="preserve">
+    <value>Machine Name</value>
+  </data>
+  <data name="header_Machine_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="header_Machine_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="header_PathType_Name" xml:space="preserve">
+    <value>Path Type</value>
+  </data>
+  <data name="isDeleted_False" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="isDeleted_True" xml:space="preserve">
+    <value>Deleted</value>
+  </data>
+  <data name="lblComment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="lblFactoryName" xml:space="preserve">
+    <value>Factory name</value>
+  </data>
+  <data name="lblMachineName" xml:space="preserve">
+    <value>Machine name</value>
+  </data>
+  <data name="lblMessageCheckFile" xml:space="preserve">
+    <value>The file extension {0} is not allowed. Please select XLS file.</value>
+  </data>
+  <data name="lblMessageCheckFileAppear" xml:space="preserve">
+    <value>Please choose a WorkNC Machine file</value>
+  </data>
+  <data name="lblMessageCheckFileImg" xml:space="preserve">
+    <value>Please select Image format only</value>
+  </data>
+  <data name="lblNoRecord" xml:space="preserve">
+    <value>No record found.</value>
+  </data>
+  <data name="lblPicture" xml:space="preserve">
+    <value>Picture</value>
+  </data>
+  <data name="lblTitle" xml:space="preserve">
+    <value>Process Detail of WorkZone</value>
+  </data>
+  <data name="lblWorkZone" xml:space="preserve">
+    <value>Work Zone</value>
+  </data>
+  <data name="lblWorkZoneName" xml:space="preserve">
+    <value>Work Zone Name</value>
+  </data>
+  <data name="msDelete.Text" xml:space="preserve">
+    <value>Do you wish to delete?</value>
+  </data>
+  <data name="MSG_MORE_ONE_SELECTED" xml:space="preserve">
+    <value>Too many items selected.</value>
+  </data>
+  <data name="MSG_NONE_SELECTED_ITEM" xml:space="preserve">
+    <value>No items selected.</value>
+  </data>
+  <data name="msUpload" xml:space="preserve">
+    <value>Do you wish to Upload?</value>
+  </data>
+  <data name="NoExcelFile" xml:space="preserve">
+    <value>No Excel file to load.</value>
+  </data>
+  <data name="requiredFactoryName" xml:space="preserve">
+    <value>Please input Factory name.</value>
+  </data>
+  <data name="RequiredFieldFactory" xml:space="preserve">
+    <value>Please select Factory Name.</value>
+  </data>
+  <data name="requiredMachine" xml:space="preserve">
+    <value>Please select Machine Name.</value>
+  </data>
+  <data name="requiredWorkZone" xml:space="preserve">
+    <value>Please select Work Zone.</value>
+  </data>
+  <data name="requiredWorkZoneLoad" xml:space="preserve">
+    <value>Please load WorkNC Machine file</value>
+  </data>
+  <data name="requiredWorkZoneName" xml:space="preserve">
+    <value>Please input Work Zone Name.</value>
+  </data>
+  <data name="STATUS_0" xml:space="preserve">
+    <value>In Process</value>
+  </data>
+  <data name="STATUS_1" xml:space="preserve">
+    <value>Problem</value>
+  </data>
+  <data name="STATUS_2" xml:space="preserve">
+    <value>Finished</value>
+  </data>
+  <data name="STATUS_DELETE" xml:space="preserve">
+    <value>Deleted</value>
+  </data>
+  <data name="STATUS_NORMAL" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="STATUS_RESERVER" xml:space="preserve">
+    <value>Reserver</value>
+  </data>
+  <data name="Title_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="lblImgFolder" xml:space="preserve">
+    <value>Please find image in:</value>
+  </data>
+  <data name="lblChekFileFormat" xml:space="preserve">
+    <value>This is not a WorkNC file. Please select other.</value>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>Approve</value>
+  </data>
+  <data name="Aprroved" xml:space="preserve">
+    <value>Aprroved</value>
+  </data>
+  <data name="cbxOnlineUser" xml:space="preserve">
+    <value>Online user</value>
+  </data>
+  <data name="CheckWZName" xml:space="preserve">
+    <value>This WorkZone name {0} already exist.</value>
+  </data>
+  <data name="Disapprove" xml:space="preserve">
+    <value>Disapprove</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="lblUserName" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="msDisapproveAccount" xml:space="preserve">
+    <value>Do you wish to {0} account {1}</value>
+  </data>
+  <data name="MSGUPLOAD" xml:space="preserve">
+    <value>Upload successfull!</value>
+  </data>
+  <data name="msResetPassword" xml:space="preserve">
+    <value>Do you wish to reset password for account {0}</value>
+  </data>
+  <data name="msResetPasswordDetail" xml:space="preserve">
+    <value>New password for account {0}: {1}</value>
+  </data>
+  <data name="msResetPasswordFail" xml:space="preserve">
+    <value>Reset password fail!</value>
+  </data>
+  <data name="msResetPasswordSuccess" xml:space="preserve">
+    <value>Reset password successful!</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>ResetPassword</value>
+  </data>
+  <data name="btnLogin" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="cbRememberMe" xml:space="preserve">
+    <value>Remember me</value>
+  </data>
+  <data name="lblPassWord" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="LoginFail" xml:space="preserve">
+    <value>Login Failed. Please remember that passwords are case sensitive</value>
+  </data>
+  <data name="btnRegister" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="CompValidatorPassWord" xml:space="preserve">
+    <value>The Passwords do not match</value>
+  </data>
+  <data name="lblAccessDenided" xml:space="preserve">
+    <value>You do not have permission to access this page!</value>
+  </data>
+  <data name="lblConfirmPassWord" xml:space="preserve">
+    <value>Confirm PassWord</value>
+  </data>
+  <data name="lblUserPermission" xml:space="preserve">
+    <value>User permission</value>
+  </data>
+  <data name="msPermission" xml:space="preserve">
+    <value>Your account cannot login on Web</value>
+  </data>
+  <data name="msSelectPermission" xml:space="preserve">
+    <value>Please select a permission for user: {0}</value>
+  </data>
+  <data name="RegisterUserFail" xml:space="preserve">
+    <value>Duplicate User!</value>
+  </data>
+  <data name="RegisterUserSuccess" xml:space="preserve">
+    <value>Registration User successful!</value>
+  </data>
+  <data name="RegValidatorEmail" xml:space="preserve">
+    <value>You must enter a valid email address</value>
+  </data>
+  <data name="RegValidatorPassWordLenght" xml:space="preserve">
+    <value>Passwords must be at least 7 characters in length</value>
+  </data>
+  <data name="RegValidatorUserLenght" xml:space="preserve">
+    <value>UserName not be longer than 20 characters</value>
+  </data>
+  <data name="ReqValidatorEmail" xml:space="preserve">
+    <value>Email is required</value>
+  </data>
+  <data name="ReqValidatorPassWord" xml:space="preserve">
+    <value>You must provide a password</value>
+  </data>
+  <data name="ReqValidatorPassWordConfirm" xml:space="preserve">
+    <value>You must provide a password confirmation</value>
+  </data>
+  <data name="ReqValidatorUserName" xml:space="preserve">
+    <value>User name is required</value>
+  </data>
+  <data name="ChangePassFail" xml:space="preserve">
+    <value>Change User password fail</value>
+  </data>
+  <data name="ChangePassSuccess" xml:space="preserve">
+    <value>Change User password success</value>
+  </data>
+  <data name="ChangePassWord" xml:space="preserve">
+    <value>Change user password</value>
+  </data>
+  <data name="lblMenuAbout" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="lblMenuContact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="lblMenuFactory" xml:space="preserve">
+    <value>Factory</value>
+  </data>
+  <data name="lblMenuHome" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="lblMenuMachine" xml:space="preserve">
+    <value>Machine</value>
+  </data>
+  <data name="lblMenuMaster" xml:space="preserve">
+    <value>Master</value>
+  </data>
+  <data name="lblMenuUpload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="lblMenuUser" xml:space="preserve">
+    <value>Manage User</value>
+  </data>
+  <data name="lblNewPassWord" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="lblOldPassWord" xml:space="preserve">
+    <value>Current Password</value>
+  </data>
+  <data name="lblRegisterUser" xml:space="preserve">
+    <value>Register User</value>
+  </data>
+  <data name="lblUser" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="lBtnLogin" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="lBtnLogout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="NoPermissionApp" xml:space="preserve">
+    <value>Your account can not login on IOS. Please contact Admin.</value>
+  </data>
+  <data name="lblProgramDate" xml:space="preserve">
+    <value>Program date</value>
+  </data>
+  <data name="header_Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="header_FactoryName" xml:space="preserve">
+    <value>Factory</value>
+  </data>
+  <data name="header_MachineName" xml:space="preserve">
+    <value>Machine</value>
+  </data>
+  <data name="header_MachiningTimeTotal" xml:space="preserve">
+    <value>Machining Time Total</value>
+  </data>
+  <data name="header_ModelDataProgramer" xml:space="preserve">
+    <value>Model Data Programer</value>
+  </data>
+  <data name="header_ModelName" xml:space="preserve">
+    <value>ModelName</value>
+  </data>
+  <data name="header_NCDataProgramer" xml:space="preserve">
+    <value>NC Data Programer</value>
+  </data>
+  <data name="header_PartName" xml:space="preserve">
+    <value>Part Name</value>
+  </data>
+  <data name="header_Parts" xml:space="preserve">
+    <value>Parts</value>
+  </data>
+  <data name="header_ProgramDate" xml:space="preserve">
+    <value>Program Date</value>
+  </data>
+  <data name="header_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="header_workzonename" xml:space="preserve">
+    <value>WorkZone Name</value>
+  </data>
+  <data name="header_WorkZonePath" xml:space="preserve">
+    <value>WorkZone Path</value>
+  </data>
+  <data name="btnBack" xml:space="preserve">
+    <value>Back to WorkZone Page</value>
+  </data>
+  <data name="CompareValidatorDate" xml:space="preserve">
+    <value>Please input correct date format.</value>
+  </data>
+  <data name="RequiredFieldDate" xml:space="preserve">
+    <value>Please input date.</value>
+  </data>
+  <data name="btnSaveWZD" xml:space="preserve">
+    <value>Save Image</value>
+  </data>
+  <data name="lblWorkZoneDetail" xml:space="preserve">
+    <value>WorkZone Detail</value>
+  </data>
+  <data name="header_Company_ID" xml:space="preserve">
+    <value>Company ID</value>
+  </data>
+  <data name="header_Company_Name" xml:space="preserve">
+    <value>Company Name</value>
+  </data>
+  <data name="header_Company_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="lblCompanyName" xml:space="preserve">
+    <value>Company Name</value>
+  </data>
+  <data name="lblRegisterCompany" xml:space="preserve">
+    <value>Register Company</value>
+  </data>
+  <data name="onlyInterger" xml:space="preserve">
+    <value>Please input correct interger format.</value>
+  </data>
+  <data name="requiredCompanyID" xml:space="preserve">
+    <value>Company ID is required</value>
+  </data>
+  <data name="requiredCompanyName" xml:space="preserve">
+    <value>Company Name is required</value>
+  </data>
+  <data name="header_Approach_FeedRate" xml:space="preserve">
+    <value>Appoarch FeedRate</value>
+  </data>
+  <data name="header_Cutting_FeedRate" xml:space="preserve">
+    <value>Cutting FeedRate</value>
+  </data>
+  <data name="header_Holder_Name" xml:space="preserve">
+    <value>Holder Name</value>
+  </data>
+  <data name="header_Machine_Distance" xml:space="preserve">
+    <value>Machining Distance</value>
+  </data>
+  <data name="header_Machine_Time" xml:space="preserve">
+    <value>Machining Time</value>
+  </data>
+  <data name="header_NCData_Name" xml:space="preserve">
+    <value>NC Data Nm</value>
+  </data>
+  <data name="header_Spindle" xml:space="preserve">
+    <value>Spindle</value>
+  </data>
+  <data name="header_Tool_Corner" xml:space="preserve">
+    <value>Coner Radius</value>
+  </data>
+  <data name="header_Tool_Diameter" xml:space="preserve">
+    <value>Diameter</value>
+  </data>
+  <data name="header_Tool_Shape" xml:space="preserve">
+    <value>Tool Shape</value>
+  </data>
+  <data name="header_PathType" xml:space="preserve">
+    <value>Path Type</value>
+  </data>
+  <data name="header_Path_No" xml:space="preserve">
+    <value>Path No</value>
+  </data>
+  <data name="header_StockAllowance" xml:space="preserve">
+    <value>Stock Allowance</value>
+  </data>
+  <data name="header_StockTolerance" xml:space="preserve">
+    <value>Stock Tolerance</value>
+  </data>
+  <data name="header_PathNo" xml:space="preserve">
+    <value>Path No</value>
+  </data>
+  <data name="lblAppPermission" xml:space="preserve">
+    <value>App Permission</value>
+  </data>
+  <data name="lblWebPermission" xml:space="preserve">
+    <value>Web Permission</value>
+  </data>
+  <data name="MSG_LOGIN_EMPTY" xml:space="preserve">
+    <value>User name or password can not be null.</value>
+  </data>
+  <data name="MSG_HEAD_INFO_CSV_NOT_FOUND" xml:space="preserve">
+    <value>Can not find headinfo.csv</value>
+  </data>
+  <data name="MSG_UPLOAD_SUCCESS" xml:space="preserve">
+    <value>Register Upload Work Zone successful !</value>
+  </data>
+  <data name="MSG_ZONE_INFO_CSV_NOT_FOUND" xml:space="preserve">
+    <value>Can not find zoneinfo.csv</value>
+  </data>
+  <data name="header_Address_1" xml:space="preserve">
+    <value>Address 1</value>
+  </data>
+  <data name="header_Address_2" xml:space="preserve">
+    <value>Address 2</value>
+  </data>
+  <data name="header_FAX" xml:space="preserve">
+    <value>FAX</value>
+  </data>
+  <data name="header_TEL" xml:space="preserve">
+    <value>TEL</value>
+  </data>
+</root>

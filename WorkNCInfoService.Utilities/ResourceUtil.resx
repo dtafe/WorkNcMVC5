@@ -1,0 +1,585 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Approve" xml:space="preserve">
+    <value>承認する</value>
+  </data>
+  <data name="Aprroved" xml:space="preserve">
+    <value>承認された</value>
+  </data>
+  <data name="btnAddNew" xml:space="preserve">
+    <value>新しい追加</value>
+  </data>
+  <data name="btnCancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="btnClear" xml:space="preserve">
+    <value>クリア</value>
+  </data>
+  <data name="btnDelete" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="btnEdit" xml:space="preserve">
+    <value>編集</value>
+  </data>
+  <data name="btnLoad" xml:space="preserve">
+    <value>ロード·ファイル</value>
+  </data>
+  <data name="btnLoadImage" xml:space="preserve">
+    <value>ロードイメージ</value>
+  </data>
+  <data name="btnLogin" xml:space="preserve">
+    <value>ログイン</value>
+  </data>
+  <data name="btnRegister" xml:space="preserve">
+    <value>登録</value>
+  </data>
+  <data name="btnSave" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="btnSearch" xml:space="preserve">
+    <value>検索</value>
+  </data>
+  <data name="btnUpload" xml:space="preserve">
+    <value>アップロード</value>
+  </data>
+  <data name="cbRememberMe" xml:space="preserve">
+    <value>ログインを記憶</value>
+  </data>
+  <data name="cbShowDeleted" xml:space="preserve">
+    <value>削除された項目を表示</value>
+  </data>
+  <data name="cbxOnlineUser" xml:space="preserve">
+    <value>オンラインユーザー</value>
+  </data>
+  <data name="checkfile" xml:space="preserve">
+    <value>誤った形式のファイル</value>
+  </data>
+  <data name="CheckName" xml:space="preserve">
+    <value>この {0} は入力してください別の名前を、使用可能です。</value>
+  </data>
+  <data name="CheckWZName" xml:space="preserve">
+    <value>このWorkZone名{0}はすでに存在して。</value>
+  </data>
+  <data name="CompValidatorPassWord" xml:space="preserve">
+    <value>パスワードが一致しません.</value>
+  </data>
+  <data name="Disapprove" xml:space="preserve">
+    <value>不可とする</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>電子メールアドレス</value>
+  </data>
+  <data name="header_Factory_Name" xml:space="preserve">
+    <value>ファクトリ名</value>
+  </data>
+  <data name="header_Factory_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="header_Factory_Status" xml:space="preserve">
+    <value>ステータス</value>
+  </data>
+  <data name="header_image" xml:space="preserve">
+    <value>画像</value>
+  </data>
+  <data name="header_Machine_Name" xml:space="preserve">
+    <value>マシン名</value>
+  </data>
+  <data name="header_Machine_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="header_Machine_Status" xml:space="preserve">
+    <value>ステータス</value>
+  </data>
+  <data name="header_PathType_Name" xml:space="preserve">
+    <value>パスタイプ</value>
+  </data>
+  <data name="isDeleted_False" xml:space="preserve">
+    <value>正常</value>
+  </data>
+  <data name="isDeleted_True" xml:space="preserve">
+    <value>削除済み</value>
+  </data>
+  <data name="lblChekFileFormat" xml:space="preserve">
+    <value>これはWorkNCのファイルではありません。その他選択してください。</value>
+  </data>
+  <data name="lblComment" xml:space="preserve">
+    <value>備考</value>
+  </data>
+  <data name="lblConfirmPassWord" xml:space="preserve">
+    <value>確認用パスワード</value>
+  </data>
+  <data name="lblFactoryName" xml:space="preserve">
+    <value>ファクトリ名</value>
+  </data>
+  <data name="lblImgFolder" xml:space="preserve">
+    <value>画像を内で検索してください：</value>
+  </data>
+  <data name="lblMachineName" xml:space="preserve">
+    <value>マシン名</value>
+  </data>
+  <data name="lblMessageCheckFile" xml:space="preserve">
+    <value>ファイル拡張子{0}は許可されません。 XLSファイル選択してください。</value>
+  </data>
+  <data name="lblMessageCheckFileAppear" xml:space="preserve">
+    <value>WorkNCのマシンファイルを選択してください</value>
+  </data>
+  <data name="lblMessageCheckFileImg" xml:space="preserve">
+    <value>画像フォーマットだけ選択してください</value>
+  </data>
+  <data name="lblNoRecord" xml:space="preserve">
+    <value>レコードが見つかりませんでした！</value>
+  </data>
+  <data name="lblPassWord" xml:space="preserve">
+    <value>パスワード</value>
+  </data>
+  <data name="lblPicture" xml:space="preserve">
+    <value>絵</value>
+  </data>
+  <data name="lblTitle" xml:space="preserve">
+    <value>プロセスの詳細のWorkZone</value>
+  </data>
+  <data name="lblUserName" xml:space="preserve">
+    <value>ユーザー名</value>
+  </data>
+  <data name="lblUserPermission" xml:space="preserve">
+    <value>ユーザーアクセス許可</value>
+  </data>
+  <data name="lblWorkZone" xml:space="preserve">
+    <value>WorkZone</value>
+  </data>
+  <data name="lblWorkZoneName" xml:space="preserve">
+    <value>WorkZone名称</value>
+  </data>
+  <data name="LoginFail" xml:space="preserve">
+    <value>ログインに失敗しました。パスワードは大文字と小文字が区別されていることを忘れないでください</value>
+  </data>
+  <data name="msDelete.Text" xml:space="preserve">
+    <value>削除してよろしいですか？</value>
+  </data>
+  <data name="msDisapproveAccount" xml:space="preserve">
+    <value>あなたは、アカウント {1} の {0} しますか</value>
+  </data>
+  <data name="MSGUPLOAD" xml:space="preserve">
+    <value>成功したアップロード！</value>
+  </data>
+  <data name="MSG_MORE_ONE_SELECTED" xml:space="preserve">
+    <value>1つのみ選択してください</value>
+  </data>
+  <data name="MSG_NONE_SELECTED_ITEM" xml:space="preserve">
+    <value>項目が選択されていません</value>
+  </data>
+  <data name="msResetPassword" xml:space="preserve">
+    <value>そのアカウントのパスワードをリセットしますか{0}</value>
+  </data>
+  <data name="msResetPasswordDetail" xml:space="preserve">
+    <value>アカウントの新しいパスワード{0}: {1}</value>
+  </data>
+  <data name="msResetPasswordFail" xml:space="preserve">
+    <value>パスワードは失敗リセット！</value>
+  </data>
+  <data name="msResetPasswordSuccess" xml:space="preserve">
+    <value>リセットパスワードに成功！</value>
+  </data>
+  <data name="msSelectPermission" xml:space="preserve">
+    <value>ユーザの権限選択してください：{0}</value>
+  </data>
+  <data name="msUpload" xml:space="preserve">
+    <value>あなたがアップロードしますか？</value>
+  </data>
+  <data name="NoExcelFile" xml:space="preserve">
+    <value>いいえExcelファイルをロード渡らない</value>
+  </data>
+  <data name="RegisterUserFail" xml:space="preserve">
+    <value>重複したユーザー！</value>
+  </data>
+  <data name="RegisterUserSuccess" xml:space="preserve">
+    <value>登録ユーザーに成功！</value>
+  </data>
+  <data name="RegValidatorEmail" xml:space="preserve">
+    <value>有効なEメールアドレスを入力してください</value>
+  </data>
+  <data name="RegValidatorPassWordLenght" xml:space="preserve">
+    <value>パスワードは、長さが少なくとも7文字でなければなりません</value>
+  </data>
+  <data name="RegValidatorUserLenght" xml:space="preserve">
+    <value>ユーザー名は20文字より長くすることはできません</value>
+  </data>
+  <data name="requiredFactoryName" xml:space="preserve">
+    <value>入力された工場名をお願いします。</value>
+  </data>
+  <data name="RequiredFieldFactory" xml:space="preserve">
+    <value>工場名]を選択してください。</value>
+  </data>
+  <data name="requiredMachine" xml:space="preserve">
+    <value>マシン名選択してください。</value>
+  </data>
+  <data name="requiredWorkZone" xml:space="preserve">
+    <value>WorkZone選択してください。</value>
+  </data>
+  <data name="requiredWorkZoneLoad" xml:space="preserve">
+    <value>WorkNCのマシンファイルをロードしてください</value>
+  </data>
+  <data name="requiredWorkZoneName" xml:space="preserve">
+    <value>入力作業ZoneNameをしてください。</value>
+  </data>
+  <data name="ReqValidatorEmail" xml:space="preserve">
+    <value>Eメールアドレスは必須項目です</value>
+  </data>
+  <data name="ReqValidatorPassWord" xml:space="preserve">
+    <value>パスワードを設定してください</value>
+  </data>
+  <data name="ReqValidatorPassWordConfirm" xml:space="preserve">
+    <value>確認用パスワードを設定してください</value>
+  </data>
+  <data name="ReqValidatorUserName" xml:space="preserve">
+    <value>ユーザ名は必須項目です</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>リセットパスワード</value>
+  </data>
+  <data name="STATUS_0" xml:space="preserve">
+    <value>プロセスで</value>
+  </data>
+  <data name="STATUS_1" xml:space="preserve">
+    <value>問題がある</value>
+  </data>
+  <data name="STATUS_2" xml:space="preserve">
+    <value>終了し</value>
+  </data>
+  <data name="STATUS_DELETE" xml:space="preserve">
+    <value>削除された</value>
+  </data>
+  <data name="STATUS_NORMAL" xml:space="preserve">
+    <value>正常</value>
+  </data>
+  <data name="STATUS_RESERVER" xml:space="preserve">
+    <value>た予約</value>
+  </data>
+  <data name="Title_Error" xml:space="preserve">
+    <value>エラー</value>
+  </data>
+  <data name="lblAccessDenided" xml:space="preserve">
+    <value>あなたがこのページにアクセスする権限がありません！</value>
+  </data>
+  <data name="msPermission" xml:space="preserve">
+    <value>あなたのアカウントには、Web上でログインすることができません</value>
+  </data>
+  <data name="ChangePassFail" xml:space="preserve">
+    <value>ユーザーパスワードの変更に失敗</value>
+  </data>
+  <data name="ChangePassSuccess" xml:space="preserve">
+    <value>ユーザーパスワード変更の成功</value>
+  </data>
+  <data name="ChangePassWord" xml:space="preserve">
+    <value>ユーザーパスワードの変更</value>
+  </data>
+  <data name="lblMenuAbout" xml:space="preserve">
+    <value>について</value>
+  </data>
+  <data name="lblMenuContact" xml:space="preserve">
+    <value>コンタクト</value>
+  </data>
+  <data name="lblMenuFactory" xml:space="preserve">
+    <value>ファクトリ</value>
+  </data>
+  <data name="lblMenuHome" xml:space="preserve">
+    <value>ホームページ</value>
+  </data>
+  <data name="lblMenuMachine" xml:space="preserve">
+    <value>マシン</value>
+  </data>
+  <data name="lblMenuMaster" xml:space="preserve">
+    <value>マスタ</value>
+  </data>
+  <data name="lblMenuUpload" xml:space="preserve">
+    <value>アップロード</value>
+  </data>
+  <data name="lblMenuUser" xml:space="preserve">
+    <value>ユーザー管理</value>
+  </data>
+  <data name="lblNewPassWord" xml:space="preserve">
+    <value>新しいパスワード</value>
+  </data>
+  <data name="lblOldPassWord" xml:space="preserve">
+    <value>現在のパスワード</value>
+  </data>
+  <data name="lblRegisterUser" xml:space="preserve">
+    <value>レジスタユーザー</value>
+  </data>
+  <data name="lblUser" xml:space="preserve">
+    <value>ユーザー</value>
+  </data>
+  <data name="lBtnLogin" xml:space="preserve">
+    <value>ログイン</value>
+  </data>
+  <data name="lBtnLogout" xml:space="preserve">
+    <value>ログアウト</value>
+  </data>
+  <data name="NoPermissionApp" xml:space="preserve">
+    <value>あなたのアカウントは、IOSにログインできません。管理者に連絡してください。</value>
+  </data>
+  <data name="lblProgramDate" xml:space="preserve">
+    <value>Program date</value>
+  </data>
+  <data name="btnBack" xml:space="preserve">
+    <value>Back to WorkZone Page</value>
+  </data>
+  <data name="btnSaveWZD" xml:space="preserve">
+    <value>Save Image</value>
+  </data>
+  <data name="CompareValidatorDate" xml:space="preserve">
+    <value>Please input correct date format.</value>
+  </data>
+  <data name="header_MachiningTimeTotal" xml:space="preserve">
+    <value>Machining Time Total</value>
+  </data>
+  <data name="header_ModelDataProgramer" xml:space="preserve">
+    <value>Model Data Programer</value>
+  </data>
+  <data name="header_ModelName" xml:space="preserve">
+    <value>ModelName</value>
+  </data>
+  <data name="header_NCDataProgramer" xml:space="preserve">
+    <value>NC Data Programer</value>
+  </data>
+  <data name="header_PartName" xml:space="preserve">
+    <value>Part Name</value>
+  </data>
+  <data name="header_Parts" xml:space="preserve">
+    <value>Parts</value>
+  </data>
+  <data name="header_ProgramDate" xml:space="preserve">
+    <value>Program Date</value>
+  </data>
+  <data name="header_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="header_workzonename" xml:space="preserve">
+    <value>WorkZone Name</value>
+  </data>
+  <data name="header_WorkZonePath" xml:space="preserve">
+    <value>WorkZone Path</value>
+  </data>
+  <data name="lblWorkZoneDetail" xml:space="preserve">
+    <value>WorkZone Detail</value>
+  </data>
+  <data name="header_Company_ID" xml:space="preserve">
+    <value>Company ID JP</value>
+  </data>
+  <data name="header_Company_Name" xml:space="preserve">
+    <value>Company Name JP</value>
+  </data>
+  <data name="header_Company_Status" xml:space="preserve">
+    <value>Status JP</value>
+  </data>
+  <data name="lblCompanyName" xml:space="preserve">
+    <value>Company Name JP</value>
+  </data>
+  <data name="lblRegisterCompany" xml:space="preserve">
+    <value>Register Company JP</value>
+  </data>
+  <data name="onlyInterger" xml:space="preserve">
+    <value>Please input correct interger format JP.</value>
+  </data>
+  <data name="requiredCompanyID" xml:space="preserve">
+    <value>Company ID is required JP</value>
+  </data>
+  <data name="requiredCompanyName" xml:space="preserve">
+    <value>Company Name is required JP</value>
+  </data>
+  <data name="header_Approach_FeedRate" xml:space="preserve">
+    <value>Appoarch FeedRate</value>
+  </data>
+  <data name="header_Cutting_FeedRate" xml:space="preserve">
+    <value>Cutting FeedRate</value>
+  </data>
+  <data name="header_Holder_Name" xml:space="preserve">
+    <value>Holder Name</value>
+  </data>
+  <data name="header_Machine_Distance" xml:space="preserve">
+    <value>Machining Distance</value>
+  </data>
+  <data name="header_Machine_Time" xml:space="preserve">
+    <value>Machining Time</value>
+  </data>
+  <data name="header_NCData_Name" xml:space="preserve">
+    <value>NC Data Name</value>
+  </data>
+  <data name="header_Spindle" xml:space="preserve">
+    <value>Spindle</value>
+  </data>
+  <data name="header_Tool_Corner" xml:space="preserve">
+    <value>Coner Radius</value>
+  </data>
+  <data name="header_Tool_Diameter" xml:space="preserve">
+    <value>Diameter</value>
+  </data>
+  <data name="header_Tool_Shape" xml:space="preserve">
+    <value>Tool Shape</value>
+  </data>
+  <data name="header_PathType" xml:space="preserve">
+    <value>Path Type</value>
+  </data>
+  <data name="header_Path_No" xml:space="preserve">
+    <value>Path No</value>
+  </data>
+  <data name="header_StockAllowance" xml:space="preserve">
+    <value>Stock Allowance</value>
+  </data>
+  <data name="header_StockTolerance" xml:space="preserve">
+    <value>Stock Tolerance</value>
+  </data>
+  <data name="lblAppPermission" xml:space="preserve">
+    <value>App Permission</value>
+  </data>
+  <data name="lblWebPermission" xml:space="preserve">
+    <value>Web Permission</value>
+  </data>
+  <data name="header_FactoryName" xml:space="preserve">
+    <value>Factory Name JP</value>
+  </data>
+  <data name="header_MachineName" xml:space="preserve">
+    <value>Machine Name JP</value>
+  </data>
+  <data name="MSG_LOGIN_EMPTY" xml:space="preserve">
+    <value>User name or password can not be null.</value>
+  </data>
+  <data name="MSG_HEAD_INFO_CSV_NOT_FOUND" xml:space="preserve">
+    <value>Can not find zoneinfo.csv</value>
+  </data>
+  <data name="MSG_UPLOAD_SUCCESS" xml:space="preserve">
+    <value>Register Upload Work Zone successful !</value>
+  </data>
+  <data name="MSG_ZONE_INFO_CSV_NOT_FOUND" xml:space="preserve">
+    <value>Can not find zoneinfo.csv</value>
+  </data>
+  <data name="header_Address_1" xml:space="preserve">
+    <value>Address 1</value>
+  </data>
+  <data name="header_Address_2" xml:space="preserve">
+    <value>Address 2</value>
+  </data>
+  <data name="header_FAX" xml:space="preserve">
+    <value>FAX</value>
+  </data>
+  <data name="header_TEL" xml:space="preserve">
+    <value>TEL</value>
+  </data>
+</root>

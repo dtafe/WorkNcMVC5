@@ -1,0 +1,1 @@
+Storage to save Portal folder of Factory , WorkZone , Detail problem

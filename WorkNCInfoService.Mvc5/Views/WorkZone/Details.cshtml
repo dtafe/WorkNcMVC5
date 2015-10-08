@@ -1,0 +1,187 @@
+﻿@model WorkNCInfoService.Mvc5.Models.WorkModels.WorkNC_WorkZone
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FactoryId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FactoryId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FactoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FactoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MachineId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MachineId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WorkZonePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WorkZonePath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModelDataProgramer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModelDataProgramer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NCDataProgramer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NCDataProgramer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProgramDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProgramDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModelName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModelName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Parts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Parts)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MachiningTimeTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MachiningTimeTotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageFile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImageFile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateAccount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateAccount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedAccount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedAccount)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    
+    @Html.ActionLink("Back to List", "Index") |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.WorkZoneId }) 
+</p>

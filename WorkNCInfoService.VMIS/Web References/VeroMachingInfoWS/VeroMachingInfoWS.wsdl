@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetListMachineFromUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListMachineFromUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListMachineFromUserResult" type="tns:ArrayOfMachine" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfMachine">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Machine" nillable="true" type="tns:Machine" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Machine">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDomainOfMachine">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="MachineId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CompanyId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="FactoryId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="No" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="isDeleted" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CreateDate" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="CreateAccount" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="ModifiedDate" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="ModifiedAccount" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseDomainOfMachine" />
+      <s:element name="UploadWorkZone">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="workZoneInfo" type="tns:WorkZone" />
+            <s:element minOccurs="0" maxOccurs="1" name="listWorkZoneDetail" type="tns:ArrayOfWorkZoneDetail" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="WorkZone">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDomainOfWorkZone">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Base64Data" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="WorkZoneId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CompanyId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="FactoryId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="FactoryName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="MachineId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="WorkZonePath" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ModelDataProgramer" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="NCDataProgramer" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="ProgramDate" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="ModelName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Parts" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PartName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="MachiningTimeTotal" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Comment" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Status" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="ImageFile" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CreateDate" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="CreateAccount" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="ModifiedDate" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="ModifiedAccount" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseDomainOfWorkZone" />
+      <s:complexType name="ArrayOfWorkZoneDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="WorkZoneDetail" nillable="true" type="tns:WorkZoneDetail" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="WorkZoneDetail">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDomainOfWorkZoneDetail">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Base64Data" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="WorkZoneId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="WorkZoneDetailId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="No" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PathType" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="ToolLenth" nillable="true" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Tno" nillable="true" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="StockAllowance" nillable="true" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Tolerance" nillable="true" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="NCFileName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="MachineTime" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="MachineDistance" nillable="true" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="ToolShape" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="ToolDia" nillable="true" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="ToolConerR" nillable="true" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="HolderName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Spindle" nillable="true" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="CuttingFeedRate" nillable="true" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="ApproachFeedRate" nillable="true" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="Comment" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Status" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="ImageFile" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CreateDate" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="CreateAccount" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="ModifiedDate" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="ModifiedAccount" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseDomainOfWorkZoneDetail" />
+      <s:element name="UploadWorkZoneResponse">
+        <s:complexType />
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetListMachineFromUserSoapIn">
+    <wsdl:part name="parameters" element="tns:GetListMachineFromUser" />
+  </wsdl:message>
+  <wsdl:message name="GetListMachineFromUserSoapOut">
+    <wsdl:part name="parameters" element="tns:GetListMachineFromUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadWorkZoneSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadWorkZone" />
+  </wsdl:message>
+  <wsdl:message name="UploadWorkZoneSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadWorkZoneResponse" />
+  </wsdl:message>
+  <wsdl:portType name="VeroMachingInfoWSSoap">
+    <wsdl:operation name="GetListMachineFromUser">
+      <wsdl:input message="tns:GetListMachineFromUserSoapIn" />
+      <wsdl:output message="tns:GetListMachineFromUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadWorkZone">
+      <wsdl:input message="tns:UploadWorkZoneSoapIn" />
+      <wsdl:output message="tns:UploadWorkZoneSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="VeroMachingInfoWSSoap" type="tns:VeroMachingInfoWSSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetListMachineFromUser">
+      <soap:operation soapAction="http://tempuri.org/GetListMachineFromUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadWorkZone">
+      <soap:operation soapAction="http://tempuri.org/UploadWorkZone" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="VeroMachingInfoWSSoap12" type="tns:VeroMachingInfoWSSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetListMachineFromUser">
+      <soap12:operation soapAction="http://tempuri.org/GetListMachineFromUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadWorkZone">
+      <soap12:operation soapAction="http://tempuri.org/UploadWorkZone" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="VeroMachingInfoWS">
+    <wsdl:port name="VeroMachingInfoWSSoap" binding="tns:VeroMachingInfoWSSoap">
+      <soap:address location="http://localhost:8089/WebServices/VeroMachingInfoWS.asmx" />
+    </wsdl:port>
+    <wsdl:port name="VeroMachingInfoWSSoap12" binding="tns:VeroMachingInfoWSSoap12">
+      <soap12:address location="http://localhost:8089/WebServices/VeroMachingInfoWS.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
