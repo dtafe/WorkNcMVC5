@@ -14,13 +14,16 @@
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div ng-controller="CascadingController">
+        <div ng-controller="myController">
             <div class="form-group">
                 @Html.LabelFor(model => model.FactoryId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @*@Html.EditorFor(model => model.MachineId, "", new { AllowHtmlAttribute = new { @class = "form-control" } })*@
-                    <select ng-model="FactoryId" ng-options="I.FactoryId as I.Name for I in FactoryList" ng-change="GetFactory()">
+                    @*<select ng-model="FactoryId" ng-options="I.FactoryId as I.Name for I in FactoryList" ng-change="GetFactory()" class="form-control">
                         <option value="">Select factory</option>
+                    </select>*@
+                    <select ng-model="WorkNC_Factory" ng-options="c.Name for c in factoryList track by c.FactoryId" ng-change="GetMachineList()">
+                        <option value="">Select Country</option>
                     </select>
                     @Html.ValidationMessageFor(model => model.FactoryId, "", new { @class = "text-danger" })
                 </div>
@@ -30,12 +33,19 @@
                 @Html.LabelFor(model => model.MachineId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @*@Html.EditorFor(model=>model.MachineId,"", new {AllowHtmlAttribute= new { @class = "form-control" } })*@
-                    <select ng-model="MachineId" ng-options="I.MachineId as I.Name for I in MachineList">
+                    @*<select ng-model="MachineId" ng-options="I.MachineId as I.Name for I in MachineList" class="form-control">
                         <option value="">{{MachineTextToShow}}</option>
+                    </select>*@
+                    <select ng-model="WorkNC_Machine" ng-options="s.Name for s in machineList track by s.MachineId">
+                        <option value="">Select State</option>
                     </select>
                     @Html.ValidationMessageFor(model => model.MachineId, "", new { @class = "text-danger" })
                 </div>
             </div>
+            @*<input type="button" value="Get Selected Values" ng-click="ShowResult()" />
+            <div style="padding:10px; font-weight:bold; border:1px solid #f3f3f3">
+                {{Result}}
+            </div>*@
         </div><!--Feedback dropdownlist-->
         
         <div class="form-group">

@@ -6,9 +6,11 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/angular.min.js"></script>
+    
     
 </head>
-<body ng-app="MyApp">
+<body>
     <div class="main">
         <div class="banner">
             <img src="~/Images/banner.jpg" />
@@ -26,9 +28,14 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "WorkZone")</li>
                     <li>@Html.ActionLink("Work Zone", "Index", "WorkZone")</li>
-                    <li>@Html.ActionLink("Master", "Contact", "Home")</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Master <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Factory","Index","Factory")</li>
+                            <li>@Html.ActionLink("Machine", "Index", "Machine")</li>
+                        </ul>
+                    </li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -49,10 +56,9 @@
 
     @Scripts.Render("~/bundles/jquery")    
     @* Add Angular Library Here *@
-    @Scripts.Render("~/bundles/angular")
-    <script src="~/Scripts/MyApp.js"></script>
-    <script src="~/Scripts/AngularController/CascadingController.js"></script>
+    @*@Scripts.Render("~/bundles/angular")*@
     @Scripts.Render("~/bundles/bootstrap")
+    @*<script src="~/Scripts/AngularController/CascadingController.js"></script>*@
     @RenderSection("scripts", required: false)
 
         

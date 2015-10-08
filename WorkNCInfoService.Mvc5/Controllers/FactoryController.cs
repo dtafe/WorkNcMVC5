@@ -40,6 +40,8 @@ namespace WorkNCInfoService.Mvc5.Controllers
             {
                 if(ModelState.IsValid)
                 {
+                    factory.CreateDate = DateTime.Now;
+                    factory.CreateAccount = User.Identity.Name;
                     db.Entry(factory).State = System.Data.Entity.EntityState.Added;
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -72,6 +74,9 @@ namespace WorkNCInfoService.Mvc5.Controllers
             {
                 if(ModelState.IsValid)
                 {
+                    factory.ModifiedAccount = User.Identity.Name;
+                    factory.ModifiedDate = DateTime.Now;
+
                     db.Entry(factory).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");

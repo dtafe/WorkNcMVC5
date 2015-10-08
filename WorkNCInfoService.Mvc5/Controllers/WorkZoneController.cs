@@ -161,6 +161,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
             return new JsonResult { Data = allFactory, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             //return PartialView("_Search");
         }
+        // Fetch Machine by Factory ID
         public JsonResult GetMachine(int factoryId)
         {
             List<WorkNC_Machine> allMachine = new List<WorkNC_Machine>();
@@ -169,6 +170,23 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 allMachine = context.WorkNC_Machine.Where(n => n.FactoryId.Equals(factoryId)).OrderBy(n => n.Name).ToList();
             }
             return new JsonResult { Data = allMachine, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public JsonResult GetAllFactory()
+        {
+            using (WorkNCDbContext context = new WorkNCDbContext())
+            {
+                var allFactory = context.WorkNC_Factory.ToList();
+                return Json(allFactory, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult GetMachineByIdFactory(int factoryId)
+        {
+            using (WorkNCDbContext context = new WorkNCDbContext())
+            {
+                var allMachine = context.WorkNC_Machine.Where(n => n.FactoryId==factoryId).Select(x=>new {x.MachineId, x.Name }).ToList();
+                return Json(allMachine);
+            }
         }
         #endregion
     }
