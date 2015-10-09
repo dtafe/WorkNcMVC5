@@ -1,7 +1,11 @@
 ﻿@model IEnumerable<WorkNCInfoService.Mvc5.Models.WorkModels.WorkNC_WorkZoneDetail>
 
+
+<input type="submit" value="Edit" class="btn btn-success" />
+
 <table class="table" style="font-size: 12px; border: 1px solid green;">
     <tr class="td-border" style="background-color: green; color: white;">
+        <th></th>
         <th>
             @Html.DisplayNameFor(model => model.No)
         </th>
@@ -46,6 +50,9 @@
 
 @foreach (var item in Model) {
     <tr class="td-border">
+        <td class="td-border">
+            <input type="checkbox" value="@item.WorkZoneDetailId" id="chkZoneDetail"/>
+        </td>
         <td class="td-border">
             @Html.DisplayFor(modelItem => item.No)
         </td>
@@ -97,9 +104,5 @@
 <style>
     .textWorkList {
         font-size: 12px;
-    }
-
-    .td-border {
-        border: 1px solid green;
     }
 </style>

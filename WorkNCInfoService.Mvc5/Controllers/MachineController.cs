@@ -29,7 +29,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
         {
             return View();
         }
-        public PartialViewResult SearchMagine()
+        public PartialViewResult SearchMachine()
         {
             List<WorkNC_Factory> listFactory = new List<WorkNC_Factory>();
             using (WorkNCDbContext context = new WorkNCDbContext())
@@ -37,8 +37,8 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 listFactory = context.WorkNC_Factory.ToList();
             }
             ViewBag.Factory = new SelectList(listFactory, "FactoryId", "Name");
-            ViewBag.Factory = new SelectList(db.WorkNC_Factory.OrderBy(n => n.Name), "FactoryId", "Name");
-            return PartialView("_SearchMagine");
+            //ViewBag.Factory = new SelectList(db.WorkNC_Factory.OrderBy(n => n.Name), "FactoryId", "Name");
+            return PartialView("_SearchMachine");
         }
 
         // POST: Machine/Create

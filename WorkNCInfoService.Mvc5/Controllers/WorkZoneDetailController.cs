@@ -33,7 +33,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
             return View(zoneDetail);
         }
         [HttpPost]
-        public ActionResult Edit(WorkNC_WorkZoneDetail zoneDetail)
+        public ActionResult Edit(int? id,WorkNC_WorkZoneDetail zoneDetail)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 {
                     db.Entry(zoneDetail).State = EntityState.Modified;
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Edit", "WorkZone", new { id=zoneDetail.WorkZoneId});
                 }
                 return View(zoneDetail);
             }

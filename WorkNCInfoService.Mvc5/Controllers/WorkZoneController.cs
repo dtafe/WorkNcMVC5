@@ -100,6 +100,8 @@ namespace WorkNCInfoService.Mvc5.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    workZone.ModifiedDate = DateTime.Now;
+                    workZone.ModifiedAccount = User.Identity.Name;
                     db.Entry(workZone).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -171,23 +173,16 @@ namespace WorkNCInfoService.Mvc5.Controllers
             }
             return new JsonResult { Data = allMachine, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
-
-        //public JsonResult GetAllFactory()
-        //{
-        //    using (WorkNCDbContext context = new WorkNCDbContext())
-        //    {
-        //        var allFactory = context.WorkNC_Factory.ToList();
-        //        return Json(allFactory, JsonRequestBehavior.AllowGet);
-        //    }
-        //}
-        //public JsonResult GetMachineByIdFactory(int factoryId)
-        //{
-        //    using (WorkNCDbContext context = new WorkNCDbContext())
-        //    {
-        //        var allMachine = context.WorkNC_Machine.Where(n => n.FactoryId==factoryId).Select(x=>new {x.MachineId, x.Name }).ToList();
-        //        return Json(allMachine);
-        //    }
-        //}
         #endregion
+        public JsonResult GetAllFactory()
+        {
+            return Json(db.WorkNC_Factory.ToList(), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetMachineByIdFactory(string factoryId)
+        {
+            int id = Convert.ToInt32(factoryId);
+            var machine = from a in db.WorkNC_Machine where a.FactoryId == id select a;
+            return Json(machine); 
+        }
     }
 }

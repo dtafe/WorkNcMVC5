@@ -40,9 +40,6 @@
 
         </div>
         <div class="content">
-            <div>
-                
-            </div>
            <div>
                @RenderBody()
            </div>
@@ -54,13 +51,13 @@
 
     @Scripts.Render("~/bundles/jquery")    
     @* Add Angular Library Here *@
-    @Scripts.Render("~/bundles/angular")
+    @*@Scripts.Render("~/bundles/angular")
     <script src="~/Scripts/MyApp.js"></script>
-    <script src="~/Scripts/AngularController/CascadingController.js"></script>
+    <script src="~/Scripts/AngularController/CascadingController.js"></script>*@
     @Scripts.Render("~/bundles/bootstrap")
     @*<script src="~/Scripts/AngularController/CascadingController.js"></script>*@
     @RenderSection("scripts", required: false)
-
+    <script src="~/Scripts/CascadingDropdownList.js"></script>
         
 </body>
 </html>

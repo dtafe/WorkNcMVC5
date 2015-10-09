@@ -44,7 +44,7 @@
 
 .content{
     margin: 0;
-    padding: 0 5px;
+    padding: 15px 5px 0 5px;
     background-color: white;
 }
 
@@ -60,4 +60,7 @@
 .footer p{
     color: white;
     font-weight: 400;
+}
+tr.td-border, td.td-border {
+    border: 1px solid green;
 }

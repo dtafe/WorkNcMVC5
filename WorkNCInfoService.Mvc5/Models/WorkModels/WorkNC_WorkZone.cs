@@ -22,10 +22,11 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
         [Display(Name = "Company")]
         public string CompanyName { get; set; }
 
+        [Display(Name = "Factory")]
         public int FactoryId { get; set; }
 
         [StringLength(50)]
-        [Display(Name = "Factory")]
+        [Display(Name = "Factory Name")]
         public string FactoryName { get; set; }
 
         [Display(Name = "Machine")]
@@ -36,7 +37,7 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
         public string WorkZonePath { get; set; }
 
         [StringLength(100)]
-        [Display(Name = "Model Date Programer")]
+        [Display(Name = "Model Data Programer")]
         public string ModelDataProgramer { get; set; }
 
         [StringLength(100)]
@@ -44,6 +45,8 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
         public string NCDataProgramer { get; set; }
 
         [Display(Name = "Program Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? ProgramDate { get; set; }
 
         [StringLength(100)]
@@ -51,7 +54,7 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
         public string ModelName { get; set; }
 
         [StringLength(100)]
-        [Display(Name = "Name")]
+        [Display(Name = "Parts")]
         public string Parts { get; set; }
 
         [StringLength(100)]

@@ -18,6 +18,7 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
         public virtual DbSet<WorkNC_WorkZone> WorkNC_WorkZone { get; set; }
         public virtual DbSet<WorkNC_WorkZoneDetail> WorkNC_WorkZoneDetail { get; set; }
         public virtual DbSet<WorkNC_WorkZoneDetailProblem> WorkNC_WorkZoneDetailProblem { get; set; }
+        public virtual DbSet<ImageGallery> ImageGallery { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

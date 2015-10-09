@@ -119,5 +119,9 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 return View();
             }
         }
+        public PartialViewResult Search()
+        {
+            return PartialView("_SearchFactory");
+        }
     }
 }
