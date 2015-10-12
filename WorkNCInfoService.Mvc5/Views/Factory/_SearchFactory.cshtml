@@ -1,6 +1,6 @@
 ﻿@model WorkNCInfoService.Mvc5.Models.WorkModels.WorkNC_Factory
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Index","Factory", FormMethod.Get)) 
 {
     @Html.AntiForgeryToken()
     

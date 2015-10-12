@@ -43,7 +43,6 @@
         return $http.get('/WorkZone/GetFactory')
     }
     fac.GetMachine = function (factoryId) {
-        debugger;
         return $http.get('/WorkZone/GetMachine?factoryId='+factoryId)
     }
     return fac;

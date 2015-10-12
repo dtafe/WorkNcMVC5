@@ -14,6 +14,7 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
 
         [StringLength(100)]
         [Display(Name ="Name")]
+        [Required]
         public string Name { get; set; }
 
         public int CompanyId { get; set; }
@@ -45,9 +46,9 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
         public string NCDataProgramer { get; set; }
 
         [Display(Name = "Program Date")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime? ProgramDate { get; set; }
+        //[DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime ProgramDate { get; set; }
 
         [StringLength(100)]
         [Display(Name = "Model Name")]

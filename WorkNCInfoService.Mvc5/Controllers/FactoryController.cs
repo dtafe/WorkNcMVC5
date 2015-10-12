@@ -5,18 +5,26 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
+using PagedList.Mvc;
 using WorkNCInfoService.Mvc5.Models.WorkModels;
 
 namespace WorkNCInfoService.Mvc5.Controllers
 {
     public class FactoryController : Controller
     {
+        private const int pageSize = 10;
         WorkNCDbContext db = new WorkNCDbContext();
         // GET: Factory
-        public ActionResult Index()
+        public ActionResult Index(int? page, string name)
         {
-            
-            return View(db.WorkNC_Factory.ToList());
+            int pageNumber = (page ?? 1);
+            if(!string.IsNullOrEmpty(name))
+            {
+                var model = db.WorkNC_Factory.Where(n=>n.Name.Contains(name)).OrderBy(n=>n.Name).ToPagedList(pageNumber, pageSize);
+                return View(model);
+            }
+            return View(db.WorkNC_Factory.OrderBy(n => n.Name).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Factory/Details/5

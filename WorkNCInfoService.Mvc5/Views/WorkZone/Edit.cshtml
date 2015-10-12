@@ -73,8 +73,8 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.ProgramDate, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.TextBoxFor(model => model.ProgramDate, new {type="date", @class="form-control"})
-                        @Html.ValidationMessageFor(model => model.ProgramDate, "", new { @class = "text-danger" })
+                        @Html.TextBoxFor(model => model.ProgramDate,null, new { @class= "form-control", id= "jqueryui-marker-datepicker" })
+                        @Html.ValidationMessageFor(model => model.ProgramDate,null, new { @class = "text-danger" })
                     </div>
                 </div>
                  <hr />
@@ -223,5 +223,32 @@
     }
 </style>
 @section scripts{
-    
+    <script type="text/javascript">
+        $(function () {
+            $('#jqueryui-marker-datepicker').datepicker({
+                dateFormat: 'dd/MM/yy',
+                changeMonth: true,
+                changeYear: true,
+                showOn: 'button'
+            }).css('display', 'inline-block')
+                .next('button').button({
+                    icons: { primary: "ui-icon-calenda" },
+                    label: 'select a date',
+                    text: false
+                });
+        });
+        //$(function () {
+
+        //    $("#ui-date-picker").datepicker({
+        //        dateFormat: 'dd-M-yy',
+        //        showOn: "button",
+        //        buttonImage: "../Content/img/calendar.gif",
+        //        buttonImageOnly: true,
+        //        changeMonth: true,
+        //        changeYear: true,
+        //        buttonText: "Select date",
+        //        //hideIfNoPrevNext: true
+        //    });
+        //});
+</script>
 }

@@ -12,14 +12,13 @@
 
     $('#dropdownFactory').change(function () {
         $('#dropdownMachine').empty();
-
         $.ajax({
             type: 'POST',
             url: '/WorkZone/GetMachineByIdFactory',
             dataType: 'Json',
             data: { factoryId: $('#dropdownFactory').val() },
             success: function (data) {
-                debugger;
+                $('#dropdownMachine').html('');
                 $.each(data, function (index, value) {
                     $('#dropdownMachine').append('<option value="' + value.id + '">' + value.Name + '</option>');
                 });

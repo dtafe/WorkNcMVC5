@@ -5,19 +5,59 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
+using PagedList.Mvc;
 using WorkNCInfoService.Mvc5.Models.WorkModels;
 
 namespace WorkNCInfoService.Mvc5.Controllers
 {
     public class WorkZoneController : Controller
     {
+        private const int pageSize = 5;
         WorkNCDbContext db = new WorkNCDbContext();
         // GET: WorkZone
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(db.WorkNC_WorkZone.ToList());
+            int pageNumber = (page??1);
+            return View(db.WorkNC_WorkZone.OrderBy(n=>n.Name).ToPagedList(pageNumber, pageSize));
         }
-
+        public ActionResult List(string name = "", int factoryId=0, int machineId=0, DateTime? min = null, DateTime? max=null)
+        {
+            if(name!="")
+            {
+                var model = db.WorkNC_WorkZone.Where(n => n.Name.Contains(name));
+                return View(model); 
+            }
+            if(factoryId!=0)
+            {
+                var model = db.WorkNC_WorkZone.Where(f => f.FactoryId == factoryId);
+                return View(model);
+            }
+            if(machineId!=0)
+            {
+                var model = db.WorkNC_WorkZone.Where(m => m.MachineId == machineId);
+                return View(model);
+            }
+            if(min!=null)
+            {
+                var date = from d in db.WorkNC_WorkZone
+                           where min >= d.ProgramDate
+                           select d;
+            }
+            if (max != null)
+            {
+                var date = from d in db.WorkNC_WorkZone
+                           where max <= d.ProgramDate
+                           select d;
+            }
+            if (min!=null && max!=null)
+            {
+                var date = from d in db.WorkNC_WorkZone
+                           where min >= d.ProgramDate && max <= d.ProgramDate
+                           select d;
+            }
+            return View(db.WorkNC_WorkZone);
+        }
         // GET: WorkZone/Details/5
         public ActionResult Details(int? id)
         {
@@ -153,26 +193,26 @@ namespace WorkNCInfoService.Mvc5.Controllers
         {
             return PartialView("_Search");
         }
-        public JsonResult GetFactory()
-        {
-            List<WorkNC_Factory> allFactory = new List<WorkNC_Factory>();
-            using (WorkNCDbContext context = new WorkNCDbContext())
-            {
-                allFactory = context.WorkNC_Factory.OrderBy(n => n.Name).ToList();
-            }
-            return new JsonResult { Data = allFactory, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            //return PartialView("_Search");
-        }
-        // Fetch Machine by Factory ID
-        public JsonResult GetMachine(int factoryId)
-        {
-            List<WorkNC_Machine> allMachine = new List<WorkNC_Machine>();
-            using (WorkNCDbContext context = new WorkNCDbContext())
-            {
-                allMachine = context.WorkNC_Machine.Where(n => n.FactoryId==factoryId).OrderBy(n => n.Name).ToList();
-            }
-            return new JsonResult { Data = allMachine, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
+        //public JsonResult GetFactory()
+        //{
+        //    List<WorkNC_Factory> allFactory = new List<WorkNC_Factory>();
+        //    using (WorkNCDbContext context = new WorkNCDbContext())
+        //    {
+        //        allFactory = context.WorkNC_Factory.OrderBy(n => n.Name).ToList();
+        //    }
+        //    return new JsonResult { Data = allFactory, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        //    //return PartialView("_Search");
+        //}
+        //// Fetch Machine by Factory ID
+        //public JsonResult GetMachine(int factoryId)
+        //{
+        //    List<WorkNC_Machine> allMachine = new List<WorkNC_Machine>();
+        //    using (WorkNCDbContext context = new WorkNCDbContext())
+        //    {
+        //        allMachine = context.WorkNC_Machine.Where(n => n.FactoryId==factoryId).OrderBy(n => n.Name).ToList();
+        //    }
+        //    return new JsonResult { Data = allMachine, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        //}
         #endregion
         public JsonResult GetAllFactory()
         {

@@ -1,4 +1,6 @@
-﻿@model IEnumerable<WorkNCInfoService.Mvc5.Models.WorkModels.WorkNC_WorkZone>
+﻿@using WorkNCInfoService.Mvc5.Models.WorkModels;
+@using PagedList.Mvc;
+@model PagedList.PagedList<WorkNC_WorkZone>
 
 @{
     ViewBag.Title = "Index";
@@ -13,38 +15,37 @@
     <tr class="td-border" style="background-color: green; color: white;">
         <th></th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            <p>Name</p>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CompanyName)
+            <p>Company Name</p>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FactoryName)
+            <p>Factory Name</p>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ModelDataProgramer)
+            <p>Model Data Programer</p>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NCDataProgramer)
+            <p>NCData Programer</p>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ProgramDate)
-            
+            <p>Program Date</p>        
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ModelName)
+            <p>Model Name</p>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Parts)
+            <p>Parts</p>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PartName)
+            <p>Part Name</p>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MachiningTimeTotal)
+            <p>Machining Time Total</p>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Status)
+            <p>Status</p>
         </th>
         <th></th>
     </tr>
@@ -95,6 +96,18 @@
     </tr>
 }
 </table>
+@*tao link lien ket trang*@
+<p class="sotrang">Trang: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount</p>
+<div id="pageList">
+    @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page = Page }))
+</div>
 <style>
-    
+    #pageList{
+        display: inline;
+    }
+    p.sotrang{
+        color: forestgreen;
+        margin:5px 0 0 15px;
+        font-weight: bold;
+    }
 </style>

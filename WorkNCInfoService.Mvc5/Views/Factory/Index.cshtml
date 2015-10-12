@@ -1,4 +1,6 @@
-﻿@model IEnumerable<WorkNCInfoService.Mvc5.Models.WorkModels.WorkNC_Factory>
+﻿@using WorkNCInfoService.Mvc5.Models.WorkModels;
+@using PagedList.Mvc;
+@model PagedList.PagedList<WorkNC_Factory>
 
 @{
     ViewBag.Title = "Index";
@@ -14,32 +16,21 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CompanyId)
+            <p>Company</p>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.No)
+            <p>No</p>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            <p>Name</p>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.isDeleted)
+            <p>Deleted</p>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ImageFile)
+            <p>Images</p>
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreateDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreateAccount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedAccount)
-        </th>
+
         <th></th>
     </tr>
 
@@ -61,18 +52,6 @@
             @Html.DisplayFor(modelItem => item.ImageFile)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CreateDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreateAccount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifiedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifiedAccount)
-        </td>
-        <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.FactoryId }) 
             @Html.ActionLink("Details", "Details", new { id=item.FactoryId }) 
             @Html.ActionLink("Delete", "Delete", new { id=item.FactoryId })
@@ -81,3 +60,18 @@
 }
 
 </table>
+<p class="sotrang">Trang: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount</p>
+<div id="pageList">
+    @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page = Page }))
+</div>
+<style>
+    #pageList {
+        display: inline;
+    }
+
+    p.sotrang {
+        color: forestgreen;
+        margin: 5px 0 0 15px;
+        font-weight: bold;
+    }
+</style>
