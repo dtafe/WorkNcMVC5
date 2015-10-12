@@ -38,27 +38,11 @@
             @Html.LabelFor(model => model.ProgramDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
                 @*@Html.EditorFor(model => model.ProgramDate, new { htmlAttributes = new { @class = "form-control" } })*@
-                @Html.Editor("ProgramDateStart", null,
-                          new
-                          {
-                              htmlAttributes = new
-                              {
-                                  @Value = String.Format("MM-dd-yyy"),
-                                  @class = "form-control"
-                              }
-                          })
+                @Html.TextBox("ProgramDateStart", null, new { @class="form-control", id="ProgramDateStart"})
             </div>
             <div class="col-md-1"><p class="fromto">~</p> </div>
             <div class="col-md-6">
-                @Html.Editor("ProgramDateEnd", null,
-                          new
-                          {
-                              htmlAttributes = new
-                              {
-                                  @Value = String.Format("MM-dd-yyy"),
-                                  @class = "form-control"
-                              }
-                          })
+                @Html.TextBox("ProgramDateEnd", null, new { @class="form-control", id= "ProgramDateEnd" })
                 @*@Html.TextBox("txtProgramDateTo", null, new { type = "date", @class = "form-control" })*@
             </div>
         </div>
@@ -73,7 +57,7 @@
 
 <style>
     input#ProgramDateStart, input#ProgramDateEnd {
-        width: 200px;
+        width: 150px;
     }
 
     p.fromto {
