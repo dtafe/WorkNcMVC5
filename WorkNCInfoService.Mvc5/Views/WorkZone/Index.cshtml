@@ -113,32 +113,6 @@
 </style>
 @section scripts{
     <script language="javascript">
-        $(function () {
-            $('#ProgramDateStart').datepicker({
-                dataFormat: 'dd/M/yy',
-                changeMonth: true,
-                changeYear: true,
-                showOn: 'button'
-            }).css('display', 'inline-block')
-            .next('button').button({
-                icons: { primary: "ui-icon-calenda" },
-                label: 'select a date',
-                text: false
-            });
 
-            //
-            $('#ProgramDateEnd').datepicker({
-                dataFormat: 'dd/M/yy',
-                changeMonth: true,
-                changeYear: true,
-                showOn: 'button'
-            }).css('display', 'inline-block')
-            .next('button').button({
-                icons: { primary: "ui-icon-calenda" },
-                label: 'select a date',
-                text: false
-            });
-
-        });
     </script>    
 }

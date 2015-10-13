@@ -11,14 +11,14 @@
     });//ajax
 
     $('#dropdownFactory').change(function () {
-        $('#dropdownMachine').empty();
+        //$('#dropdownMachine').empty();
         $.ajax({
             type: 'POST',
             url: '/WorkZone/GetMachineByIdFactory',
             dataType: 'Json',
             data: { factoryId: $('#dropdownFactory').val() },
             success: function (data) {
-                $('#dropdownMachine').html('');
+                $('#dropdownMachine').append('<option value="">--Select machine--</option>');
                 $.each(data, function (index, value) {
                     $('#dropdownMachine').append('<option value="' + value.id + '">' + value.Name + '</option>');
                 });

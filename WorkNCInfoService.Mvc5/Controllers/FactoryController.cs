@@ -16,15 +16,27 @@ namespace WorkNCInfoService.Mvc5.Controllers
         private const int pageSize = 10;
         WorkNCDbContext db = new WorkNCDbContext();
         // GET: Factory
+        
         public ActionResult Index(int? page, string name)
         {
             int pageNumber = (page ?? 1);
-            if(!string.IsNullOrEmpty(name))
+            string check = Request.Form["chkFactory"];
+            if(check=="true")
             {
-                var model = db.WorkNC_Factory.Where(n=>n.Name.Contains(name)).OrderBy(n=>n.Name).ToPagedList(pageNumber, pageSize);
-                return View(model);
+                if (!string.IsNullOrEmpty(name))
+                {
+                    var model = db.WorkNC_Factory.Where(n => n.Name.Contains(name)).OrderBy(n => n.Name).ToPagedList(pageNumber, pageSize);
+                    return View(model);
+                }
+                else
+                {
+                    var model = db.WorkNC_Factory.OrderBy(n=>n.Name).ToPagedList(pageNumber, pageSize);
+                    return View(model);
+                }
             }
-            return View(db.WorkNC_Factory.OrderBy(n => n.Name).ToPagedList(pageNumber, pageSize));
+            
+            return View(db.WorkNC_Factory.Where(n => n.isDeleted.Equals(false)).OrderBy(n => n.Name).ToPagedList(pageNumber, pageSize));
+
         }
 
         // GET: Factory/Details/5

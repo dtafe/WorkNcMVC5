@@ -6,21 +6,22 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div>
     @Html.Action("Search","Factory")
 </div>
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
-    <tr>
+    <tr class="td-border" style="background-color: green; color: white;">
         <th>
             <p>Company</p>
         </th>
         <th>
             <p>No</p>
         </th>
+        
         <th>
             <p>Name</p>
         </th>
@@ -36,22 +37,22 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        <td class="td-border">
             @Html.DisplayFor(modelItem => item.CompanyId)
         </td>
-        <td>
+        <td class="td-border">
             @Html.DisplayFor(modelItem => item.No)
         </td>
-        <td>
+        <td class="td-border">
             @Html.DisplayFor(modelItem => item.Name)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.isDeleted)
+        <td class="td-border">
+            @Html.DisplayFor(modelItem=>item.isDeleted)
         </td>
-        <td>
+        <td class="td-border">
             @Html.DisplayFor(modelItem => item.ImageFile)
         </td>
-        <td>
+        <td class="td-border">
             @Html.ActionLink("Edit", "Edit", new { id=item.FactoryId }) 
             @Html.ActionLink("Details", "Details", new { id=item.FactoryId }) 
             @Html.ActionLink("Delete", "Delete", new { id=item.FactoryId })
@@ -75,3 +76,24 @@
         font-weight: bold;
     }
 </style>
+@section scripts{
+    <script language="javascript">
+        function LoadDeleted() {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Factory/Index',
+                    data: {},
+                    datatype: 'json',
+                    success: function (data) {
+                        $.each(data, function (index, value) {
+
+                        });
+                    }
+                });
+        }
+        $('#chkFactory').change(function () {
+            LoadDeleted();
+        });
+    </script>    
+}

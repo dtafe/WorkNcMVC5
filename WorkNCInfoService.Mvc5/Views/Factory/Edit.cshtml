@@ -52,8 +52,12 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ImageFile, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ImageFile, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.ImageFile,null, new { type="file", @class = "form-control", onchange = "loadFile(event)" })
+                @*<input type="file" accept="image/*" value="@Model.ImageFile" onchange="loadFile(event)"/>*@
                 @Html.ValidationMessageFor(model => model.ImageFile, "", new { @class = "text-danger" })
+                <div>
+                    <img id="output"/>
+                </div>
             </div>
         </div>
 
@@ -100,3 +104,19 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+<style>
+    img#output{
+        height: 150px;
+        width: 170px;
+        background-color: silver;
+        margin-top: 10px;
+    }
+</style>
+@section scripts{
+    <script language="javascript">
+        var loadFile = function (event) {
+            var output = document.getElementById('output');
+            output.src = URL.createObjectURL(event.target.files[0]);
+        };
+    </script>    
+}
