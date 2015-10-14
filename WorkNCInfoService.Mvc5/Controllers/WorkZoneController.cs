@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using PagedList;
 using PagedList.Mvc;
 using WorkNCInfoService.Mvc5.Models.WorkModels;
+using WorkNCInfoService.Mvc5.ViewModel;
 
 namespace WorkNCInfoService.Mvc5.Controllers
 {
@@ -21,9 +22,11 @@ namespace WorkNCInfoService.Mvc5.Controllers
             int pageNumber = (page??1);
             return View(db.WorkNC_WorkZone.OrderBy(n=>n.Name).ToPagedList(pageNumber, pageSize));
         }
-        public ActionResult List(string name = "", int factoryId=0, int machineId=0, DateTime? min = null, DateTime? max=null)
+
+        public ActionResult List(string name = "", int factoryId = 0, int machineId=0, DateTime? startDate=null, DateTime? endDate=null)
         {
-            if(name!="")
+             
+            if (name != "")
             {
                 var model = db.WorkNC_WorkZone.Where(n => n.Name.Contains(name));
                 return View(model); 
@@ -38,23 +41,26 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 var model = db.WorkNC_WorkZone.Where(m => m.MachineId == machineId);
                 return View(model);
             }
-            if(min!=null)
+            if(startDate!=null && endDate==null)
             {
                 var date = from d in db.WorkNC_WorkZone
-                           where min >= d.ProgramDate
+                           where  d.ProgramDate>= startDate
                            select d;
+                return View(date);
             }
-            if (max != null)
+            if (startDate==null && endDate != null)
             {
                 var date = from d in db.WorkNC_WorkZone
-                           where max <= d.ProgramDate
+                           where  d.ProgramDate<= endDate
                            select d;
+                return View(date);
             }
-            if (min!=null && max!=null)
+            if (startDate != null && endDate!=null)
             {
                 var date = from d in db.WorkNC_WorkZone
-                           where min >= d.ProgramDate && max <= d.ProgramDate
+                           where d.ProgramDate>=startDate && d.ProgramDate<= endDate
                            select d;
+                return View(date);
             }
             return View(db.WorkNC_WorkZone);
         }
@@ -141,7 +147,8 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 if (ModelState.IsValid)
                 {
                     workZone.ModifiedDate = DateTime.Now;
-                    workZone.ModifiedAccount = User.Identity.Name;
+                    
+                    //workZone.ModifiedAccount = User.Identity.Name;
                     db.Entry(workZone).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");

@@ -45,5 +45,7 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
                 .Property(e => e.ImageFile)
                 .IsUnicode(false);
         }
+
+        public System.Data.Entity.DbSet<MVCtest.Models.WorkModels.WorkNC_UserPermission> WorkNC_UserPermission { get; set; }
     }
 }

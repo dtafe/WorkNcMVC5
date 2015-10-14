@@ -5,22 +5,23 @@
         dataType: 'Json',
         success: function (data) {
             $.each(data, function (index, value) {
-                $('#dropdownFactory').append('<option value="' + value.FactoryId + '">' + value.Name + '</option');
+                $('#FactoryId').append('<option value="' + value.FactoryId + '">' + value.Name + '</option');
             });
         }
     });//ajax
 
-    $('#dropdownFactory').change(function () {
-        //$('#dropdownMachine').empty();
+    $('#FactoryId').change(function () {
+        $('#MachineId').empty();
         $.ajax({
             type: 'POST',
             url: '/WorkZone/GetMachineByIdFactory',
             dataType: 'Json',
-            data: { factoryId: $('#dropdownFactory').val() },
+            data: { factoryId: $('#FactoryId').val() },
             success: function (data) {
-                $('#dropdownMachine').append('<option value="">--Select machine--</option>');
+                //$('#dropdownMachine').html(' ');
+                $('#MachineId').append('<option value="">--Select machine--</option>');
                 $.each(data, function (index, value) {
-                    $('#dropdownMachine').append('<option value="' + value.id + '">' + value.Name + '</option>');
+                    $('#MachineId').append('<option value="' + value.MachineId + '">' + value.Name + '</option>');
                 });
             }
 

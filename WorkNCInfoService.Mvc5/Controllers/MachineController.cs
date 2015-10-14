@@ -24,11 +24,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
             return View();
         }
 
-        // GET: Machine/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        
         public PartialViewResult SearchMachine()
         {
             List<WorkNC_Factory> listFactory = new List<WorkNC_Factory>();
@@ -39,6 +35,11 @@ namespace WorkNCInfoService.Mvc5.Controllers
             ViewBag.Factory = new SelectList(listFactory, "FactoryId", "Name");
             //ViewBag.Factory = new SelectList(db.WorkNC_Factory.OrderBy(n => n.Name), "FactoryId", "Name");
             return PartialView("_SearchMachine");
+        }
+        // GET: Machine/Create
+        public ActionResult Create()
+        {
+            return View();
         }
 
         // POST: Machine/Create
