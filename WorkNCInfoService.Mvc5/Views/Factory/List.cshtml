@@ -1,13 +1,12 @@
-﻿@using WorkNCInfoService.Mvc5.Models.WorkModels;
-@using PagedList.Mvc;
-@model PagedList.PagedList<WorkNC_Factory>
+﻿
+@model IEnumerable<WorkNCInfoService.Mvc5.Models.WorkModels.WorkNC_Factory>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div>
-    @Html.Action("Search","Factory")
+    @Html.Action("Search", "Factory")
 </div>
 
 <p>
@@ -21,7 +20,7 @@
         <th>
             <p>No</p>
         </th>
-        
+
         <th>
             <p>Name</p>
         </th>
@@ -32,44 +31,31 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td class="td-border">
-            @Html.DisplayFor(modelItem => item.CompanyId)
-        </td>
-        <td class="td-border">
-            @Html.DisplayFor(modelItem => item.No)
-        </td>
-        <td class="td-border">
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td class="td-border">
-            @Html.DisplayFor(modelItem => item.ImageFile)
-        </td>
-        <td class="td-border">
-            @Html.ActionLink("Edit", "Edit", new { id=item.FactoryId }) 
-            @Html.ActionLink("Details", "Details", new { id=item.FactoryId }) 
-            @Html.ActionLink("Delete", "Delete", new { id=item.FactoryId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="td-border">
+                @Html.DisplayFor(modelItem => item.CompanyId)
+            </td>
+            <td class="td-border">
+                @Html.DisplayFor(modelItem => item.No)
+            </td>
+            <td class="td-border">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td class="td-border">
+                @Html.DisplayFor(modelItem => item.ImageFile)
+            </td>
+            <td class="td-border">
+                @Html.ActionLink("Edit", "Edit", new { id = item.FactoryId })
+                @Html.ActionLink("Details", "Details", new { id = item.FactoryId })
+                @Html.ActionLink("Delete", "Delete", new { id = item.FactoryId })
+            </td>
+        </tr>
+    }
 
 </table>
-<p class="sotrang">Trang: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount</p>
-<div id="pageList">
-    @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page = Page }))
-</div>
-<style>
-    #pageList {
-        display: inline;
-    }
 
-    p.sotrang {
-        color: forestgreen;
-        margin: 5px 0 0 15px;
-        font-weight: bold;
-    }
-</style>
 @section scripts{
     <script language="javascript">
 

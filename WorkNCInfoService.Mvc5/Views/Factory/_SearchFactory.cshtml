@@ -1,6 +1,6 @@
-﻿@model WorkNCInfoService.Mvc5.Models.WorkModels.WorkNC_Factory
+﻿@model WorkNCInfoService.Mvc5.ViewModel.SearchChecked
 
-@using (Html.BeginForm("Index","Factory", FormMethod.Get)) 
+@using (Html.BeginForm("List","Factory", FormMethod.Get)) 
 {
     @Html.AntiForgeryToken()
     
@@ -18,8 +18,7 @@
             @Html.LabelFor(model => model.isDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @*@Html.CheckBoxFor(model => model.isDeleted, new {id= "isDeleted" })*@
-                    <input type="checkbox" name="chkFactory" id="chkFactory"/>
+                    @Html.CheckBoxFor(model => model.isDeleted, new { id="isDeleted"})
                     @Html.ValidationMessageFor(model => model.isDeleted, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -27,8 +26,9 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Search" class="btn btn-success" />
+                <input type="submit" value="Search" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
+

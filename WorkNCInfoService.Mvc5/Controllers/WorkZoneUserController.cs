@@ -40,6 +40,13 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 return View();
             }
         }
-        
+        public ActionResult Search()
+        {
+            return PartialView("_SearchUser");
+        }
+        public ActionResult ViewPermission()
+        {
+            return PartialView("_WebPermission");
+        }
     }
 }

@@ -17,28 +17,75 @@ namespace WorkNCInfoService.Mvc5.Controllers
         WorkNCDbContext db = new WorkNCDbContext();
         // GET: Factory
         
-        public ActionResult Index(int? page, string name)
+        public ActionResult Index(string search, string check, int? page)
         {
             int pageNumber = (page ?? 1);
-            string check = Request.Form["chkFactory"];
-            if(check=="true")
+            if(!string.IsNullOrEmpty(search))
             {
-                if (!string.IsNullOrEmpty(name))
+                if (check == "true")
                 {
-                    var model = db.WorkNC_Factory.Where(n => n.Name.Contains(name)).OrderBy(n => n.Name).ToPagedList(pageNumber, pageSize);
-                    return View(model);
+                    var record = db.WorkNC_Factory.Where(n=>n.Name.Contains(search)).OrderBy(n => n.Name).ToPagedList(pageNumber, pageSize);
+                    return View(record);
                 }
-                else
+                if (check == "false")
                 {
-                    var model = db.WorkNC_Factory.OrderBy(n=>n.Name).ToPagedList(pageNumber, pageSize);
-                    return View(model);
+                    var record = db.WorkNC_Factory.Where(n => n.isDeleted.Equals(false) && n.Name.Contains(search)).OrderBy(n => n.Name).ToPagedList(pageNumber, pageSize);
+                    return View(record);
                 }
             }
+            else
+            {
+                if (check == "true")
+                {
+                    var record = db.WorkNC_Factory.OrderBy(n => n.Name).ToPagedList(pageNumber, pageSize);
+                    return View(record);
+                }
+                if (check == "false")
+                {
+                    var record = db.WorkNC_Factory.Where(n => n.isDeleted.Equals(false)).OrderBy(n => n.Name).ToPagedList(pageNumber, pageSize);
+                    return View(record);
+                }
+            }
+            
             
             return View(db.WorkNC_Factory.Where(n => n.isDeleted.Equals(false)).OrderBy(n => n.Name).ToPagedList(pageNumber, pageSize));
 
         }
 
+        public ActionResult List(string name = "", string isDeleted = "" )
+        {
+            if (name != "")
+            {
+                if (isDeleted == "true")
+                {
+                    var record = db.WorkNC_Factory.Where(n => n.Name.Contains(name)).OrderBy(n => n.Name);
+                    return View(record);
+                }
+                if (isDeleted == "false")
+                {
+                    var record = db.WorkNC_Factory.Where(n => n.isDeleted.Equals(false) && n.Name.Contains(name)).OrderBy(n => n.Name);
+                    return View(record);
+                }
+            }
+            else
+
+            {
+                if (isDeleted == "true")
+                {
+                    var record = db.WorkNC_Factory.OrderBy(n => n.Name);
+                    return View(record);
+                }
+                if (isDeleted == "false")
+                {
+                    var record = db.WorkNC_Factory.Where(n => n.isDeleted.Equals(false)).OrderBy(n => n.Name);
+                    return View(record);
+                }
+            }
+
+
+            return View(db.WorkNC_Factory.Where(n => n.isDeleted.Equals(false)).OrderBy(n => n.Name));
+
+        }
         // GET: Factory/Details/5
         public ActionResult Details(int id)
         {
@@ -61,8 +108,8 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 if(ModelState.IsValid)
                 {
                     factory.CreateDate = DateTime.Now;
-                    factory.CreateAccount = User.Identity.Name;
-                    db.Entry(factory).State = System.Data.Entity.EntityState.Added;
+                    //factory.CreateAccount = User.Identity.Name;
+                    db.Entry(factory).State = EntityState.Added;
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
