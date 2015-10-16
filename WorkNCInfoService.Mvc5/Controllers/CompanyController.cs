@@ -104,5 +104,17 @@ namespace WorkNCInfoService.Mvc5.Controllers
         {
             return PartialView("_SearchCompany");
         }
+        public ActionResult CompanyDropdown()
+        {
+            List<WorkNC_Company> listCompany = new List<WorkNC_Company>();
+            using (WorkNCDbContext db = new WorkNCDbContext())
+            {
+                listCompany = db.WorkNC_Company.ToList();
+            }
+            ViewBag.Company = new SelectList(listCompany, "CompanyId", "CompanyName");
+            ViewBag.Company = new SelectList(db.WorkNC_Company.OrderBy(n => n.CompanyName), "CompanyId", "CompanyName");
+            return PartialView("_CompanyPartial");
+
+        }
     }
 }

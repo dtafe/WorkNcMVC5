@@ -10,13 +10,28 @@
     {
         [Key]
         [StringLength(20)]
+        [Display(Name = "Username")]
         public string Username { get; set; }
 
+        [Required]
+        [Display(Name = "Company")]
         public int CompanyId { get; set; }
 
+        [Required]
+        [Display(Name ="Password")]
+        public string Password { get; set; }
+
+        [Required]
+        [Display(Name = "Pre Password")]
+        public string PrePassword { get; set; }
+
         [StringLength(50)]
+        [Required]
+        [Display(Name = "Web Permission")]
         public string WebPermission { get; set; }
 
+        [Required]
+        [Display(Name = "App Permission")]
         public bool AppPermission { get; set; }
 
         public DateTime CreateDate { get; set; }

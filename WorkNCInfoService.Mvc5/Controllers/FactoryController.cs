@@ -190,5 +190,6 @@ namespace WorkNCInfoService.Mvc5.Controllers
         {
             return PartialView("_SearchFactory");
         }
+        
     }
 }

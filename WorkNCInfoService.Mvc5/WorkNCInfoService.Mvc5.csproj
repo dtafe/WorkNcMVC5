@@ -184,7 +184,7 @@
     <Compile Include="Controllers\ImageGalleryController.cs" />
     <Compile Include="Controllers\MachineController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\WorkZoneUserController.cs" />
+    <Compile Include="Controllers\UserPermissionController.cs" />
     <Compile Include="Controllers\WorkZoneController.cs" />
     <Compile Include="Controllers\WorkZoneDetailController.cs" />
     <Compile Include="Global.asax.cs">
@@ -349,13 +349,15 @@
     <Content Include="Views\Company\Create.cshtml" />
     <Content Include="Views\Company\Edit.cshtml" />
     <Content Include="Views\Company\Delete.cshtml" />
-    <Content Include="Views\Company\_SearchCompany.cshtml" />
-    <Content Include="Views\WorkZoneUser\Register.cshtml" />
-    <Content Include="Views\WorkZoneUser\Index.cshtml" />
+    <Content Include="Views\UserPermission\Register.cshtml" />
+    <Content Include="Views\UserPermission\Index.cshtml" />
     <Content Include="Views\Factory\List.cshtml" />
     <Content Include="Views\Factory\_SearchFactory.cshtml" />
-    <Content Include="Views\WorkZoneUser\_SearchUser.cshtml" />
-    <Content Include="Views\WorkZoneUser\_WebPermission.cshtml" />
+    <Content Include="Views\UserPermission\_SearchUser.cshtml" />
+    <Content Include="Views\UserPermission\_WebPermission.cshtml" />
+    <Content Include="Views\Shared\_CompanyPartial.cshtml" />
+    <Content Include="Views\Company\_CompanyDropdown.cshtml" />
+    <Content Include="Views\Company\_SearchCompany.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
