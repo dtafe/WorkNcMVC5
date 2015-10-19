@@ -1,17 +1,32 @@
-﻿namespace MVCtest.Models.WorkModels
-{
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-    public partial class WorkNC_UserPermission
+namespace WorkNCInfoService.Mvc5.ViewModel
+{
+    public class RegisterAccount
     {
-        [Key]
         [StringLength(20)]
         [Display(Name = "Username")]
         public string Username { get; set; }
+
+        [Required]
+        [Display(Name = "Password")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [Required]
+        [Display(Name = "Pre Password")]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string PrePassword { get; set; }
+
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
         [Required]
         [Display(Name = "Company")]

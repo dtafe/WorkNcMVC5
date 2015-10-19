@@ -13,7 +13,9 @@ namespace WorkNCInfoService.Mvc5.Controllers
     {
         WorkNCDbContext db = new WorkNCDbContext();
         private const int pageSize = 10;
+
         // GET: Company
+        [Authorize(Roles = "Admin")]
         public ActionResult Index(string name, int? page)
         {
             

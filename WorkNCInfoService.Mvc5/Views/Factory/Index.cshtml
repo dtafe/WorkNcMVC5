@@ -1,6 +1,7 @@
 ﻿@using WorkNCInfoService.Mvc5.Models.WorkModels;
+@model PagedList.IPagedList<WorkNC_Factory>
 @using PagedList.Mvc;
-@model PagedList.PagedList<WorkNC_Factory>
+
 
 @{
     ViewBag.Title = "Index";
@@ -16,17 +17,17 @@
 <table class="table">
     <tr class="td-border" style="background-color: green; color: white;">
         <th>
-            <p>Company</p>
+            <p class="colorSort">Company</p>
         </th>
         <th>
-            <p>No</p>
+            <p class="colorSort">@Html.ActionLink("No","Index",new {sortOrder=ViewBag.NoSortParm, currentFilter = ViewBag.CurrentFilter })</p>
         </th>
         
         <th>
-            <p>Name</p>
+            <p class="colorSort">@Html.ActionLink("Company", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })</p>
         </th>
         <th>
-            <p>Images</p>
+            <p class="colorSort">Images</p>
         </th>
 
         <th></th>
@@ -55,21 +56,12 @@
 }
 
 </table>
-<p class="sotrang">Trang: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount</p>
+Page @(Model.PageCount <Model.PageNumber?0:Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page=>Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter}))
+@*<p class="sotrang">Trang: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount</p>
 <div id="pageList">
     @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page = Page }))
-</div>
-<style>
-    #pageList {
-        display: inline;
-    }
-
-    p.sotrang {
-        color: forestgreen;
-        margin: 5px 0 0 15px;
-        font-weight: bold;
-    }
-</style>
+</div>*@
 @section scripts{
     <script language="javascript">
 

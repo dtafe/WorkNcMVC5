@@ -16,76 +16,49 @@ namespace WorkNCInfoService.Mvc5.Controllers
         private const int pageSize = 10;
         WorkNCDbContext db = new WorkNCDbContext();
         // GET: Factory
-        
-        public ActionResult Index(string search, string check, int? page)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, string isDeleted, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.NoSortParm = sortOrder == "No" ? "no_desc" : "Date";
+            if(searchString !=null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+            var factory = from s in db.WorkNC_Factory select s;
+            if(!String.IsNullOrEmpty(searchString))
+            {
+                if(isDeleted == "false")
+                {
+                    factory = factory.Where(n => n.Name.Contains(searchString) && n.isDeleted.Equals(false));
+                }
+                if(isDeleted == "true")
+                {
+                    factory = factory.Where(n => n.Name.Contains(searchString));
+                }
+            }
+            switch(sortOrder)
+            {
+                case "name_desc":
+                    factory = factory.OrderBy(n => n.Name);
+                    break;
+                case "no_desc":
+                    factory = factory.OrderBy(n => n.No);
+                    break;
+                default:
+                    factory = factory.OrderBy(n => n.CompanyId);
+                    break;
+            }
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
-            if(!string.IsNullOrEmpty(search))
-            {
-                if (check == "true")
-                {
-                    var record = db.WorkNC_Factory.Where(n=>n.Name.Contains(search)).OrderBy(n => n.Name).ToPagedList(pageNumber, pageSize);
-                    return View(record);
-                }
-                if (check == "false")
-                {
-                    var record = db.WorkNC_Factory.Where(n => n.isDeleted.Equals(false) && n.Name.Contains(search)).OrderBy(n => n.Name).ToPagedList(pageNumber, pageSize);
-                    return View(record);
-                }
-            }
-            else
-            {
-                if (check == "true")
-                {
-                    var record = db.WorkNC_Factory.OrderBy(n => n.Name).ToPagedList(pageNumber, pageSize);
-                    return View(record);
-                }
-                if (check == "false")
-                {
-                    var record = db.WorkNC_Factory.Where(n => n.isDeleted.Equals(false)).OrderBy(n => n.Name).ToPagedList(pageNumber, pageSize);
-                    return View(record);
-                }
-            }
-            
-            
-            return View(db.WorkNC_Factory.Where(n => n.isDeleted.Equals(false)).OrderBy(n => n.Name).ToPagedList(pageNumber, pageSize));
-
+            return View(factory.ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult List(string name = "", string isDeleted = "" )
-        {
-            if (name != "")
-            {
-                if (isDeleted == "true")
-                {
-                    var record = db.WorkNC_Factory.Where(n => n.Name.Contains(name)).OrderBy(n => n.Name);
-                    return View(record);
-                }
-                if (isDeleted == "false")
-                {
-                    var record = db.WorkNC_Factory.Where(n => n.isDeleted.Equals(false) && n.Name.Contains(name)).OrderBy(n => n.Name);
-                    return View(record);
-                }
-            }
-            else
-
-            {
-                if (isDeleted == "true")
-                {
-                    var record = db.WorkNC_Factory.OrderBy(n => n.Name);
-                    return View(record);
-                }
-                if (isDeleted == "false")
-                {
-                    var record = db.WorkNC_Factory.Where(n => n.isDeleted.Equals(false)).OrderBy(n => n.Name);
-                    return View(record);
-                }
-            }
-
-
-            return View(db.WorkNC_Factory.Where(n => n.isDeleted.Equals(false)).OrderBy(n => n.Name));
-
-        }
         // GET: Factory/Details/5
         public ActionResult Details(int id)
         {
