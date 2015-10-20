@@ -19,8 +19,8 @@ namespace WorkNCInfoService.Mvc5.Controllers
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, string isDeleted, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.NoSortParm = sortOrder == "No" ? "no_desc" : "Date";
+            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
+            ViewBag.NoSort = sortOrder == "No" ? "no_asc" : "no";
             if(searchString !=null)
             {
                 page = 1;
@@ -29,6 +29,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
             {
                 searchString = currentFilter;
             }
+
             ViewBag.CurrentFilter = searchString;
             var factory = from s in db.WorkNC_Factory select s;
             if(!String.IsNullOrEmpty(searchString))
@@ -42,19 +43,20 @@ namespace WorkNCInfoService.Mvc5.Controllers
                     factory = factory.Where(n => n.Name.Contains(searchString));
                 }
             }
+
             switch(sortOrder)
             {
-                case "name_desc":
+                case "name_asc":
                     factory = factory.OrderBy(n => n.Name);
                     break;
-                case "no_desc":
+                case "no_asc":
                     factory = factory.OrderBy(n => n.No);
                     break;
                 default:
                     factory = factory.OrderBy(n => n.CompanyId);
                     break;
             }
-            int pageSize = 10;
+
             int pageNumber = (page ?? 1);
             return View(factory.ToPagedList(pageNumber, pageSize));
         }

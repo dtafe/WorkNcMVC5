@@ -20,6 +20,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

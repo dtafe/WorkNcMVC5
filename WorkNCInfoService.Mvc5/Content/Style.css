@@ -64,3 +64,15 @@
 tr.td-border, td.td-border {
     border: 1px solid green;
 }
+th.td-border p{
+    color: white;
+}
+.colorSort a{
+    color: lightgoldenrodyellow;
+}
+.colorSort a:focus{
+    color: greenyellow;
+}
+.table th {
+    height: 20px !important;
+}

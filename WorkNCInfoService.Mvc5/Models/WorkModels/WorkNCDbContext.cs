@@ -15,6 +15,7 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
         public virtual DbSet<WorkNC_Company> WorkNC_Company { get; set; }
         public virtual DbSet<WorkNC_Factory> WorkNC_Factory { get; set; }
         public virtual DbSet<WorkNC_Machine> WorkNC_Machine { get; set; }
+        public virtual DbSet<WorkNC_UserPermission> WorkNC_UserPermission { get; set; }
         public virtual DbSet<WorkNC_WorkZone> WorkNC_WorkZone { get; set; }
         public virtual DbSet<WorkNC_WorkZoneDetail> WorkNC_WorkZoneDetail { get; set; }
         public virtual DbSet<WorkNC_WorkZoneDetailProblem> WorkNC_WorkZoneDetailProblem { get; set; }
@@ -45,7 +46,5 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
                 .Property(e => e.ImageFile)
                 .IsUnicode(false);
         }
-
-        public System.Data.Entity.DbSet<MVCtest.Models.WorkModels.WorkNC_UserPermission> WorkNC_UserPermission { get; set; }
     }
 }

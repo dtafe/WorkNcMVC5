@@ -2,7 +2,6 @@
 @model PagedList.IPagedList<WorkNC_Factory>
 @using PagedList.Mvc;
 
-
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -17,17 +16,14 @@
 <table class="table">
     <tr class="td-border" style="background-color: green; color: white;">
         <th>
-            <p class="colorSort">Company</p>
-        </th>
-        <th>
-            <p class="colorSort">@Html.ActionLink("No","Index",new {sortOrder=ViewBag.NoSortParm, currentFilter = ViewBag.CurrentFilter })</p>
+            <div class="colorSort">@Html.ActionLink("No", "Index", new { sortOrder = ViewBag.NoSort, currentFilter = ViewBag.CurrentFilter })<span class="caret"></span></div>
         </th>
         
         <th>
-            <p class="colorSort">@Html.ActionLink("Company", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })</p>
+            <div class="colorSort">@Html.ActionLink("Company", "Index", new { sortOrder = ViewBag.NameSort, currentFilter = ViewBag.CurrentFilter })<span class="caret"></span></div>
         </th>
         <th>
-            <p class="colorSort">Images</p>
+            Status
         </th>
 
         <th></th>
@@ -36,17 +32,20 @@
 @foreach (var item in Model) {
     <tr>
         <td class="td-border">
-            @Html.DisplayFor(modelItem => item.CompanyId)
-        </td>
-        <td class="td-border">
             @Html.DisplayFor(modelItem => item.No)
         </td>
         <td class="td-border">
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td class="td-border">
-            @Html.DisplayFor(modelItem => item.ImageFile)
-        </td>
+            @if(item.isDeleted.Equals(false))
+            {
+                <p>Normal</p>
+            }
+            else
+            {
+                <p>Deleted</p>
+            }
         <td class="td-border">
             @Html.ActionLink("Edit", "Edit", new { id=item.FactoryId }) 
             @Html.ActionLink("Details", "Details", new { id=item.FactoryId }) 
@@ -56,15 +55,11 @@
 }
 
 </table>
-Page @(Model.PageCount <Model.PageNumber?0:Model.PageNumber) of @Model.PageCount
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 @Html.PagedListPager(Model, page=>Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter}))
-@*<p class="sotrang">Trang: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount</p>
-<div id="pageList">
-    @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page = Page }))
-</div>*@
+
 @section scripts{
     <script language="javascript">
-
         $('#chkFactory').change(function () {
             if ($(this).is(":checked")) {
                 $.ajax({

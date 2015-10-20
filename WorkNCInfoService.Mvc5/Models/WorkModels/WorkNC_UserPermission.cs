@@ -1,4 +1,4 @@
-﻿namespace MVCtest.Models.WorkModels
+﻿namespace WorkNCInfoService.Mvc5.Models.WorkModels
 {
     using System;
     using System.Collections.Generic;

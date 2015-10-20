@@ -14,18 +14,23 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
 
         [Required]
         [StringLength(50)]
+        [Display(Name ="Company Name")]
         public string CompanyName { get; set; }
 
         [StringLength(200)]
+        [Display(Name = "Address 1")]
         public string Address1 { get; set; }
 
         [StringLength(200)]
+        [Display(Name = "Address 2")]
         public string Address2 { get; set; }
 
         [StringLength(50)]
+        [Display(Name = "TEL")]
         public string TEL { get; set; }
 
         [StringLength(50)]
+        [Display(Name = "FAX")]
         public string FAX { get; set; }
 
         public bool isDeleted { get; set; }

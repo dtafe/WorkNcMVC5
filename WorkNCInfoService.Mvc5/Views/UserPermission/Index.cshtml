@@ -1,0 +1,51 @@
+﻿@using WorkNCInfoService.Mvc5.Models.WorkModels;
+@model PagedList.IPagedList<WorkNC_UserPermission>
+@using PagedList.Mvc;
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr class="td-border" style="background-color: green; color: white;">
+        <th>
+            <div class="colorSort">@Html.ActionLink("Username", "Index", new { sortOrder = ViewBag.UsernameSort, currentFilter = ViewBag.CurrentFilter })<span class="caret"></span></div>
+        </th>
+        <th>
+            Web Permission
+        </th>
+        <th>
+            App Permission
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td class="td-border">
+            @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        <td class="td-border">
+            @Html.Action("ViewPermission", "UserPermission")
+        </td>
+        <td class="td-border">
+            @Html.CheckBoxFor(modelItem => item.AppPermission)
+        </td>
+        <td class="td-border">
+            @Html.ActionLink("Edit", "Edit", new { id = item.Username }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Username }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Username })
+        </td>
+    </tr>
+}
+
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

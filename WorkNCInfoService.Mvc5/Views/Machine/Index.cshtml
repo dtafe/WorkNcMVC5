@@ -1,4 +1,6 @@
-﻿@model IEnumerable<WorkNCInfoService.Mvc5.Models.WorkModels.WorkNC_Machine>
+﻿@using WorkNCInfoService.Mvc5.Models.WorkModels;
+@model PagedList.IPagedList<WorkNC_Machine>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Index";
@@ -14,33 +16,32 @@
 <table class="table">
     <tr class="td-border" style="background-color: green; color: white;">
         <th>
-            @Html.DisplayNameFor(model => model.CompanyId)
+            <div class="colorSort">@Html.ActionLink("Machine No", "Index", new { sortOrder = ViewBag.NoSort, currentFilter = ViewBag.CurrentFilter })<span class="caret"></span></div>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FactoryId)
+            <div class="colorSort">@Html.ActionLink("Machine Name", "Index", new { sortOrder = ViewBag.NameSort, currentFilter = ViewBag.CurrentFilter })<span class="caret"></span></div>
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.No)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
+        <th>Status</th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td class="td-border">
-            @Html.DisplayFor(modelItem => item.CompanyId)
-        </td>
-        <td class="td-border">
-            @Html.DisplayFor(modelItem => item.FactoryId)
-        </td>
-        <td class="td-border">
             @Html.DisplayFor(modelItem => item.No)
         </td>
         <td class="td-border">
             @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td class="td-border">
+            @if(item.isDeleted.Equals(true))
+            {
+                <p>Deleted</p>
+            }
+            else
+            {
+                <p>Normal</p>
+            }
         </td>
         <td class="td-border">
             @Html.ActionLink("Edit", "Edit", new { id=item.MachineId }) 
@@ -51,3 +52,6 @@
 }
 
 </table>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

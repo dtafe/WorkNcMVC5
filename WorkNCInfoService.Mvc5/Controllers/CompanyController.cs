@@ -16,19 +16,40 @@ namespace WorkNCInfoService.Mvc5.Controllers
 
         // GET: Company
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(string name, int? page)
+        public ActionResult Index(string sortOrder, string currentFilter, string companyName, int? page)
         {
-            
-            if(name!=null)
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
+            if (companyName != null)
             {
                 page = 1;
             }
-            int pageNumber = (page ?? 1);
-            if (!string.IsNullOrEmpty(name))
+            else
             {
-                return View(db.WorkNC_Company.Where(n=>n.CompanyName.Contains(name)).OrderBy(n=>n.CompanyName).ToPagedList(pageNumber, pageSize));
+                companyName = currentFilter;
             }
-            return View(db.WorkNC_Company.OrderBy(n=>n.CompanyId).ToPagedList(pageNumber, pageSize));
+            ViewBag.CurrentFilter = companyName;
+
+            var company = from s in db.WorkNC_Company select s;
+
+            if(!String.IsNullOrEmpty(companyName))
+            {
+                company = company.Where(n => n.CompanyName.Contains(companyName));
+            }
+
+            switch(sortOrder)
+            {
+                case "name_asc":
+                    company = company.OrderBy(n => n.CompanyName);
+                    break;
+                default:
+                    company = company.OrderBy(n => n.CompanyId);
+                    break;
+            }
+
+            int pageNumber = (page ?? 1);
+            
+            return View(company.ToPagedList(pageNumber, pageSize));
         }
         
         // GET: Company/Details/5
