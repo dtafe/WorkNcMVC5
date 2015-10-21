@@ -51,7 +51,7 @@
 @foreach (var item in Model) {
     <tr class="td-border">
         <td class="td-border">
-            <input type="checkbox" value="@item.WorkZoneDetailId" id="chkZoneDetail"/>
+            <input type="checkbox" value="@item.WorkZoneDetailId" id=""/>
         </td>
         <td class="td-border">
             @Html.DisplayFor(modelItem => item.No)
@@ -90,7 +90,14 @@
             @Html.DisplayFor(modelItem => item.ApproachFeedRate)
         </td>
         <td class="td-border">
-            @Html.DisplayFor(modelItem => item.Status)
+            @if(item.Status==1)
+            {
+                <p>Problem</p>
+            }
+            else
+            {
+                <p>Finished</p>
+            }
         </td>
         <td class="td-border">
             @Html.ActionLink("Edit", "Edit", new { id = item.WorkZoneDetailId }) 

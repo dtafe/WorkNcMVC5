@@ -65,11 +65,11 @@ namespace WorkNCInfoService.Mvc5.Controllers
             return View(db.WorkNC_WorkZone);
         }
         // GET: WorkZone/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? workzoneId)
         {
-            if (id == null)
+            if (workzoneId == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            WorkNC_WorkZone workZone = db.WorkNC_WorkZone.Find(id);
+            WorkNC_WorkZone workZone = db.WorkNC_WorkZone.Find(workzoneId);
             if (workZone == null)
                 return HttpNotFound();
 
@@ -100,7 +100,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
 
         // GET: WorkZone/Edit/5
 
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? workzoneId)
         {
 
             List<WorkNC_Factory> listFactory = new List<WorkNC_Factory>();
@@ -115,9 +115,9 @@ namespace WorkNCInfoService.Mvc5.Controllers
             ViewBag.Machine = new SelectList(listMachine, "MachineId", "Name");
 
 
-            if (id == null)
+            if (workzoneId == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            WorkNC_WorkZone workZone = db.WorkNC_WorkZone.Find(id); 
+            WorkNC_WorkZone workZone = db.WorkNC_WorkZone.Find(workzoneId); 
 
             //fill to DropdownList
             ViewBag.Factory = new SelectList(db.WorkNC_Factory.OrderBy(n => n.Name), "FactoryId", "Name");
@@ -162,65 +162,55 @@ namespace WorkNCInfoService.Mvc5.Controllers
         }
 
         // GET: WorkZone/Delete/5
-        [HttpGet]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            WorkNC_WorkZone workZone = db.WorkNC_WorkZone.Find(id);
-            if (workZone == null)
-                return HttpNotFound();
-            return View(workZone);
-        }
+        //[HttpGet]
+        //public ActionResult Delete(int? workzoneId)
+        //{
+        //    if (workzoneId == null)
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    WorkNC_WorkZone workZone = db.WorkNC_WorkZone.Find(workzoneId);
+        //    if (workZone == null)
+        //        return HttpNotFound();
+        //    return View(workZone);
+        //}
 
-        // POST: WorkZone/Delete/5
+        //// POST: WorkZone/Delete/5
+        //[HttpPost]
+        //public ActionResult Delete(WorkNC_WorkZone workZone)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            db.Entry(workZone).State = EntityState.Deleted;
+        //            db.SaveChanges();
+        //            return RedirectToAction("Index");
+        //        }
+
+        //        return View(workZone);
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
         [HttpPost]
-        public ActionResult Delete(WorkNC_WorkZone workZone)
+        public ActionResult Delete(IEnumerable<int> workzoneId)
         {
-            try
+            List<WorkNC_WorkZone> listDelete = db.WorkNC_WorkZone.Where(x => workzoneId.Contains(x.WorkZoneId)).ToList();
+            foreach(WorkNC_WorkZone item in listDelete)
             {
-                if (ModelState.IsValid)
-                {
-                    db.Entry(workZone).State = EntityState.Deleted;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
+                db.WorkNC_WorkZone.Remove(item);
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index");
 
-                return View(workZone);
-            }
-            catch
-            {
-                return View();
-            }
         }
 
-
-        #region form search
         public ActionResult Search()
         {
             return PartialView("_Search");
         }
-        //public JsonResult GetFactory()
-        //{
-        //    List<WorkNC_Factory> allFactory = new List<WorkNC_Factory>();
-        //    using (WorkNCDbContext context = new WorkNCDbContext())
-        //    {
-        //        allFactory = context.WorkNC_Factory.OrderBy(n => n.Name).ToList();
-        //    }
-        //    return new JsonResult { Data = allFactory, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        //    //return PartialView("_Search");
-        //}
-        //// Fetch Machine by Factory ID
-        //public JsonResult GetMachine(int factoryId)
-        //{
-        //    List<WorkNC_Machine> allMachine = new List<WorkNC_Machine>();
-        //    using (WorkNCDbContext context = new WorkNCDbContext())
-        //    {
-        //        allMachine = context.WorkNC_Machine.Where(n => n.FactoryId==factoryId).OrderBy(n => n.Name).ToList();
-        //    }
-        //    return new JsonResult { Data = allMachine, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        //}
-        #endregion
+        
         public JsonResult GetAllFactory()
         {
             return Json(db.WorkNC_Factory.ToList(), JsonRequestBehavior.AllowGet);

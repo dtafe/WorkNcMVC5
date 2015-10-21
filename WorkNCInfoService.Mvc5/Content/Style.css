@@ -76,3 +76,12 @@ th.td-border p{
 .table th {
     height: 20px !important;
 }
+.language img{
+    display: inline-block;
+    width: 30px;
+    height: 20px;
+    float: right;
+}
+    .language img:hover {
+        cursor: pointer;
+    }

@@ -1,0 +1,11 @@
+﻿@model IEnumerable<WorkNCInfoService.Mvc5.Models.WorkModels.AspNetUser>
+
+@foreach (var item in Model) {
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailConfirmed)
+        </td>
+}
+

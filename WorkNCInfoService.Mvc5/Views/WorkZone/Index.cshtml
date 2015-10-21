@@ -8,9 +8,10 @@
 }
 
 @Html.Action("Search", "WorkZone")
-
-<input type="submit" value="Edit" class="btn btn-success"/>
-<input type="submit" value="Delete" class="btn btn-success"/>
+@using (Html.BeginForm("Delete", "WorkZone", FormMethod.Post))
+{
+<button class="btn btn-success">@Html.ActionLink("Edit","Edit", new { id = "workZoneId" } )</button>
+<input type="submit" value="Delete" class="btn btn-success" id="deleteWorkzone"/>
 <table class="table">
     <tr class="td-border" style="background-color: green; color: white;">
         <th></th>
@@ -50,10 +51,11 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr class="td-border">
         <td class="td-border">
-            <input type="checkbox"  id="chkWorkzone" name="chkWorkzone"/>
+            <input type="checkbox"  id="workzoneId" name="workzoneId" value="@item.WorkZoneId"/>
         </td>
         <td class="td-border">
             @Html.DisplayFor(modelItem => item.Name)
@@ -86,21 +88,34 @@
             @Html.DisplayFor(modelItem => item.MachiningTimeTotal)
         </td>
         <td class="td-border">
-            @Html.DisplayFor(modelItem => item.Status)
+            @if (item.Status == 0)
+            {
+                <p>In Process</p>
+            }
+            else if (item.Status == 1)
+            {
+                <p>Problem</p>
+            }
+            else
+            {
+                <p>Finished</p>
+            }
         </td>
         <td class="td-border">
-            @Html.ActionLink("Edit", "Edit", new { id=item.WorkZoneId })
-            @Html.ActionLink("Details", "Details", new { id=item.WorkZoneId })
-            @Html.ActionLink("Delete", "Delete", new { id=item.WorkZoneId })
+            @Html.ActionLink("Edit", "Edit", new { workzoneId = item.WorkZoneId })
+            @Html.ActionLink("Details", "Details", new { workzoneId = item.WorkZoneId })
+            @Html.ActionLink("Delete", "Delete", new { workzoneId = item.WorkZoneId })
         </td>
     </tr>
 }
 </table>
+}
 @*tao link lien ket trang*@
 <p class="page-number">Page: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount</p>
 <div id="pageList">
     @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page = Page }))
 </div>
+
 <style>
     #pageList{
         display: inline;
@@ -113,6 +128,27 @@
 </style>
 @section scripts{
     <script language="javascript">
+        //show dialog before delete 
+        $('#deleteWorkzone').bind('click', function (ev) {
+                var $btn = $(this);
+                ev.preventDefault();
+                $("<div />").html("Are you sure?").dialog({
+                    modal: true,
+                    title: "Confirmation",
+                    buttons: [{
+                        text: "Ok",
+                        click: function() {
+                            $btn.trigger("click.confirmed");
+                            $(this).dialog("close");
+                        }
+                    }, {
+                        text: "Cancel",
+                        click: function() {
+                            $(this).dialog("close");
+                        }
+                    }]
+                }).show();  
+            });
         
     </script>    
 }
