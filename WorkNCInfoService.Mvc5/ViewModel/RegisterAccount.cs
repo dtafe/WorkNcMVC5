@@ -33,11 +33,10 @@ namespace WorkNCInfoService.Mvc5.ViewModel
         public int CompanyId { get; set; }
 
         [StringLength(50)]
-        [Required]
         [Display(Name = "Web Permission")]
         public string WebPermission { get; set; }
 
-
+        [Required]
         [Display(Name = "App Permission")]
         public bool AppPermission { get; set; }
 

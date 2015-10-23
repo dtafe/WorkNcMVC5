@@ -23,7 +23,7 @@
 }
 .navbar{
     background-color: rgba(0, 255, 255, 0) !important;
-    -webkit-border-radius: 0px;;
+    -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
     margin: 0;
@@ -75,6 +75,10 @@ th.td-border p{
 }
 .table th {
     height: 20px !important;
+}
+.language{
+    width: 100%;
+    height: 21px;
 }
 .language img{
     display: inline-block;

@@ -8,10 +8,10 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using WorkNCInfoService.Mvc5.Models;
 using System.Data.Entity.Validation;
-using WorkNCInfoService.Mvc5.ViewModel;
 using WorkNCInfoService.Mvc5.Models.WorkModels;
+using WorkNCInfoService.Mvc5.Models;
+using WorkNCInfoService.Mvc5.ViewModel;
 
 namespace WorkNCInfoService.Mvc5.Controllers
 {
@@ -183,16 +183,18 @@ namespace WorkNCInfoService.Mvc5.Controllers
                         userPermission.WebPermission = model.WebPermission;
                         userPermission.AppPermission = model.AppPermission;
                         userPermission.CreateDate = DateTime.Now;
-                        userPermission.CreateAccount = model.Username;
+                        userPermission.CreateAccount = User.Identity.Name;
                         userPermission.ModifiedDate = DateTime.Now;
-                        userPermission.ModifiedAccount = model.Username;
+                        userPermission.ModifiedAccount = User.Identity.Name;
                         db.WorkNC_UserPermission.Add(userPermission);
+
+                        UserManager.AddToRole(user.Id, model.WebPermission);//add to AspnetUserRoles table
                         db.SaveChanges();
 
 
                         //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                        string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
+                        //string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
                         // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link
                         // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -201,11 +203,11 @@ namespace WorkNCInfoService.Mvc5.Controllers
                         // Uncomment to debug locally 
                         // TempData["ViewBagLink"] = callbackUrl;
 
-                        ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
-                                        + "before you can log in.";
+                        //ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
+                                        //+ "before you can log in.";
 
-                        return View("Info");
-                        //return RedirectToAction("Index", "Home");
+                        //return View("Info");
+                        return RedirectToAction("Index", "Home");
                     }
                     catch (DbEntityValidationException e)
                     {

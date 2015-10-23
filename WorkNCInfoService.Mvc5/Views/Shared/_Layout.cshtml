@@ -35,17 +35,34 @@
                             <li>@Html.ActionLink("Machine", "Index", "Machine")</li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Register Company", "Index", "Company")</li>
-                            <li>@Html.ActionLink("Register User", "Register", "UserPermission")</li>
-                            <li>@Html.ActionLink("Manage User", "Index", "UserPermission")</li>
-                        </ul>
-                    </li>
+                    @if (User.IsInRole("Chief"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Register User", "Register", "UserPermission")</li>
+                                <li>@Html.ActionLink("Manage User", "Index", "UserPermission")</li>
+                            </ul>
+                        </li>
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Register Company", "Index", "Company")</li>
+                                <li>@Html.ActionLink("Register User", "Register", "UserPermission")</li>
+                                <li>@Html.ActionLink("Manage User", "Index", "UserPermission")</li>
+                            </ul>
+                        </li>
+                    }
+                    
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                 </ul>
-                @Html.Action("CompanyDropdown", "Company")
+                @if (!string.IsNullOrEmpty(User.Identity.Name))
+                {
+                    @Html.Action("CompanyDropdown", "Company")
+                }
                 @Html.Partial("_LoginPartial")
             </div>
 

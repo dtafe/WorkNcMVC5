@@ -14,7 +14,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
 {
     public class WorkZoneController : Controller
     {
-        private const int pageSize = 5;
+        private const int pageSize = 10;
         WorkNCDbContext db = new WorkNCDbContext();
         // GET: WorkZone
         public ActionResult Index(int? page)
@@ -111,17 +111,13 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 listFactory = db.WorkNC_Factory.ToList();
                 listMachine = db.WorkNC_Machine.ToList();
             }
-            ViewBag.Factory = new SelectList(listFactory, "FactoryId", "Name");
-            ViewBag.Machine = new SelectList(listMachine, "MachineId", "Name");
-
-
             if (workzoneId == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             WorkNC_WorkZone workZone = db.WorkNC_WorkZone.Find(workzoneId); 
 
             //fill to DropdownList
-            ViewBag.Factory = new SelectList(db.WorkNC_Factory.OrderBy(n => n.Name), "FactoryId", "Name");
-            ViewBag.Machine = new SelectList(db.WorkNC_Machine.OrderBy(n => n.Name), "MachineId", "Name");
+            ViewBag.Factory = new SelectList(listFactory.OrderBy(n => n.Name), "FactoryId", "Name");
+            ViewBag.Machine = new SelectList(listMachine.OrderBy(n => n.Name), "MachineId", "Name");
 
             if (workZone == null)
                 return HttpNotFound();
@@ -139,16 +135,16 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 listFactory = db.WorkNC_Factory.ToList();
                 listMachine = db.WorkNC_Machine.ToList();
             }
-            ViewBag.Factory = new SelectList(listFactory, "FactoryId", "Name");
-            ViewBag.Machine = new SelectList(listMachine, "MachineId", "Name");
+            ViewBag.Factory = new SelectList(listFactory.OrderBy(n => n.Name), "FactoryId", "Name");
+            ViewBag.Machine = new SelectList(listMachine.OrderBy(n => n.Name), "MachineId", "Name");
 
             try
             {
                 if (ModelState.IsValid)
                 {
+                    //workZone.FactoryId = ViewBag.Factory("Name");
                     workZone.ModifiedDate = DateTime.Now;
-                    
-                    //workZone.ModifiedAccount = User.Identity.Name;
+                    workZone.ModifiedAccount = User.Identity.Name;
                     db.Entry(workZone).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -161,38 +157,6 @@ namespace WorkNCInfoService.Mvc5.Controllers
             }
         }
 
-        // GET: WorkZone/Delete/5
-        //[HttpGet]
-        //public ActionResult Delete(int? workzoneId)
-        //{
-        //    if (workzoneId == null)
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    WorkNC_WorkZone workZone = db.WorkNC_WorkZone.Find(workzoneId);
-        //    if (workZone == null)
-        //        return HttpNotFound();
-        //    return View(workZone);
-        //}
-
-        //// POST: WorkZone/Delete/5
-        //[HttpPost]
-        //public ActionResult Delete(WorkNC_WorkZone workZone)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            db.Entry(workZone).State = EntityState.Deleted;
-        //            db.SaveChanges();
-        //            return RedirectToAction("Index");
-        //        }
-
-        //        return View(workZone);
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
         [HttpPost]
         public ActionResult Delete(IEnumerable<int> workzoneId)
         {

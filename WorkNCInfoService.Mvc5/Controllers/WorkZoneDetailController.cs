@@ -13,11 +13,11 @@ namespace WorkNCInfoService.Mvc5.Controllers
     {
         WorkNCDbContext db = new WorkNCDbContext();
         // GET: WorkZoneDetail
-        public PartialViewResult List(int? id)
+        public PartialViewResult List(int? workzoneId)
         {
-            if (id != 0)
+            if (workzoneId != 0)
             {
-                var model = db.WorkNC_WorkZoneDetail.Where(n => n.WorkZoneId == id);
+                var model = db.WorkNC_WorkZoneDetail.Where(n => n.WorkZoneId == workzoneId);
                 return PartialView(model);
             }
             return PartialView("List");

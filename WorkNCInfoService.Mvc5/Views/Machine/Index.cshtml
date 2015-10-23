@@ -55,3 +55,17 @@
 
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+@section scripts{
+    <script language="javascript">
+        $('#isDeleted').change(function () {
+            if ($(this).is(":checked")) {
+                $('#isDeleted').prop('checked', true);
+            }
+            else {
+                $('#isDeleted').prop('checked', false);
+            }
+        });
+
+    </script>
+}

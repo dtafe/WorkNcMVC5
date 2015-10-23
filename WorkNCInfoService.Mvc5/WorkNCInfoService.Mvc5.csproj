@@ -377,6 +377,7 @@
     <Content Include="Views\Shared\Info.cshtml" />
     <Content Include="Views\UserPermission\Index.cshtml" />
     <Content Include="Views\UserPermission\_UserPartial.cshtml" />
+    <Content Include="Views\UserPermission\_SetAppPermission.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -387,6 +388,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WorkNCInfoService.Domain\WorkNCInfoService.Domain.csproj">
+      <Project>{023908be-0db6-40e3-af9d-d93c22949218}</Project>
+      <Name>WorkNCInfoService.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WorkNCInfoService.Utilities\WorkNCInfoService.Utilities.csproj">
       <Project>{6d8d82b2-609f-4595-a737-126aff7be4b6}</Project>
       <Name>WorkNCInfoService.Utilities</Name>

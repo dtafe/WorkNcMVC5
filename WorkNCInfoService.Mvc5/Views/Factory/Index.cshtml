@@ -60,30 +60,39 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
 
 @section scripts{
     <script language="javascript">
-        $('#chkFactory').change(function () {
+        $('#isDeleted').change(function () {
             if ($(this).is(":checked")) {
-                $.ajax({
-                    type: 'GET',
-                    url: '/Factory/Index',
-                    dataType: 'Json',
-                    data: { isDeleted: $('chkFactory').val() },
-                    success: function (data) {
-                        $('#chkFactory').prop('checked', true);
-                    }
-                });
+                $('#isDeleted').prop('checked', true);
             }
-
             else {
-                $.ajax({
-                    type: 'GET',
-                    url: '/Factory/Index',
-                    dataType: 'Json',
-                    data: { isDeleted: $('chkFactory').val() },
-                    success: function (data) {
-                        $('#chkFactory').prop('checked', false);
-                    }
-                });
+                $('#isDeleted').prop('checked', false);
             }
         });
+        //$('#chkFactory').change(function () {
+        //    if ($(this).is(":checked")) {
+        //        $.ajax({
+        //            type: 'GET',
+        //            url: '/Factory/Index',
+        //            dataType: 'Json',
+        //            data: { isDeleted: $('chkFactory').val() },
+        //            success: function (data) {
+        //                $('#chkFactory').prop('checked', true);
+        //            }
+        //        });
+        //    }
+
+        //    else {
+        //        $.ajax({
+        //            type: 'GET',
+        //            url: '/Factory/Index',
+        //            dataType: 'Json',
+        //            data: { isDeleted: $('chkFactory').val() },
+        //            success: function (data) {
+        //                $('#chkFactory').prop('checked', false);
+        //            }
+        //        });
+        //    }
+        //});
+
     </script>
 }

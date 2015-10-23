@@ -16,8 +16,9 @@ namespace WorkNCInfoService.Mvc5.Controllers
         private const int pageSize = 10;
         WorkNCDbContext db = new WorkNCDbContext();
         // GET: Factory
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, string isDeleted, int? page)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, bool isDeleted=false, int? page=1)
         {
+            int pageNumber = (page ?? 1);
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
             ViewBag.NoSort = sortOrder == "No" ? "no_asc" : "no";
@@ -32,19 +33,9 @@ namespace WorkNCInfoService.Mvc5.Controllers
 
             ViewBag.CurrentFilter = searchString;
             var factory = from s in db.WorkNC_Factory select s;
-            if(!String.IsNullOrEmpty(searchString))
-            {
-                if(isDeleted == "false")
-                {
-                    factory = factory.Where(n => n.Name.Contains(searchString) && n.isDeleted.Equals(false));
-                }
-                if(isDeleted == "true")
-                {
-                    factory = factory.Where(n => n.Name.Contains(searchString));
-                }
-            }
 
-            switch(sortOrder)
+            //sort machine
+            switch (sortOrder)
             {
                 case "name_asc":
                     factory = factory.OrderBy(n => n.Name);
@@ -56,9 +47,21 @@ namespace WorkNCInfoService.Mvc5.Controllers
                     factory = factory.OrderBy(n => n.CompanyId);
                     break;
             }
-
-            int pageNumber = (page ?? 1);
-            return View(factory.ToPagedList(pageNumber, pageSize));
+            //search by Machine Name & isDeleted
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                if(isDeleted == false)
+                {
+                    return View(factory.Where(n => n.Name.Contains(searchString) && n.isDeleted.Equals(false)).ToPagedList(pageNumber, pageSize));
+                }
+                if(isDeleted == true)
+                {
+                    return View(factory.Where(n => n.Name.Contains(searchString)).ToPagedList(pageNumber, pageSize));
+                }
+            }
+ 
+            
+            return View(factory.Where(n =>n.isDeleted.Equals(isDeleted)).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Factory/Details/5

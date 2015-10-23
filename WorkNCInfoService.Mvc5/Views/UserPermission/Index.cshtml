@@ -9,9 +9,11 @@
 }
 
 @Html.Action("Search", "UserPermission")
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div>
+    <input type="checkbox" value="Online" id="lockoutUer" name="lockoutUer"/> Online
+</div>
+<input type="button" value="Create" class="btn btn-success" title="Create" onclick="location.href='@Url.Action("Register","UserPermission")'"/>
+
 <table class="table">
     <tr class="td-border" style="background-color: green; color: white;">
         <th>
@@ -60,18 +62,15 @@
         <td class="td-border">
             @if(item.EmailConfirm.Equals(true))
             {
-                <a>Approve</a>
+                @Html.ActionLink("Approve","Index",null, new { @id = item.UserName })
             }
             else
             {
-                <a>Disapprove</a>
+                @Html.ActionLink("Disapprove", "Index", null, new { @id = item.UserName })
             }
         </td>
         <td class="td-border">
-            @Html.Action("AppPermission", "UserPermission")
-        </td>
-        <td class="td-border">
-            @Html.CheckBoxFor(modelItem => item.AppPermission)
+            @Html.CheckBoxFor(modelItem => item.AppPermission, new { id= "AppPermission" })
         </td>
         <td class="td-border">
             <a>Reset Password</a>
@@ -87,3 +86,35 @@
 </table>
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+@section scripts{
+    <script language="javascript">
+
+        $(function () {
+            
+            //Set AppPermission
+            $('#AppPermission').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#AppPermission').prop('checked', true);
+                }
+                else
+                {
+                    $('#AppPermission').prop('checked',false);
+                }
+            });
+
+            $('#EmailConfirm').click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/UsePermission/EmailConfirm'+userName,
+                    dataType: 'Json',
+                    success: function (data) {
+                        $.each({
+                            
+                        });
+                    }
+                });
+            });
+        });
+    </script>    
+}

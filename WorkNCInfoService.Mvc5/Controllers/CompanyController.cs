@@ -18,6 +18,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Index(string sortOrder, string currentFilter, string companyName, int? page)
         {
+            int pageNumber = (page ?? 1);
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
             if (companyName != null)
@@ -32,12 +33,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
 
             var company = from s in db.WorkNC_Company select s;
 
-            if(!String.IsNullOrEmpty(companyName))
-            {
-                company = company.Where(n => n.CompanyName.Contains(companyName));
-            }
-
-            switch(sortOrder)
+            switch (sortOrder)
             {
                 case "name_asc":
                     company = company.OrderBy(n => n.CompanyName);
@@ -46,12 +42,13 @@ namespace WorkNCInfoService.Mvc5.Controllers
                     company = company.OrderBy(n => n.CompanyId);
                     break;
             }
-
-            int pageNumber = (page ?? 1);
-            
+            if (!String.IsNullOrEmpty(companyName))
+            {
+                return View(company.Where(n => n.CompanyName.Contains(companyName)).ToPagedList(pageNumber,pageSize));
+            }
             return View(company.ToPagedList(pageNumber, pageSize));
         }
-        
+
         // GET: Company/Details/5
         public ActionResult Details(int id)
         {
@@ -129,13 +126,36 @@ namespace WorkNCInfoService.Mvc5.Controllers
         }
         public ActionResult CompanyDropdown()
         {
-            List<WorkNC_Company> listCompany = new List<WorkNC_Company>();
-            using (WorkNCDbContext db = new WorkNCDbContext())
+            if (!string.IsNullOrEmpty(User.Identity.Name))
             {
-                listCompany = db.WorkNC_Company.ToList();
+                List<WorkNC_Company> listCompany = new List<WorkNC_Company>();
+                using (WorkNCDbContext db = new WorkNCDbContext())
+                {
+                    listCompany = db.WorkNC_Company.ToList();
+                }
+                List<WorkNC_Company> list = new List<WorkNC_Company>();
+
+                var user = (from f in db.WorkNC_UserPermission
+                            where f.Username == User.Identity.Name
+                            select f).FirstOrDefault();
+
+                //check role
+                if (user != null)
+                {
+                    if (User.IsInRole("Admin"))
+                    {
+                        list = db.WorkNC_Company.ToList();
+                    }
+                    else
+                    {
+                        list = db.WorkNC_Company.Where(n => n.CompanyId == user.CompanyId && n.isDeleted == false).ToList();
+                    }
+                }
+                
+                ViewBag.Company = new SelectList(list.OrderBy(n => n.CompanyName), "CompanyId", "CompanyName");
+
             }
-            ViewBag.Company = new SelectList(listCompany, "CompanyId", "CompanyName");
-            ViewBag.Company = new SelectList(db.WorkNC_Company.OrderBy(n => n.CompanyName), "CompanyId", "CompanyName");
+
             return PartialView("_CompanyPartial");
 
         }

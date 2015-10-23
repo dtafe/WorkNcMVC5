@@ -8,9 +8,9 @@
 }
 
 @Html.Action("Search", "WorkZone")
+@Html.ActionLink("Edit", "Edit", new { @id = "editWorkZone" })
 @using (Html.BeginForm("Delete", "WorkZone", FormMethod.Post))
 {
-<button class="btn btn-success">@Html.ActionLink("Edit","Edit", new { id = "workZoneId" } )</button>
 <input type="submit" value="Delete" class="btn btn-success" id="deleteWorkzone"/>
 <table class="table">
     <tr class="td-border" style="background-color: green; color: white;">
@@ -110,7 +110,7 @@
 }
 </table>
 }
-@*tao link lien ket trang*@
+@*paging*@
 <p class="page-number">Page: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount</p>
 <div id="pageList">
     @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page = Page }))
@@ -149,6 +149,18 @@
                     }]
                 }).show();  
             });
-        
+        //edit
+        $(function () {
+            $('#editWorkZone').click(function () {
+                var edit = $('#editWorkZone').val();
+                $('#workzoneId').change(function () {
+                    if ($(this).is(":checked")) {
+                        var id = $('#workzoneId').val();
+                        edit = id;
+                        alert('hello');
+                    }
+                });
+            });
+        });
     </script>    
 }

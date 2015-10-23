@@ -15,9 +15,10 @@ namespace WorkNCInfoService.Mvc5.Controllers
     {
         WorkNCDbContext db = new WorkNCDbContext();
         // GET: Machine
-        private const int page = 10;
-        public ActionResult Index(string sortOrder, string currentFilter, int? factoryId, string name, string isDeleted, int? page)
+        private const int pageSize = 10;
+        public ActionResult Index(string sortOrder, string currentFilter, int? factoryId, string name, bool isDeleted=false, int? page=1)
         {
+            int pageNumber = (page ?? 1);
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
             ViewBag.NoSort = sortOrder == "No" ? "no_asc" : "no";
@@ -33,32 +34,8 @@ namespace WorkNCInfoService.Mvc5.Controllers
             ViewBag.CurrentFilter = name;
             var machine = from s in db.WorkNC_Machine select s;
 
-            if (factoryId != null)
-            {
-                if(isDeleted=="true")
-                {
-                    machine = machine.Where(n => n.FactoryId == factoryId);
-                }
-                if(isDeleted=="false")
-                {
-                    machine = machine.Where(n => n.FactoryId == factoryId && n.isDeleted.Equals(false));
-                }
-            }
-
-            if (!String.IsNullOrEmpty(name))
-            {
-                if(isDeleted=="true")
-                {
-                    machine = machine.Where(n => n.Name.Contains(name));
-                }
-                if (isDeleted == "false")
-                {
-                    machine = machine.Where(n => n.Name.Contains(name)&&n.isDeleted.Equals(false));
-                }
-
-            }
-            
-            switch(sortOrder)
+            //sort machine
+            switch (sortOrder)
             {
                 case "no_asc":
                     machine = machine.OrderBy(n => n.No);
@@ -70,10 +47,34 @@ namespace WorkNCInfoService.Mvc5.Controllers
                     machine = machine.OrderBy(n => n.MachineId);
                     break;
             }
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
 
-            return View(machine.ToPagedList(pageNumber, pageSize));       }
+            //search by factoryId & isDeleted
+            if (factoryId != null)
+            {
+                if(isDeleted==true)
+                {
+                    return View(machine.Where(n => n.FactoryId == factoryId).ToPagedList(pageNumber, pageSize));
+                }
+                if(isDeleted==false)
+                {
+                    return View(machine.Where(n => n.FactoryId == factoryId && n.isDeleted.Equals(false)).ToPagedList(pageNumber, pageSize));
+                }
+            }
+            //search by factoryName & isDeleted
+            if (!String.IsNullOrEmpty(name))
+            {
+                if(isDeleted==true)
+                {
+                    return View(machine.Where(n => n.Name.Contains(name)).ToPagedList(pageNumber, pageSize));
+                }
+                if (isDeleted == false)
+                {
+                    return View(machine.Where(n => n.Name.Contains(name)&&n.isDeleted.Equals(false)).ToPagedList(pageNumber, pageSize));
+                }
+
+            }
+            return View(machine.Where(n=>n.isDeleted.Equals(isDeleted)).ToPagedList(pageNumber, pageSize));
+        }
 
         // GET: Machine/Details/5
         public ActionResult Details(int id)
