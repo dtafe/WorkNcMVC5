@@ -89,3 +89,7 @@ th.td-border p{
     .language img:hover {
         cursor: pointer;
     }
+    .language input {
+        float: right;
+    }
+    

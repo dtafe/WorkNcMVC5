@@ -1,0 +1,9 @@
+﻿@{
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+}
+@using (Html.BeginForm("SetCulture", "Home"))
+{
+    <input type="hidden" name="culture" id="culture"/>
+    <input type="image" src="~/Images/en-US.gif" data-culture="en-us" class="culture" value="en-us" />
+    <input type="image" src="~/Images/ja-JP.gif" data-culture="jp" class="culture" value="jp" />
+}

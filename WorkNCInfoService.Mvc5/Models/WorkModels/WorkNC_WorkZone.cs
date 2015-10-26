@@ -5,6 +5,7 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    
 
     [Table("WorkNC_WorkZone")]
     public partial class WorkNC_WorkZone

@@ -9,6 +9,7 @@ using PagedList;
 using PagedList.Mvc;
 using WorkNCInfoService.Mvc5.Models.WorkModels;
 using WorkNCInfoService.Mvc5.ViewModel;
+using WorkNCInfoService.Utilities;
 
 namespace WorkNCInfoService.Mvc5.Controllers
 {

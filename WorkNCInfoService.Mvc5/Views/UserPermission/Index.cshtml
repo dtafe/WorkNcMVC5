@@ -37,20 +37,22 @@
         <th>
             Reset Password
         </th>
-        <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
+    using (Html.BeginForm())
+    {
     <tr>
         <td class="td-border">
             @Html.DisplayFor(modelItem => item.UserName)
         </td>
 
         <td class="td-border">
-            @Html.DisplayFor(modelItem=>item.Email)
+            @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td class="td-border">
-            @if(item.EmailConfirm.Equals(true))
+            @if (item.EmailConfirm.Equals(true))
             {
                 <i class="glyphicon glyphicon-ok"></i>
             }
@@ -60,9 +62,9 @@
             }
         </td>
         <td class="td-border">
-            @if(item.EmailConfirm.Equals(true))
+            @if (item.EmailConfirm.Equals(true))
             {
-                @Html.ActionLink("Approve","Index",null, new { @id = item.UserName })
+                @Html.ActionLink("Approve", "Index", null, new { @id = item.UserName })
             }
             else
             {
@@ -70,18 +72,19 @@
             }
         </td>
         <td class="td-border">
-            @Html.CheckBoxFor(modelItem => item.AppPermission, new { id= "AppPermission" })
+            @Html.Action("SetWebPermission", "UserPermission")
+        </td>
+        <td class="td-border">
+            
+                @Html.CheckBoxFor(modelItem => item.AppPermission, new { id = "AppPermission" })
+            
         </td>
         <td class="td-border">
             <a>Reset Password</a>
         </td>
-        <td class="td-border">
-            @Html.ActionLink("Edit", "Edit", new { id = item.UserName }) 
-            @Html.ActionLink("Details", "Details", new { id = item.UserName }) 
-            @Html.ActionLink("Delete", "Delete", new { id = item.UserName })
-        </td>
     </tr>
-}
+        }
+    }
 
 </table>
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
@@ -99,21 +102,22 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
                 }
                 else
                 {
-                    $('#AppPermission').prop('checked',false);
+                    $('#AppPermission').prop('checked', false);
                 }
+                $(this).parent('form').submit();
             });
 
+            //Set WebPermission
+            $("#WebPermission").change(function(){
+                var foo = $(this).val();
+                alert(foo);
+                $(this).parent("form").submit();//post form
+                
+            });
+
+            //Approve
             $('#EmailConfirm').click(function () {
-                $.ajax({
-                    type: 'POST',
-                    url: '/UsePermission/EmailConfirm'+userName,
-                    dataType: 'Json',
-                    success: function (data) {
-                        $.each({
-                            
-                        });
-                    }
-                });
+                
             });
         });
     </script>    

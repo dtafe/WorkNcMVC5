@@ -69,8 +69,7 @@
         </div>
         <div class="content">
             <div class="language">
-                <img src="~/Images/en-US.gif" />
-                <img src="~/Images/ja-JP.gif" />
+                @Html.Action("SetLanguage", "Home")
             </div>
            <div>
                @RenderBody()
@@ -117,6 +116,13 @@
                 text: false
             });
 
+            //choose language
+            $(function () {
+                $('.culture').click(function () {
+                    $('#culture').val($(this).data('culture')); // update the hidden input
+                    $('form').submit();
+                })
+            });
         });
     </script>
     
