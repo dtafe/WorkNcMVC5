@@ -112,16 +112,11 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 listFactory = db.WorkNC_Factory.ToList();
                 listMachine = db.WorkNC_Machine.ToList();
             }
-            if (workzoneId == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             WorkNC_WorkZone workZone = db.WorkNC_WorkZone.Find(workzoneId); 
 
             //fill to DropdownList
             ViewBag.Factory = new SelectList(listFactory.OrderBy(n => n.Name), "FactoryId", "Name");
             ViewBag.Machine = new SelectList(listMachine.OrderBy(n => n.Name), "MachineId", "Name");
-
-            if (workZone == null)
-                return HttpNotFound();
             return View(workZone);
         }
 

@@ -226,6 +226,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\SearchUsername.cs" />
+    <Compile Include="ViewModel\SetAppPermission.cs" />
+    <Compile Include="ViewModel\SetEmailConfirmed.cs" />
+    <Compile Include="ViewModel\SetWebPermission.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

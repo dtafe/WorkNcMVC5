@@ -10,10 +10,10 @@
 
 @Html.Action("Search", "UserPermission")
 <div>
-    <input type="checkbox" value="Online" id="lockoutUer" name="lockoutUer"/> Online
+    <input type="checkbox" value="Online" id="lockoutUer" name="lockoutUer" /> Online
 </div>
-<input type="button" value="Create" class="btn btn-success" title="Create" onclick="location.href='@Url.Action("Register","UserPermission")'"/>
-
+<input type="button" value="Create" class="btn btn-success" title="Create" onclick="location.href='@Url.Action("Register","UserPermission")'" />
+@using (Html.BeginForm()) {
 <table class="table">
     <tr class="td-border" style="background-color: green; color: white;">
         <th>
@@ -39,64 +39,101 @@
         </th>
     </tr>
 
-@foreach (var item in Model)
-{
-    using (Html.BeginForm())
+    @foreach (var item in Model)
     {
-    <tr>
-        <td class="td-border">
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
+        
+            <tr>
+                <td class="td-border">
+                    @Html.TextBoxFor(modelItem => item.UserName, new { id= "UserName", @readonly="readonly" })
+                </td>
 
-        <td class="td-border">
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td class="td-border">
-            @if (item.EmailConfirm.Equals(true))
-            {
-                <i class="glyphicon glyphicon-ok"></i>
-            }
-            else
-            {
-                <p> </p>
-            }
-        </td>
-        <td class="td-border">
-            @if (item.EmailConfirm.Equals(true))
-            {
-                @Html.ActionLink("Approve", "Index", null, new { @id = item.UserName })
-            }
-            else
-            {
-                @Html.ActionLink("Disapprove", "Index", null, new { @id = item.UserName })
-            }
-        </td>
-        <td class="td-border">
-            @Html.Action("SetWebPermission", "UserPermission")
-        </td>
-        <td class="td-border">
-            
-                @Html.CheckBoxFor(modelItem => item.AppPermission, new { id = "AppPermission" })
-            
-        </td>
-        <td class="td-border">
-            <a>Reset Password</a>
-        </td>
-    </tr>
-        }
+                <td class="td-border">
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td class="td-border">
+                    @if (item.EmailConfirm.Equals(true))
+                    {
+                        <i class="glyphicon glyphicon-ok"></i>
+                    }
+                    else
+                    {
+                        <p> </p>
+                    }
+                </td>
+                <td class="td-border">
+                    @Html.HiddenFor(modelItem=>item.EmailConfirm, new { id= "EmailConfirm" })
+                    @if (item.EmailConfirm.Equals(true))
+                    {
+                        @Html.ActionLink("Approve", "Index", null, new { id = "EmailConfirm" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Disapprove", "Index", null, new { id = "EmailConfirm" })
+                    }
+                </td>
+                <td class="td-border">
+                    @Html.DropDownListFor(modelItem =>item.WebPermission , new SelectList(new List<Object>
+                                                                                    {
+                                                                                        new {value="", text="" },
+                                                                                        new {value="Member", text="Member" },
+                                                                                        new {value="Chief", text="Chief" }
+                                                                                    }, "value", "text", 2),
+                                                                                    htmlAttributes: new { @class = "form-control", id = "WebPermission" })
+                </td>
+                <td class="td-border">
+                    @Html.CheckBoxFor(modelItem => item.AppPermission, new { id = "AppPermission" })
+                </td>
+                <td class="td-border">
+                    <a>Reset Password</a>
+                </td>
+            </tr>
+        
     }
-
 </table>
+}
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
 @section scripts{
     <script language="javascript">
+            //Approve Email
+            $('#EmailConfirm').click(function () {
+                var users = {
+                    UserName: $('#UserName').val(),
+                    WebPermission: $('#EmailConfirm').val()
+                }
+                $.ajax({
+                    url: '/UserPermission/EmailConfirm',
+                    type: 'GET',
+                    contentType: "application/json; charset=utf-8",
+                    data: users,
+                    success: function(result) {
+                        alert('Confirm success');
+                        $(this).parent('form').submit();
+                    }
+                });
+            });
 
-        $(function () {
-            
+            //Set WebPermission
+            $("#WebPermission").change(function () {
+                var users = {
+                    UserName: $('#UserName').val(),
+                    WebPermission: $('#WebPermission').val()
+                }
+                $.ajax({
+                    type:'GET',
+                    url: '/UserPermission/SetWebPermission',
+                    contentType: "application/json; charset=utf-8",
+                    data: users,
+                    success: function(data){
+                        $(this).parent('form').submit();
+                    }
+                    
+                });
+            });
+
             //Set AppPermission
-            $('#AppPermission').change(function () {
+            $('#AppPermission').change(function () {              
                 if ($(this).is(':checked')) {
                     $('#AppPermission').prop('checked', true);
                 }
@@ -104,21 +141,26 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
                 {
                     $('#AppPermission').prop('checked', false);
                 }
-                $(this).parent('form').submit();
+                var users = {
+                    UserName: $('#UserName').val(),
+                    AppPermission: $('#AppPermission').val()
+                }
+                $.ajax({
+                    type: 'GET',
+                    url:'/UsePermission/SetAppPermission',
+                    contentType: "application/json; charset=utf-8",
+                    data: users,
+                    //dataType:'Json',
+                    success: function(data){
+                        $(this).parent('form').submit();
+                    }
+                });
             });
-
-            //Set WebPermission
-            $("#WebPermission").change(function(){
-                var foo = $(this).val();
-                alert(foo);
-                $(this).parent("form").submit();//post form
-                
-            });
-
-            //Approve
-            $('#EmailConfirm').click(function () {
-                
-            });
-        });
-    </script>    
+    </script>
 }
+
+<style>
+    input#UserName{
+        border: none;
+    }
+</style>

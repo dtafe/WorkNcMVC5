@@ -1,6 +1,6 @@
 ﻿@model WorkNCInfoService.Mvc5.Models.WorkModels.WorkNC_UserPermission
 
-@using (Html.BeginForm("SetWebPermission", "UserPermission", FormMethod.Get))
+@using (Html.BeginForm("SetWebPermission", "UserPermission", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 

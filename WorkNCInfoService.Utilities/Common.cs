@@ -211,5 +211,18 @@ namespace WorkNCInfoService.Utilities
             return string.Format("{0}/{1}_{2}/{3}_{4}/{5}_{6}/Problem", Constant.PORTAL, companyId, companyName, factoryId, factoryName, workZoneId, workZoneName); 
         }
         #endregion
+
+        public static string RandomString(int length)
+        {
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var stringChars = new char[6];
+            var random = new Random();
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+            var finalString = new String(stringChars);
+            return finalString;
+        }
     }
 }

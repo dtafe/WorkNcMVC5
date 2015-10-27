@@ -12,7 +12,7 @@ using System.Data.Entity.Validation;
 using WorkNCInfoService.Mvc5.Models.WorkModels;
 using WorkNCInfoService.Mvc5.Models;
 using WorkNCInfoService.Mvc5.ViewModel;
-
+using WorkNCInfoService.Utilities;
 
 namespace WorkNCInfoService.Mvc5.Controllers
 {
@@ -328,13 +328,15 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
+
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            
             if (result.Succeeded)
             {
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
             AddErrors(result);
-            return View();
+            return RedirectToAction("Index","UserPermission");
         }
 
         //

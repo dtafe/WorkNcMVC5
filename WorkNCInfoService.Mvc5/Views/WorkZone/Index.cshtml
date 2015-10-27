@@ -8,7 +8,7 @@
 }
 
 @Html.Action("Search", "WorkZone")
-@Html.ActionLink("Edit", "Edit", new { @id = "editWorkZone" })
+@Html.ActionLink("Edit", "Edit", null, new { id = "workzoneId" })
 @using (Html.BeginForm("Delete", "WorkZone", FormMethod.Post))
 {
 <input type="submit" value="Delete" class="btn btn-success" id="deleteWorkzone"/>
@@ -55,7 +55,7 @@
 {
     <tr class="td-border">
         <td class="td-border">
-            <input type="checkbox"  id="workzoneId" name="workzoneId" value="@item.WorkZoneId"/>
+            <input type="checkbox"  id="WorkZoneId" name="WorkZoneId" value="@item.WorkZoneId"/>
         </td>
         <td class="td-border">
             @Html.DisplayFor(modelItem => item.Name)
@@ -148,16 +148,18 @@
                         }
                     }]
                 }).show();  
-            });
+        });
+
         //edit
         $(function () {
             $('#editWorkZone').click(function () {
-                var edit = $('#editWorkZone').val();
-                $('#workzoneId').change(function () {
-                    if ($(this).is(":checked")) {
-                        var id = $('#workzoneId').val();
-                        edit = id;
-                        alert('hello');
+                $.ajax({
+                    type: 'Get',
+                    url: '/WorkZone/Edit',
+                    //dataType: 'Json',
+                    data: { workzoneId: $('#WorkZoneId').val() },
+                    success: function(result){
+                        alert('success');
                     }
                 });
             });
