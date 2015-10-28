@@ -24,7 +24,6 @@
                     $('#MachineId').append('<option value="' + value.MachineId + '">' + value.Name + '</option>');
                 });
             }
-
         });
 
     });//event change DropdownList factory

@@ -385,6 +385,7 @@
     <Content Include="Views\UserPermission\_SetAppPermission.cshtml" />
     <Content Include="Views\UserPermission\_SetWebPermission.cshtml" />
     <Content Include="Views\Home\_SetLanguage.cshtml" />
+    <Content Include="Views\Machine\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,6 +1,6 @@
 ﻿@model WorkNCInfoService.Mvc5.Models.WorkModels.WorkNC_UserPermission
 
-@using (Html.BeginForm("SetWebPermission", "UserPermission", FormMethod.Post))
+@using (Html.BeginForm("SetWebPermission", "UserPermission", FormMethod.Get))
 {
     @Html.AntiForgeryToken()
 
@@ -10,5 +10,5 @@
                                                                                         new {value="Member", text="Member" },
                                                                                         new {value="Chief", text="Chief" }
                                                                                     }, "value", "text", 2),
-                                                                                    htmlAttributes: new { @class = "form-control", id= "WebPermission" })
-}
+                                                                                    new { id = "WebPermission", onchange = "MyFunction()" })
+

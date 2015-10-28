@@ -13,7 +13,7 @@
     <input type="checkbox" value="Online" id="lockoutUer" name="lockoutUer" /> Online
 </div>
 <input type="button" value="Create" class="btn btn-success" title="Create" onclick="location.href='@Url.Action("Register","UserPermission")'" />
-@using (Html.BeginForm()) {
+
 <table class="table">
     <tr class="td-border" style="background-color: green; color: white;">
         <th>
@@ -72,31 +72,29 @@
                     }
                 </td>
                 <td class="td-border">
-                    @Html.DropDownListFor(modelItem =>item.WebPermission , new SelectList(new List<Object>
+                    @Html.DropDownListFor(modelItem => item.WebPermission, new SelectList(new List<Object>
                                                                                     {
                                                                                         new {value="", text="" },
                                                                                         new {value="Member", text="Member" },
                                                                                         new {value="Chief", text="Chief" }
                                                                                     }, "value", "text", 2),
-                                                                                    htmlAttributes: new { @class = "form-control", id = "WebPermission" })
+                                                                                    new { id = "WebPermission", onchange = "SetWebPermission()" })
                 </td>
                 <td class="td-border">
-                    @Html.CheckBoxFor(modelItem => item.AppPermission, new { id = "AppPermission" })
+                    @Html.CheckBoxFor(modelItem => item.AppPermission, new { id = "AppPermission", onclick = "SetAppPermission()" })
                 </td>
                 <td class="td-border">
                     <a>Reset Password</a>
                 </td>
             </tr>
-        
     }
 </table>
-}
+
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
 @section scripts{
     <script language="javascript">
-            //Approve Email
             $('#EmailConfirm').click(function () {
                 var users = {
                     UserName: $('#UserName').val(),
@@ -113,32 +111,31 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
                     }
                 });
             });
-
+            
             //Set WebPermission
-            $("#WebPermission").change(function () {
+            function SetWebPermission() {
                 var users = {
                     UserName: $('#UserName').val(),
                     WebPermission: $('#WebPermission').val()
                 }
                 $.ajax({
-                    type:'GET',
+                    type: 'GET',
                     url: '/UserPermission/SetWebPermission',
                     contentType: "application/json; charset=utf-8",
                     data: users,
-                    success: function(data){
+                    success: function (data) {
                         $(this).parent('form').submit();
                     }
-                    
+
                 });
-            });
+            }
 
             //Set AppPermission
-            $('#AppPermission').change(function () {              
+            function SetAppPermission() {
                 if ($(this).is(':checked')) {
                     $('#AppPermission').prop('checked', true);
                 }
-                else
-                {
+                else {
                     $('#AppPermission').prop('checked', false);
                 }
                 var users = {
@@ -147,15 +144,16 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
                 }
                 $.ajax({
                     type: 'GET',
-                    url:'/UsePermission/SetAppPermission',
+                    url: '/UsePermission/SetAppPermission',
                     contentType: "application/json; charset=utf-8",
                     data: users,
                     //dataType:'Json',
-                    success: function(data){
+                    success: function (data) {
                         $(this).parent('form').submit();
                     }
                 });
-            });
+            }
+            //Approve Email
     </script>
 }
 

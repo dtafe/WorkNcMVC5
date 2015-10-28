@@ -76,7 +76,55 @@ namespace WorkNCInfoService.Mvc5.Controllers
             return View(machine.Where(n=>n.isDeleted.Equals(isDeleted)).ToPagedList(pageNumber, pageSize));
         }
 
-        // GET: Machine/Details/5
+        public ActionResult GetAllMachines(int? factoryId, string name, bool? isDeleted)
+        {
+
+            var machine = from s in db.WorkNC_Machine select s;
+            if (factoryId!=null)
+            {
+                if(isDeleted==true)
+                {
+                    machine  = machine.Where(n => n.FactoryId == factoryId);
+                    return Json(machine, JsonRequestBehavior.AllowGet);
+                }
+                if(isDeleted==false)
+                {
+                    machine = machine.Where(n => n.FactoryId == factoryId && n.isDeleted.Equals(false));
+                    return Json(machine, JsonRequestBehavior.AllowGet);
+                }
+            }
+            if(!String.IsNullOrEmpty(name))
+            {
+                if (isDeleted == true)
+                {
+                    machine = machine.Where(n => n.Name.Contains(name));
+                    return Json(machine, JsonRequestBehavior.AllowGet);
+                }
+                   
+                if (isDeleted == false)
+                {
+                    machine = machine.Where(n => n.Name.Contains(name) && n.isDeleted.Equals(false));
+                    return Json(machine, JsonRequestBehavior.AllowGet);
+                }
+                    
+            }
+            if(isDeleted==false)
+            {
+                machine = machine.Where(n=>n.isDeleted.Equals(false)).OrderBy(n=>n.Name);
+                return Json(machine, JsonRequestBehavior.AllowGet);
+            }
+            if(isDeleted==true)
+            {
+                machine = machine.OrderBy(n => n.Name);
+                return Json(machine, JsonRequestBehavior.AllowGet);
+            }
+            return Json(machine.Select(n=> new { n.No, n.Name, n.isDeleted}).OrderBy(n=>n.Name), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult List()
+        {
+            return View();
+        }
+        // GET: Machiner/Details/5
         public ActionResult Details(int id)
         {
             return View();

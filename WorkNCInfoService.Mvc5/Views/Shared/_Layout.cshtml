@@ -6,7 +6,6 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
 
     @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/jqueryui")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
@@ -83,10 +82,6 @@
     @Scripts.Render("~/bundles/jquery")    
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryui")
-    @* Add Angular Library Here *@
-    @*@Scripts.Render("~/bundles/angular")
-    <script src="~/Scripts/MyApp.js"></script>
-    <script src="~/Scripts/AngularController/CascadingController.js"></script>*@
     @RenderSection("scripts", required: false)
     <script src="~/Scripts/cascading.js"></script>
     <script language="javascript">
@@ -117,12 +112,10 @@
             });
 
             //choose language
-            $(function () {
-                $('.culture').click(function () {
-                    $('#culture').val($(this).data('culture')); // update the hidden input
-                    $('form').submit();
-                })
-            });
+            $('.culture').click(function () {
+                $('#culture').val($(this).data('culture')); // update the hidden input
+                $('form').submit();
+            })
         });
     </script>
     

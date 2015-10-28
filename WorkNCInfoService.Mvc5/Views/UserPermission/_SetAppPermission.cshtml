@@ -1,6 +1,6 @@
 ﻿@model WorkNCInfoService.Mvc5.Models.WorkModels.WorkNC_UserPermission
 
-@using (Html.BeginForm("SetAppPermission", "UserPermission", FormMethod.Post))
+@using (Html.BeginForm("SetAppPermission", "UserPermission", FormMethod.Get))
 {
     @Html.HiddenFor(model => model.Username)
     @Html.CheckBoxFor(model => model.AppPermission, new { id= "AppPermission" })

@@ -1,0 +1,163 @@
+﻿@model IEnumerable<WorkNCInfoService.Mvc5.Models.WorkModels.WorkNC_Machine>
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Action("SearchMachine", "Machine")
+<div>
+    <table id="tblMachines" class="simpleTable table">
+        <tr class="td-border" style="background-color: green; color: white;">
+            <th>&nbsp;</th>
+            <th><a id="lnkMachineNo" href="#">No</a></th>
+            <th><a id="lnkMachineName" href="#">Name</a></th>
+            <th>Status</th>
+        </tr>
+    </table>
+</div>
+
+@section scripts{
+    <script language="javascript">
+        // Global variable for table data
+        var tableData = null;
+
+        $(document).ready(function () {
+            // Populate categories when the page is loaded.
+            $.getJSON('/Machine/GetAllMachines', function (data) {
+                // Populate table from Json data returned from server.
+                PopulateTable(data, 1);
+                tableData = data.slice(0);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                // Ajax fail callback function.
+                alert('Error getting machines!');
+            });
+
+            //click button search
+            $('#btnSearchMachine').click(function (e) {
+                $.getJSON('/Machine/GetAllMachines', function (data) {
+                    // Populate table from Json data returned from server.
+                    PopulateTable(data, 1);
+                    tableData = data.slice(0);
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    // Ajax fail callback function.
+                    alert('Error getting machines!');
+                });
+            });
+
+            //checked checkbox Deleted
+            $('#isDeleted').change(function (e) {
+                debugger;
+                if ($(this).is(":checked")) {
+                    $('#isDeleted').prop('checked', true);
+                    
+                }
+                else {
+                    $('#isDeleted').prop('checked', false);
+                }
+                
+                $.getJSON('/Machine/GetAllMachines', function (data) {
+                    // Populate table from Json data returned from server.
+                    PopulateTable(data, 1);
+                    tableData = data.slice(0);
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    // Ajax fail callback function.
+                    alert('Error getting machines!');
+                });
+            });
+            // Link machine No click event handler
+            $('#lnkMachineNo').click(function (e) {
+                e.preventDefault();
+                if (tableData != null) {
+                    // Sort data
+                    tableData.sort(function (a, b) {
+                        return a.No <= b.No ? -1 : 1;
+                    });
+                    PopulateTable(tableData, 1);
+                }
+            });
+
+            // Link machine Name click event handler
+            $('#lnkMachineName').click(function (e) {
+                e.preventDefault();
+                if (tableData != null) {
+                    // Sort data
+                    tableData.sort(function (a, b) {
+                        return a.Name <= b.Name ? -1 : 1;
+                    });
+                    PopulateTable(tableData, 1);
+                }
+            });
+        });
+
+        
+
+        // Populate table with pager.
+        // Parameters
+        // arrData - table data
+        // pageNum - table page number
+        function PopulateTable(arrData, pageNum) {
+            var rowsPerPage = 4;
+            var pages;
+            var i;
+            var pager = '';
+            var startIndex;
+            var endIndex;
+            var row;
+
+            $('#tblMachines tr:gt(0)').remove();
+            if (arrData != null) {
+                // Populate table with data in the current page.
+                startIndex = (pageNum - 1) * rowsPerPage;
+                endIndex = pageNum * rowsPerPage > arrData.length ?
+                arrData.length - 1 : pageNum * rowsPerPage - 1;
+                for (i = startIndex; i <= endIndex; i++) {
+                    row = '<tr><td class="td-border">' + "<input type='checkbox' id='chkMachine' value='arrData[i].MachineId'></input>" + '</td>'
+                        + '<td class="td-border">' + arrData[i].No + '</td>'
+                        + '<td class="td-border">' + arrData[i].Name + '</td>'
+                        + '<td class="td-border">' + arrData[i].isDeleted + '</td></tr>';
+                    $('#tblMachines').append(row);
+                }
+
+                // Show pager row if there is more than one page
+                pages = Math.floor(arrData.length / rowsPerPage);
+                if (pages < arrData.length / rowsPerPage) {
+                    pages += 1;
+                }
+                if (pages > 1) {
+                    for (i = 0; i < pages; i++) {
+                        if (i == pageNum - 1) {
+                            pager += '<span class="pager">' + (i + 1) + '</span>';
+                        }
+                        else {
+                            pager += '<span><a href="#">' + (i + 1) + '</a></span>'
+                        }
+                    }
+                    pager = '<tr><td colspan="4" class="pagerRow td-border">' +
+                    pager + '</td></tr>';
+                    $('#tblMachines').append(pager);
+
+                    // Pager link event handler
+                    $('#tblMachines tr td.pagerRow a').click(function (e) {
+                        e.preventDefault();
+                        var pNum = parseInt($(this).text());
+                        PopulateTable(tableData, pNum);
+                    });
+                }
+            }
+        }
+    </script>
+}
+
+<style>
+    .pager{
+        background-color: forestgreen;
+        display: inline-block;
+        margin: 0 5px;
+        padding: 0 5px;
+        color: white;
+    }
+    td.pagerRow a{
+        color: forestgreen;
+        font-weight: bold;
+    }
+</style>
