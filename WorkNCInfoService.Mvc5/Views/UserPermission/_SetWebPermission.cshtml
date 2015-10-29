@@ -2,13 +2,12 @@
 
 @using (Html.BeginForm("SetWebPermission", "UserPermission", FormMethod.Get))
 {
-    @Html.AntiForgeryToken()
-
+    
     @Html.DropDownListFor(model => model.WebPermission, new SelectList(new List<Object>
                                                                                     {
                                                                                         new {value="", text="" },
                                                                                         new {value="Member", text="Member" },
                                                                                         new {value="Chief", text="Chief" }
                                                                                     }, "value", "text", 2),
-                                                                                    new { id = "WebPermission", onchange = "MyFunction()" })
-
+                                                                                        new { id = "WebPermission", onchange = "SetWebPermission()" })
+}

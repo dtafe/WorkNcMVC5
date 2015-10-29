@@ -8,7 +8,7 @@
 }
 
 @Html.Action("Search", "WorkZone")
-@Html.ActionLink("Edit", "Edit", null, new { id = "workzoneId" })
+@Html.ActionLink("Edit", "Edit", new { @id=ViewBag.WorkZoneID })
 @using (Html.BeginForm("Delete", "WorkZone", FormMethod.Post))
 {
 <input type="submit" value="Delete" class="btn btn-success" id="deleteWorkzone"/>
@@ -151,18 +151,18 @@
         });
 
         //edit
-        $(function () {
-            $('#editWorkZone').click(function () {
-                $.ajax({
-                    type: 'Get',
-                    url: '/WorkZone/Edit',
-                    //dataType: 'Json',
-                    data: { workzoneId: $('#WorkZoneId').val() },
-                    success: function(result){
-                        alert('success');
-                    }
-                });
+
+        function LinkToEdit() {
+
+            $.ajax({
+                type: 'Get',
+                url: '/WorkZone/Edit',
+                //dataType: 'Json',
+                data: { workzoneId: $('#WorkZoneId').val() },
+                success: function (result) {
+                    alert('success');
+                }
             });
-        });
+        }         
     </script>    
 }

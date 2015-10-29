@@ -78,16 +78,18 @@ namespace WorkNCInfoService.Mvc5.Controllers
             {
                 return View(model);
             }
-
+            
             // Require the user to have a confirmed email before they can log on.
             var user = await UserManager.FindByEmailAsync(model.UserName);
-            if(user!=null)
+            if (user!=null)
             {
+                
                 if (!await UserManager.IsEmailConfirmedAsync(user.Id))
                 {
                     string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
                     ViewBag.errorMessage = "you must have a confirmed email to log on." 
                         + "The confirmation token has been resent to your email account.";
+                   
                     return View("Error");
                 }
             }
@@ -98,6 +100,16 @@ namespace WorkNCInfoService.Mvc5.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    var applicationUser = await UserManager.FindByNameAsync(model.UserName);
+                    if (applicationUser != null)
+                    {
+                        AspNetUser aspnetUser = new AspNetUser();
+                        aspnetUser.Id = applicationUser.Id;
+                        var userLogin = db.AspNetUsers.Find(aspnetUser.Id);
+                        userLogin.LockoutEnabled = false;
+                        db.Entry(userLogin).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -108,6 +120,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
+            
         }
 
         //
@@ -465,9 +478,20 @@ namespace WorkNCInfoService.Mvc5.Controllers
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LogOff()
+        public async Task<ActionResult> LogOff(LoginViewModel model)
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            var applicationUser = await UserManager.FindByNameAsync(User.Identity.Name);
+            if (applicationUser != null)
+            {
+                AspNetUser aspnetUser = new AspNetUser();
+                aspnetUser.Id = applicationUser.Id;
+                var userLogin = db.AspNetUsers.Find(aspnetUser.Id);
+                userLogin.LockoutEnabled = true;
+                db.Entry(userLogin).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }           
+
             return RedirectToAction("Index", "Home");
         }
 

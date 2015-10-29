@@ -2,6 +2,6 @@
 
 @using (Html.BeginForm("SetAppPermission", "UserPermission", FormMethod.Get))
 {
-    @Html.HiddenFor(model => model.Username)
+    @Html.HiddenFor(model => model.Username, new { id="UserName"})
     @Html.CheckBoxFor(model => model.AppPermission, new { id= "AppPermission" })
 }

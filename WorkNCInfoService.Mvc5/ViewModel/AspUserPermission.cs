@@ -13,5 +13,6 @@ namespace WorkNCInfoService.Mvc5.ViewModel
         public bool EmailConfirm { get; set; }
         public string WebPermission { get; set; }
         public bool AppPermission { get; set; }
+        public bool LockoutEnable { get; set; }
     }
 }
