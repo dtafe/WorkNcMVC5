@@ -7,7 +7,7 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
     using System.Data.Entity.Spatial;
 
     [Table("WorkNC_WorkZoneDetail")]
-    public partial class WorkNC_WorkZoneDetail
+    public partial class WorkNC_WorkZoneDetail : WorkNcBaseClass
     {
         [Key]
         [Column(Order = 0)]
@@ -83,17 +83,5 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
         [StringLength(250)]
         [Display(Name = "Image File")]
         public string ImageFile { get; set; }
-
-        public DateTime CreateDate { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string CreateAccount { get; set; }
-
-        public DateTime ModifiedDate { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string ModifiedAccount { get; set; }
     }
 }

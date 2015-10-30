@@ -6,7 +6,7 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
     [Table("WorkNC_Company")]
-    public partial class WorkNC_Company
+    public partial class WorkNC_Company : WorkNcBaseClass
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -35,16 +35,5 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
 
         public bool isDeleted { get; set; }
 
-        public DateTime CreateDate { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string CreateAccount { get; set; }
-
-        public DateTime ModifiedDate { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string ModifiedAccount { get; set; }
     }
 }

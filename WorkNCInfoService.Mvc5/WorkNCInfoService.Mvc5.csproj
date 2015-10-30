@@ -207,10 +207,8 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ImageGallery.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\WorkModels\AspNetRole.cs" />
     <Compile Include="Models\WorkModels\AspNetUser.cs" />
-    <Compile Include="Models\WorkModels\AspNetUserClaim.cs" />
-    <Compile Include="Models\WorkModels\AspNetUserLogin.cs" />
+    <Compile Include="Models\WorkModels\WorkNcBaseClass.cs" />
     <Compile Include="ViewModel\AspUserPermission.cs" />
     <Compile Include="ViewModel\RegisterAccount.cs" />
     <Compile Include="Models\WorkModels\WorkNCDbContext.cs" />
@@ -377,7 +375,6 @@
     <Content Include="Views\UserPermission\_SearchUser.cshtml" />
     <Content Include="Views\UserPermission\_WebPermission.cshtml" />
     <Content Include="Views\Shared\_CompanyPartial.cshtml" />
-    <Content Include="Views\Company\_CompanyDropdown.cshtml" />
     <Content Include="Views\Company\_SearchCompany.cshtml" />
     <Content Include="Views\Shared\Info.cshtml" />
     <Content Include="Views\UserPermission\Index.cshtml" />

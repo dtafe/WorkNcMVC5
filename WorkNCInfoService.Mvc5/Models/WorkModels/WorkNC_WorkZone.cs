@@ -8,7 +8,7 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
     
 
     [Table("WorkNC_WorkZone")]
-    public partial class WorkNC_WorkZone
+    public partial class WorkNC_WorkZone : WorkNcBaseClass
     {
         [Key]
         public int WorkZoneId { get; set; }
@@ -77,21 +77,5 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
         [StringLength(250)]
         [Display(Name = "Image File")]
         public string ImageFile { get; set; }
-
-        [Display(Name = "Create Date")]
-        public DateTime CreateDate { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        [Display(Name = "Create Account")]
-        public string CreateAccount { get; set; }
-
-        [Display(Name = "Modified Date")]
-        public DateTime ModifiedDate { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        [Display(Name = "Modified Account")]
-        public string ModifiedAccount { get; set; }
     }
 }

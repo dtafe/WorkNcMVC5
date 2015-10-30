@@ -6,7 +6,7 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
     [Table("WorkNC_Machine")]
-    public partial class WorkNC_Machine
+    public partial class WorkNC_Machine : WorkNcBaseClass
     {
         [Key]
         public int MachineId { get; set; }
@@ -22,17 +22,5 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
         public string Name { get; set; }
 
         public bool isDeleted { get; set; }
-
-        public DateTime CreateDate { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string CreateAccount { get; set; }
-
-        public DateTime ModifiedDate { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string ModifiedAccount { get; set; }
     }
 }

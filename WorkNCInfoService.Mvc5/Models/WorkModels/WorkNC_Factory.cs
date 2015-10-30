@@ -6,7 +6,7 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
     [Table("WorkNC_Factory")]
-    public partial class WorkNC_Factory
+    public partial class WorkNC_Factory : WorkNcBaseClass
     {
         [Key]
         public int FactoryId { get; set; }
@@ -24,17 +24,5 @@ namespace WorkNCInfoService.Mvc5.Models.WorkModels
 
         [StringLength(250)]
         public string ImageFile { get; set; }
-
-        public DateTime CreateDate { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string CreateAccount { get; set; }
-
-        public DateTime ModifiedDate { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string ModifiedAccount { get; set; }
     }
 }

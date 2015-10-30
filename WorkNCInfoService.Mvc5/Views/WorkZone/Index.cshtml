@@ -8,7 +8,7 @@
 }
 
 @Html.Action("Search", "WorkZone")
-@Html.ActionLink("Edit", "Edit", new { @id=ViewBag.WorkZoneID })
+<button class="btn btn-success">@Html.ActionLink("Edit", "Edit", new { @onclick = "LinkToEdit()" })</button>
 @using (Html.BeginForm("Delete", "WorkZone", FormMethod.Post))
 {
 <input type="submit" value="Delete" class="btn btn-success" id="deleteWorkzone"/>
@@ -53,9 +53,9 @@
 
 @foreach (var item in Model)
 {
-    <tr class="td-border">
+    <tr class="td-border" id="Row@{@item.WorkZoneId} ">
         <td class="td-border">
-            <input type="checkbox"  id="WorkZoneId" name="WorkZoneId" value="@item.WorkZoneId"/>
+            <input type="checkbox" class="WorkZoneId"  id="@item.WorkZoneId" name="WorkZoneId" value="@item.WorkZoneId"/>
         </td>
         <td class="td-border">
             @Html.DisplayFor(modelItem => item.Name)
@@ -153,16 +153,19 @@
         //edit
 
         function LinkToEdit() {
-
-            $.ajax({
-                type: 'Get',
-                url: '/WorkZone/Edit',
-                //dataType: 'Json',
-                data: { workzoneId: $('#WorkZoneId').val() },
-                success: function (result) {
-                    alert('success');
-                }
+            debugger;
+            $('.WorkZoneId').live('click', function () {
+                $.ajax({
+                    type: 'Get',
+                    url: '/WorkZone/Edit',
+                    //dataType: 'Json',
+                    data: { workzoneId: $(this).attr(':checked') },
+                    success: function (result) {
+                        alert('success');
+                    }
+                });
             });
+            
         }         
     </script>    
 }

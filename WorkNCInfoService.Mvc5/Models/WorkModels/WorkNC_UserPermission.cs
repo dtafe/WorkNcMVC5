@@ -6,7 +6,7 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class WorkNC_UserPermission
+    public partial class WorkNC_UserPermission: WorkNcBaseClass
     {
         [Key]
         [StringLength(20)]
@@ -26,18 +26,5 @@
         [Display(Name = "App Permission")]
         public bool AppPermission { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime CreateDate { get; set; }
-
-
-        [StringLength(50)]
-        public string CreateAccount { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime ModifiedDate { get; set; }
-
-
-        [StringLength(50)]
-        public string ModifiedAccount { get; set; }
     }
 }

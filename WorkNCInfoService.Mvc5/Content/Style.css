@@ -32,8 +32,8 @@
     .navbar a{
         color: white;
     }
-    ul.nav > li:hover{
-      background-color: rgba(0,0,0,0.1) !important;
+    ul.nav li a:hover, ul.nav li a:visited{
+      background-color: rgba(0,0,0,0.5) !important;
     }
 .nav-color{
     background-color: green !important;

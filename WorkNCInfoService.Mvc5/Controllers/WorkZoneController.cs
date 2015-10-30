@@ -10,6 +10,7 @@ using PagedList.Mvc;
 using WorkNCInfoService.Mvc5.Models.WorkModels;
 using WorkNCInfoService.Mvc5.ViewModel;
 using WorkNCInfoService.Utilities;
+using System.IO;
 
 namespace WorkNCInfoService.Mvc5.Controllers
 {
@@ -17,6 +18,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
     {
         private const int pageSize = 10;
         WorkNCDbContext db = new WorkNCDbContext();
+        
         // GET: WorkZone
         public ActionResult Index(int? page)
         {
@@ -122,7 +124,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
 
         // POST: WorkZone/Edit/5
         [HttpPost]
-        public ActionResult Edit(WorkNC_WorkZone workZone)
+        public ActionResult Edit(WorkNC_WorkZone workZone, HttpPostedFileBase upload)
         {
             List<WorkNC_Factory> listFactory = new List<WorkNC_Factory>();
             List<WorkNC_Machine> listMachine = new List<WorkNC_Machine>();
@@ -138,6 +140,10 @@ namespace WorkNCInfoService.Mvc5.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if(upload!=null && upload.ContentLength>0)
+                    {
+                        
+                    }
                     //workZone.FactoryId = ViewBag.Factory("Name");
                     workZone.ModifiedDate = DateTime.Now;
                     workZone.ModifiedAccount = User.Identity.Name;
@@ -147,8 +153,9 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 }
                 return View(workZone);
             }
-            catch
+            catch(Exception e)
             {
+                ModelState.AddModelError("error", e);
                 return View();
             }
         }
