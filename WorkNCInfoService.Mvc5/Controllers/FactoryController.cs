@@ -18,6 +18,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
         // GET: Factory
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, bool isDeleted=false, int? page=1)
         {
+            int companyId =  Convert.ToInt32(Request.Cookies["cookieCompany"].Value);
             int pageNumber = (page ?? 1);
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
@@ -52,16 +53,14 @@ namespace WorkNCInfoService.Mvc5.Controllers
             {
                 if(isDeleted == false)
                 {
-                    return View(factory.Where(n => n.Name.Contains(searchString) && n.isDeleted.Equals(false)).ToPagedList(pageNumber, pageSize));
+                    return View(factory.Where(n => n.Name.Contains(searchString) && n.isDeleted.Equals(false) && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
                 }
                 if(isDeleted == true)
                 {
-                    return View(factory.Where(n => n.Name.Contains(searchString)).ToPagedList(pageNumber, pageSize));
+                    return View(factory.Where(n => n.Name.Contains(searchString) && n.CompanyId==companyId).ToPagedList(pageNumber, pageSize));
                 }
             }
- 
-            
-            return View(factory.Where(n =>n.isDeleted.Equals(isDeleted)).ToPagedList(pageNumber, pageSize));
+            return View(factory.Where(n =>n.isDeleted.Equals(isDeleted) && n.CompanyId==companyId).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Factory/Details/5
@@ -73,8 +72,14 @@ namespace WorkNCInfoService.Mvc5.Controllers
         // GET: Factory/Create
         public ActionResult Create()
         {
-            return View();
 
+            List<WorkNC_Company> listCompany = new List<WorkNC_Company>();
+            using (WorkNCDbContext db = new WorkNCDbContext())
+            {
+                listCompany = db.WorkNC_Company.ToList();
+            }
+            ViewBag.Company = new SelectList(listCompany, "CompanyId", "CompanyName");
+            return View();
         }
 
         // POST: Factory/Create
@@ -85,8 +90,10 @@ namespace WorkNCInfoService.Mvc5.Controllers
             {
                 if(ModelState.IsValid)
                 {
+                    factory.ModifiedAccount = User.Identity.Name;
+                    factory.ModifiedDate = DateTime.Now;
                     factory.CreateDate = DateTime.Now;
-                    //factory.CreateAccount = User.Identity.Name;
+                    factory.CreateAccount = User.Identity.Name;
                     db.Entry(factory).State = EntityState.Added;
                     db.SaveChanges();
                     return RedirectToAction("Index");

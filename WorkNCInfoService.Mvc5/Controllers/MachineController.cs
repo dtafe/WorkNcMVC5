@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using PagedList;
 using PagedList.Mvc;
 using WorkNCInfoService.Mvc5.Models.WorkModels;
+using WorkNCInfoService.Mvc5.ViewModel;
 
 namespace WorkNCInfoService.Mvc5.Controllers
 {
@@ -76,44 +77,43 @@ namespace WorkNCInfoService.Mvc5.Controllers
             return View(machine.Where(n=>n.isDeleted.Equals(isDeleted)).ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult GetAllMachines(int? factoryId, string name, bool? isDeleted)
+        public ActionResult GetAllMachines(SearchMachines searchMachines)
         {
 
             var machine = from s in db.WorkNC_Machine select s;
-            if (factoryId!=null)
+            if (searchMachines.FacrotyId!= 0)
             {
-                if(isDeleted==true)
+                if(searchMachines.isDeleted == true)
                 {
-                    machine  = machine.Where(n => n.FactoryId == factoryId);
                     return Json(machine, JsonRequestBehavior.AllowGet);
                 }
-                if(isDeleted==false)
+                if(searchMachines.isDeleted == false)
                 {
-                    machine = machine.Where(n => n.FactoryId == factoryId && n.isDeleted.Equals(false));
+                    machine = machine.Where(n => n.FactoryId == searchMachines.FacrotyId && n.isDeleted.Equals(false));
                     return Json(machine, JsonRequestBehavior.AllowGet);
                 }
             }
-            if(!String.IsNullOrEmpty(name))
+            if(!String.IsNullOrEmpty(searchMachines.Name))
             {
-                if (isDeleted == true)
+                if (searchMachines.isDeleted == true)
                 {
-                    machine = machine.Where(n => n.Name.Contains(name));
+                    machine = machine.Where(n => n.Name.Contains(searchMachines.Name));
                     return Json(machine, JsonRequestBehavior.AllowGet);
                 }
                    
-                if (isDeleted == false)
+                if (searchMachines.isDeleted == false)
                 {
-                    machine = machine.Where(n => n.Name.Contains(name) && n.isDeleted.Equals(false));
+                    machine = machine.Where(n => n.Name.Contains(searchMachines.Name) && n.isDeleted.Equals(false));
                     return Json(machine, JsonRequestBehavior.AllowGet);
                 }
                     
             }
-            if(isDeleted==false)
+            if(searchMachines.isDeleted == false)
             {
                 machine = machine.Where(n=>n.isDeleted.Equals(false)).OrderBy(n=>n.Name);
                 return Json(machine, JsonRequestBehavior.AllowGet);
             }
-            if(isDeleted==true)
+            if(searchMachines.isDeleted == true)
             {
                 machine = machine.OrderBy(n => n.Name);
                 return Json(machine, JsonRequestBehavior.AllowGet);

@@ -10,10 +10,11 @@ namespace WorkNCInfoService.Mvc5.Controllers
     public class HomeController : Controller
     {
         private static log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        //InitLanguage();
-        //Initialize();
+        
         public ActionResult Index()
         {
+            //InitLanguage();
+            //Initialize();
             return View();
         }
 
@@ -45,7 +46,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 cookie.Expires = DateTime.Now.AddYears(1);
             }
             Response.Cookies.Add(cookie);
-            return RedirectToAction("Index");
+            return Redirect(Request.UrlReferrer.ToString());
         }
         public ActionResult SetLanguage()
         {

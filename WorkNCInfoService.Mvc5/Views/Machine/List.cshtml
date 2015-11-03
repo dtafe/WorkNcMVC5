@@ -21,9 +21,10 @@
         // Global variable for table data
         var tableData = null;
 
-        $(document).ready(function () {
+        function LoadTable() {
             // Populate categories when the page is loaded.
             $.getJSON('/Machine/GetAllMachines', function (data) {
+                debugger;
                 // Populate table from Json data returned from server.
                 PopulateTable(data, 1);
                 tableData = data.slice(0);
@@ -31,39 +32,49 @@
                 // Ajax fail callback function.
                 alert('Error getting machines!');
             });
+        }
 
-            //click button search
-            $('#btnSearchMachine').click(function (e) {
-                $.getJSON('/Machine/GetAllMachines', function (data) {
-                    // Populate table from Json data returned from server.
-                    PopulateTable(data, 1);
-                    tableData = data.slice(0);
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                    // Ajax fail callback function.
-                    alert('Error getting machines!');
+        function SearchTable() {
+            e.preventDefault();
+            if (tableData != null) {
+                // Sort data
+                tableData.sort(function (a, b) {
+                    return a.No <= b.No ? -1 : 1;
                 });
-            });
+                PopulateTable(tableData, 1);
+            }
+        }
 
+        //isDeleted checkbox checked 
+        function CheckedStatus()
+        {
+            $.ajax({
+                type: 'GET',
+                src: 'Machine/GetAllMachines',
+                dataType: 'Json',
+                data: { isDeleted: $('#isDeleted').val() },
+                success: function (data) {
+                    response = jQuery.parseJSON(data);
+                    LoadTable();
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            LoadTable();
             //checked checkbox Deleted
             $('#isDeleted').change(function (e) {
-                debugger;
+                e.preventDefault();
                 if ($(this).is(":checked")) {
-                    $('#isDeleted').prop('checked', true);
-                    
+                    $(e).prop('checked', true);
+                    LoadTable();
                 }
                 else {
-                    $('#isDeleted').prop('checked', false);
-                }
-                
-                $.getJSON('/Machine/GetAllMachines', function (data) {
-                    // Populate table from Json data returned from server.
-                    PopulateTable(data, 1);
-                    tableData = data.slice(0);
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                    // Ajax fail callback function.
-                    alert('Error getting machines!');
-                });
+                    $(e).prop('checked', false);
+                    LoadTable();
+                }             
             });
+
             // Link machine No click event handler
             $('#lnkMachineNo').click(function (e) {
                 e.preventDefault();
@@ -88,9 +99,25 @@
                 }
             });
         });
+        function SearchMachine() {
+            var searchMachines = {
+                FactoryId: $('#factoryId').val(),
+                Name: $('#machineName').val(),
+                isDeleted: $('#isDeleted').val()
+            }
+            $.ajax({
+                type: 'GET',
+                url: '/Machine/GetAllMachines',
+                typeData: 'Json',
+                contentType: "application/json; charset=utf-8",
+                data: searchMachines,
+                success: function (data) {
+                    response = jQuery.parseJSON(data);
+                    
+                }
 
-        
-
+            });
+        }
         // Populate table with pager.
         // Parameters
         // arrData - table data

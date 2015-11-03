@@ -8,7 +8,7 @@
 }
 
 @Html.Action("Search", "WorkZone")
-<button class="btn btn-success">@Html.ActionLink("Edit", "Edit", new { @onclick = "LinkToEdit()" })</button>
+<button class="btn btn-success">@Html.ActionLink("Edit", "Edit", null, new { id = "workZone" })</button>
 @using (Html.BeginForm("Delete", "WorkZone", FormMethod.Post))
 {
 <input type="submit" value="Delete" class="btn btn-success" id="deleteWorkzone"/>
@@ -55,7 +55,7 @@
 {
     <tr class="td-border" id="Row@{@item.WorkZoneId} ">
         <td class="td-border">
-            <input type="checkbox" class="WorkZoneId"  id="@item.WorkZoneId" name="WorkZoneId" value="@item.WorkZoneId"/>
+            <input type="checkbox" id="WorkZoneId" name="WorkZoneId" value="@item.WorkZoneId"/>
         </td>
         <td class="td-border">
             @Html.DisplayFor(modelItem => item.Name)
@@ -102,9 +102,9 @@
             }
         </td>
         <td class="td-border">
-            @Html.ActionLink("Edit", "Edit", new { workzoneId = item.WorkZoneId })
-            @Html.ActionLink("Details", "Details", new { workzoneId = item.WorkZoneId })
-            @Html.ActionLink("Delete", "Delete", new { workzoneId = item.WorkZoneId })
+            @Html.ActionLink("Edit", "Edit", new { id = item.WorkZoneId })
+            @Html.ActionLink("Details", "Details", new { id = item.WorkZoneId })
+            @Html.ActionLink("Delete", "Delete", new { id = item.WorkZoneId })
         </td>
     </tr>
 }
@@ -128,7 +128,7 @@
 </style>
 @section scripts{
     <script language="javascript">
-        //show dialog before delete 
+        //show dialog before delete
         $('#deleteWorkzone').bind('click', function (ev) {
                 var $btn = $(this);
                 ev.preventDefault();
@@ -147,10 +147,11 @@
                             $(this).dialog("close");
                         }
                     }]
-                }).show();  
+                }).show();
         });
 
         //edit
+        
 
         function LinkToEdit() {
             debugger;
@@ -165,7 +166,7 @@
                     }
                 });
             });
-            
-        }         
+
+        }
     </script>    
 }

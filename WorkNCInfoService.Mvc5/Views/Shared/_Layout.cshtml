@@ -26,7 +26,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "WorkZone")</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Work Zone", "Index", "WorkZone")</li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Master <span class="caret"></span></a>
@@ -61,7 +61,7 @@
                 </ul>
                 @if (!string.IsNullOrEmpty(User.Identity.Name))
                 {
-                    @Html.Action("CompanyDropdown", "Company")
+                    @Html.Action("CompanyDropdown", "Company", new { companyId =ViewBag.Company })
                 }
                 @Html.Partial("_LoginPartial")
             </div>
@@ -86,6 +86,17 @@
     @RenderSection("scripts", required: false)
     <script src="~/Scripts/cascading.js"></script>
     <script language="javascript">
+        function ChangeDropdownCompany() {
+            $.ajax({
+                type: 'GET',
+                url: '/Company/ChangeDropdownCompany',
+                data: { companyId: $('#dopdownCompanyId').val() },
+                success: function (data) {
+                    //$('form').submit();
+
+                }
+            });
+        }
         $(function () {
             //jQuery date Timepicker
             $('#StartDate').datepicker({

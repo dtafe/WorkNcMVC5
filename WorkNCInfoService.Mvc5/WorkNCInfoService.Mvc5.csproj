@@ -218,8 +218,9 @@
     <Compile Include="Models\WorkModels\WorkNC_WorkZone.cs" />
     <Compile Include="Models\WorkModels\WorkNC_WorkZoneDetail.cs" />
     <Compile Include="Models\WorkModels\WorkNC_WorkZoneDetailProblem.cs" />
-    <Compile Include="ViewModel\SearchChecked.cs" />
-    <Compile Include="ViewModel\SearchDate.cs" />
+    <Compile Include="ViewModel\SearchFactory.cs" />
+    <Compile Include="ViewModel\SearchMachines.cs" />
+    <Compile Include="ViewModel\SearchWorkZone.cs" />
     <Compile Include="Models\WorkModels\WorkNC_Company.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

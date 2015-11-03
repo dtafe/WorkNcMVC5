@@ -151,13 +151,35 @@ namespace WorkNCInfoService.Mvc5.Controllers
                         list = db.WorkNC_Company.Where(n => n.CompanyId == user.CompanyId && n.isDeleted == false).ToList();
                     }
                 }
-                
+                HttpCookie cookie = Request.Cookies["cookieCompany"];
+                if (cookie != null)
+                {
+                    //CompanyId = cookie.Value();
+                }
                 ViewBag.Company = new SelectList(list.OrderBy(n => n.CompanyName), "CompanyId", "CompanyName");
-
+                
             }
 
             return PartialView("_CompanyPartial");
+        }
 
+        //change dropdownList Company 
+        public ActionResult ChangeDropdownCompany(int companyId)
+        {
+            if (!string.IsNullOrEmpty(User.Identity.Name))
+            {
+                var user = (from f in db.WorkNC_UserPermission
+                            where f.Username == User.Identity.Name
+                            select f).FirstOrDefault();
+                HttpCookie cookie = Request.Cookies["cookieCompany"];
+                if(cookie==null)
+                {
+                    cookie = new HttpCookie("cookieCompany");
+                }
+                cookie.Value = companyId.ToString();
+                Response.SetCookie(cookie);
+            }
+            return Redirect(Request.RawUrl);
         }
     }
 }

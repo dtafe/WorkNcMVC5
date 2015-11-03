@@ -68,11 +68,11 @@ namespace WorkNCInfoService.Mvc5.Controllers
             return View(db.WorkNC_WorkZone);
         }
         // GET: WorkZone/Details/5
-        public ActionResult Details(int? workzoneId)
+        public ActionResult Details(int? id)
         {
-            if (workzoneId == null)
+            if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            WorkNC_WorkZone workZone = db.WorkNC_WorkZone.Find(workzoneId);
+            WorkNC_WorkZone workZone = db.WorkNC_WorkZone.Find(id);
             if (workZone == null)
                 return HttpNotFound();
 
@@ -103,7 +103,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
 
         // GET: WorkZone/Edit/5
 
-        public ActionResult Edit(int? workzoneId)
+        public ActionResult Edit(int? id)
         {
 
             List<WorkNC_Factory> listFactory = new List<WorkNC_Factory>();
@@ -114,7 +114,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 listFactory = db.WorkNC_Factory.ToList();
                 listMachine = db.WorkNC_Machine.ToList();
             }
-            WorkNC_WorkZone workZone = db.WorkNC_WorkZone.Find(workzoneId); 
+            WorkNC_WorkZone workZone = db.WorkNC_WorkZone.Find(id); 
 
             //fill to DropdownList
             ViewBag.Factory = new SelectList(listFactory.OrderBy(n => n.Name), "FactoryId", "Name");
@@ -161,9 +161,9 @@ namespace WorkNCInfoService.Mvc5.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(IEnumerable<int> workzoneId)
+        public ActionResult Delete(IEnumerable<int> id)
         {
-            List<WorkNC_WorkZone> listDelete = db.WorkNC_WorkZone.Where(x => workzoneId.Contains(x.WorkZoneId)).ToList();
+            List<WorkNC_WorkZone> listDelete = db.WorkNC_WorkZone.Where(x => id.Contains(x.WorkZoneId)).ToList();
             foreach(WorkNC_WorkZone item in listDelete)
             {
                 db.WorkNC_WorkZone.Remove(item);
