@@ -14,6 +14,7 @@
 
 <table class="table">
     <tr class="td-border" style="background-color: green; color: white;">
+        <th style="display:none;"></th>
         <th>
             <div class="colorSort">@Html.ActionLink("Username", "Index", new { sortOrder = ViewBag.UsernameSort, currentFilter = ViewBag.CurrentFilter })<span class="caret"></span></div>
         </th>
@@ -39,56 +40,59 @@
 
     @foreach (var item in Model)
     {
-        
-        
-            <tr data-username='@item.UserName'>
-                <td class="td-border">
-                    @*@Html.TextBoxFor(modelItem => item.UserName, new { id = "UserName", value=item.UserName, @readonly = "readonly" })*@
-                    <input id="userName" name="userName" value="@item.UserName" type="text" readonly="readonly" />
-                </td>
+        <tr data-username='@item.UserName' data-id='@item.Id' data-email='@item.EmailConfirmed'>
+            <td class="td-border" style="display: none;">
+                @Html.HiddenFor(modelItem => item.Id, new { id = "aspnetUserId" })
+            </td>
+            <td class="td-border">
+                @*@Html.TextBoxFor(modelItem => item.UserName, new { id = "UserName", value=item.UserName, @readonly = "readonly" })*@
+                <input id="userName" name="userName" value="@item.UserName" type="text" readonly="readonly" />
+            </td>
+            <td class="td-border">
 
-                <td class="td-border">
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td class="td-border">
-                    @if (item.EmailConfirm.Equals(true))
-                    {
-                        <i class="glyphicon glyphicon-ok"></i>
-                    }
-                    else
-                    {
-                        <p> </p>
-                    }
-                </td>
-                <td class="td-border">
-                    @Html.HiddenFor(modelItem => item.EmailConfirm, new { id = "EmailConfirm" })
-                    @if (item.EmailConfirm.Equals(true))
-                    {
-                        <a href="#" onclick="SetConfirmEmail(this);">Disapprove</a>
-                    }
-                    else
-                    {
-                        @*@Html.ActionLink("Approve", "Index", new { onclick = "SetConfirmEmail(this);" })*@
-                        <a href="#" onclick="SetConfirmEmail(this);">approve</a>
-                    }
-                </td>
-                <td class="td-border">
-                    @Html.DropDownListFor(modelItem => item.WebPermission, new SelectList(new List<Object>
+                @Html.DisplayFor(modelItem => item.Email)
+
+            </td>
+            <td class="td-border">
+                @if (item.EmailConfirmed.Equals(true))
+                {
+                    <i class="glyphicon glyphicon-ok"></i>
+                }
+                else
+                {
+                    <p> </p>
+                }
+            </td>
+            <td class="td-border">
+
+                @Html.HiddenFor(modelItem => item.EmailConfirmed, new { id = "EmailConfirm" })
+                @if (item.EmailConfirmed.Equals(true))
+                {
+                    <a href="#" onclick="SetConfirmEmail(this);">Disapprove</a>
+                }
+                else
+                {
+                    @*@Html.ActionLink("Approve", "Index", new { onclick = "SetConfirmEmail(this);" })*@
+                    <a href="#" onclick="SetConfirmEmail(this);">approve</a>
+                }
+            </td>
+            <td class="td-border">
+                @Html.DropDownListFor(modelItem => item.WebPermission, new SelectList(new List<Object>
                                                                                     {
                                                                                         new {value="", text="" },
                                                                                         new {value="Member", text="Member" },
                                                                                         new {value="Chief", text="Chief" }
                                                                                     }, "Value", "Text", 2),
                                                                          new { id = "WebPermission", onchange = "SetWebPermission(this);" })
-                </td>
-                <td class="td-border">
-                    @Html.CheckBoxFor(modelItem => item.AppPermission, new { id = "AppPermission", onlick = "SetAppPermission(this);" })
-                    @*<input id="AppPermission" type="checkbox" value="@item.EmailConfirm" onclick="SetAppPermission(this);"/>*@
-                </td>
-                <td class="td-border">
-                    <a>Reset Password</a>
-                </td>
-            </tr>
+            </td>
+            <td class="td-border">
+                @Html.CheckBoxFor(modelItem => item.AppPermission, new { id = "AppPermission", onclick = "SetAppPermission(this);" })
+                @*<input id="AppPermission" type="checkbox" value="@item.EmailConfirm" onclick="SetAppPermission(this);"/>*@
+            </td>
+            <td class="td-border">
+                <a href="#" onclick="SetResetPassword(this);">Reset Password</a>
+            </td>
+        </tr>
     }
 </table>
 
@@ -97,7 +101,7 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
 
 @section scripts{
     <script language="javascript">
-        
+
         $(function () {
             //checkbox App Permission
             $('#AppPermission').change(function () {
@@ -122,8 +126,8 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
 
         function SetConfirmEmail(e) {
             var users = {
-                UserName: $(e).parents('tr').data('username'),
-                EmailConfirmed: $('#EmailConfirm').val()
+                Id: $(e).parents('tr').data('id'),
+                EmailConfirmed: $(e).parent('tr').data('email')
             }
             $.ajax({
                 url: '/UserPermission/EmailConfirm',
@@ -132,7 +136,7 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
                 data: users,
                 success: function (result) {
                     alert('Confirm success');
-                    $('form').submit();
+                    $('form').submit();                   
                 }
             });
         }
@@ -164,7 +168,7 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
             }
             $.ajax({
                 type: 'GET',
-                url: '/UsePermission/SetAppPermission',
+                url: '/UserPermission/SetAppPermission',
                 contentType: "application/json; charset=utf-8",
                 data: users,
                 //dataType:'Json',
@@ -173,7 +177,22 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
                 }
             });
         }
-        //Approve Email
+        //Reset password
+        function SetResetPassword(e) {
+            var users = {
+                Id: $(e).parents('tr').data('id'),
+                PasswordReset: $(e).val()
+            }
+            $.ajax({
+                type: 'GET',
+                url: '',
+                contentType: "",
+                data: users,
+                success: function (data) {
+                    $('form').submit();
+                }
+            });
+        }
     </script>
 }
 

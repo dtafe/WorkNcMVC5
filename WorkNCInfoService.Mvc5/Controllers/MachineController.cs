@@ -21,7 +21,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
         {
             int pageNumber = (page ?? 1);
             ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
+            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_asc" : ";";
             ViewBag.NoSort = sortOrder == "No" ? "no_asc" : "no";
             if (factoryId!=0 && name!=null)
             {

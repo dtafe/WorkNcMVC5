@@ -8,7 +8,7 @@ namespace WorkNCInfoService.Mvc5.ViewModel
 {
     public class SetEmailConfirmed
     {
-        public string UserName { get; set; }
+        public string Id { get; set; }
         public bool EmailConfirmed { get; set; }
     }
 }

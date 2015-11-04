@@ -176,9 +176,10 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 {
                     cookie = new HttpCookie("cookieCompany");
                 }
-                cookie.Value = companyId.ToString();
+                cookie.Value = Convert.ToString(companyId);
                 Response.SetCookie(cookie);
             }
+            
             return Redirect(Request.RawUrl);
         }
     }

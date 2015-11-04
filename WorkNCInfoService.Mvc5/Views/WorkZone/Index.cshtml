@@ -1,6 +1,6 @@
 ﻿@using WorkNCInfoService.Mvc5.Models.WorkModels;
+@model PagedList.IPagedList<WorkNC_WorkZone>
 @using PagedList.Mvc;
-@model PagedList.PagedList<WorkNC_WorkZone>
 
 @{
     ViewBag.Title = "Index";
@@ -16,10 +16,10 @@
     <tr class="td-border" style="background-color: green; color: white;">
         <th></th>
         <th>
-            <p>Name</p>
+            <div class="colorSort">@Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSort, currentFilter = ViewBag.CurrentFilter })<span class="caret"></span></div>
         </th>
         <th>
-            <p>Company Name</p>
+            <div class="colorSort">@Html.ActionLink("Company", "Index", new { sortOrder = ViewBag.CompanySort, currentFilter = ViewBag.CurrentFilter })<span class="caret"></span></div>
         </th>
         <th>
             <p>Factory Name</p>
@@ -110,11 +110,8 @@
 }
 </table>
 }
-@*paging*@
-<p class="page-number">Page: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount</p>
-<div id="pageList">
-    @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page = Page }))
-</div>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
 <style>
     #pageList{

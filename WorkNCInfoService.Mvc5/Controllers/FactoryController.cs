@@ -16,14 +16,13 @@ namespace WorkNCInfoService.Mvc5.Controllers
         private const int pageSize = 10;
         WorkNCDbContext db = new WorkNCDbContext();
         // GET: Factory
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, bool isDeleted=false, int? page=1)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, bool isDeleted = false, int? page = 1)
         {
-            int companyId =  Convert.ToInt32(Request.Cookies["cookieCompany"].Value);
             int pageNumber = (page ?? 1);
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
             ViewBag.NoSort = sortOrder == "No" ? "no_asc" : "no";
-            if(searchString !=null)
+            if (searchString != null)
             {
                 page = 1;
             }
@@ -33,9 +32,12 @@ namespace WorkNCInfoService.Mvc5.Controllers
             }
 
             ViewBag.CurrentFilter = searchString;
-            var factory = from s in db.WorkNC_Factory select s;
 
-            //sort machine
+            var factory = from s in db.WorkNC_Factory select s;
+            //select role: Member, Chief
+            var user = (from f in db.WorkNC_UserPermission where f.Username == User.Identity.Name select f).FirstOrDefault();
+
+            //sort machine 
             switch (sortOrder)
             {
                 case "name_asc":
@@ -48,19 +50,63 @@ namespace WorkNCInfoService.Mvc5.Controllers
                     factory = factory.OrderBy(n => n.CompanyId);
                     break;
             }
-            //search by Machine Name & isDeleted
-            if (!String.IsNullOrEmpty(searchString))
+            if (User.IsInRole("Admin"))
             {
-                if(isDeleted == false)
+                //select List factory equal DropdownList Company
+                int companyId = Convert.ToInt32(Request.Cookies["cookieCompany"].Value);
+                if(Convert.ToString(companyId) !=null)
                 {
-                    return View(factory.Where(n => n.Name.Contains(searchString) && n.isDeleted.Equals(false) && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
+                    if (!String.IsNullOrEmpty(searchString))
+                    {
+                        if (isDeleted == false)
+                        {
+                            return View(factory.Where(n => n.Name.Contains(searchString)
+                            && n.isDeleted.Equals(false) && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
+                        }
+                        if (isDeleted == true)
+                        {
+                            return View(factory.Where(n => n.Name.Contains(searchString)
+                            && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
+                        }
+                    }
+                    return View(factory.Where(n => n.isDeleted.Equals(isDeleted) && n.CompanyId==companyId).ToPagedList(pageNumber, pageSize));
                 }
-                if(isDeleted == true)
+                else
                 {
-                    return View(factory.Where(n => n.Name.Contains(searchString) && n.CompanyId==companyId).ToPagedList(pageNumber, pageSize));
+                    if (!String.IsNullOrEmpty(searchString))
+                    {
+                        if (isDeleted == false)
+                        {
+                            return View(factory.Where(n => n.Name.Contains(searchString)
+                            && n.isDeleted.Equals(false)).ToPagedList(pageNumber, pageSize));
+                        }
+                        if (isDeleted == true)
+                        {
+                            return View(factory.Where(n => n.Name.Contains(searchString)).ToPagedList(pageNumber, pageSize));
+                        }
+                    }
+                    return View(factory.Where(n => n.isDeleted.Equals(isDeleted) &&n.CompanyId==user.CompanyId).ToPagedList(pageNumber, pageSize));
                 }
             }
-            return View(factory.Where(n =>n.isDeleted.Equals(isDeleted) && n.CompanyId==companyId).ToPagedList(pageNumber, pageSize));
+            else
+            {
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    if (isDeleted == false)
+                    {
+                        return View(factory.Where(n => n.Name.Contains(searchString)
+                        && n.isDeleted.Equals(false) && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
+                    }
+                    if (isDeleted == true)
+                    {
+                        return View(factory.Where(n => n.Name.Contains(searchString)
+                        && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
+                    }
+                }
+                return View(factory.Where(n => n.isDeleted.Equals(isDeleted)
+                && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
+            }
+            
         }
 
         // GET: Factory/Details/5
@@ -88,7 +134,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
         {
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     factory.ModifiedAccount = User.Identity.Name;
                     factory.ModifiedDate = DateTime.Now;
@@ -98,7 +144,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                return View(factory);              
+                return View(factory);
             }
             catch
             {
@@ -124,7 +170,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
         {
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     factory.ModifiedAccount = User.Identity.Name;
                     factory.ModifiedDate = DateTime.Now;
@@ -158,7 +204,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
         {
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     db.Entry(factory).State = EntityState.Deleted;
                     db.SaveChanges();
@@ -175,6 +221,6 @@ namespace WorkNCInfoService.Mvc5.Controllers
         {
             return PartialView("_SearchFactory");
         }
-        
+
     }
 }

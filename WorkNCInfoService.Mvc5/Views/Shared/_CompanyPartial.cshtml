@@ -6,13 +6,13 @@
 
     <ul class="nav navbar-nav navbar-right  companyPartial">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.DropDownListFor(model => model.CompanyId, @ViewBag.Company as IEnumerable<SelectListItem>,"-select company-", new { @class = "form-control", id = "dopdownCompanyId", onchange= "ChangeDropdownCompany()" })
+        @Html.DropDownListFor(model => model.CompanyId, @ViewBag.Company as IEnumerable<SelectListItem>, new { @class = "form-control", id = "dopdownCompanyId", onchange = "ChangeDropdownCompany()" })
         @Html.ValidationMessageFor(model => model.CompanyId, "", new { @class = "text-danger" })
-    </ul/>
+    </ul>
 }
 <style>
-    #dopdownCompanyId{
+    #dopdownCompanyId {
         margin: 7px 10px 5px 30px;
-        width: 150px
+        width: 180px;
     }
 </style>
