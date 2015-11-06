@@ -34,9 +34,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
             ViewBag.CurrentFilter = searchString;
 
             var factory = from s in db.WorkNC_Factory select s;
-            //select role: Member, Chief
-            var user = (from f in db.WorkNC_UserPermission where f.Username == User.Identity.Name select f).FirstOrDefault();
-
+            
             //sort machine 
             switch (sortOrder)
             {
@@ -50,12 +48,21 @@ namespace WorkNCInfoService.Mvc5.Controllers
                     factory = factory.OrderBy(n => n.CompanyId);
                     break;
             }
+
+            //use when cookieCompany is null
+            var user = (from f in db.WorkNC_UserPermission
+                        where f.Username == User.Identity.Name
+                        select f).FirstOrDefault();
+
+            //search when role is admin
             if (User.IsInRole("Admin"))
             {
                 //select List factory equal DropdownList Company
-                int companyId = Convert.ToInt32(Request.Cookies["cookieCompany"].Value);
-                if(Convert.ToString(companyId) !=null)
+                int companyId;
+                HttpCookie cookie = Request.Cookies["cookieCompany"];
+                if (cookie !=null)
                 {
+                    companyId = Convert.ToInt32(cookie.Value);
                     if (!String.IsNullOrEmpty(searchString))
                     {
                         if (isDeleted == false)
@@ -78,16 +85,19 @@ namespace WorkNCInfoService.Mvc5.Controllers
                         if (isDeleted == false)
                         {
                             return View(factory.Where(n => n.Name.Contains(searchString)
-                            && n.isDeleted.Equals(false)).ToPagedList(pageNumber, pageSize));
+                            && n.isDeleted.Equals(false) && n.CompanyId==user.CompanyId).ToPagedList(pageNumber, pageSize));
                         }
                         if (isDeleted == true)
                         {
                             return View(factory.Where(n => n.Name.Contains(searchString)).ToPagedList(pageNumber, pageSize));
                         }
                     }
-                    return View(factory.Where(n => n.isDeleted.Equals(isDeleted) &&n.CompanyId==user.CompanyId).ToPagedList(pageNumber, pageSize));
+                    return View(factory.Where(n => n.isDeleted.Equals(isDeleted) 
+                                &&n.CompanyId==user.CompanyId).ToPagedList(pageNumber, pageSize));
                 }
             }
+
+            //search when role is chief, member
             else
             {
                 if (!String.IsNullOrEmpty(searchString))

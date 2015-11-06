@@ -1,16 +1,15 @@
 ﻿@model WorkNCInfoService.Mvc5.Models.WorkModels.WorkNC_Machine
 
-@using (Html.BeginForm("GetAllMachines", "Machine", FormMethod.Get))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
             @Html.LabelFor(model => model.FactoryId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.FactoryId, @ViewBag.Factory as IEnumerable<SelectListItem>, "Select factory", new { id="factoryId", @class = "form-control" })
+                @Html.DropDownListFor(model => model.FactoryId, @ViewBag.Factory as IEnumerable<SelectListItem>, "Select factory", new { id="machineFactoryId", @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.FactoryId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -27,7 +26,7 @@
             @Html.LabelFor(model => model.isDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.CheckBoxFor(model => model.isDeleted, new { id = "isDeleted" })
+                    @Html.CheckBoxFor(model => model.isDeleted, new { id = "isDeletedMachine", onclick = "CheckedStatus();" })
                     @Html.ValidationMessageFor(model => model.isDeleted, "", new { @class = "text-danger" })
                 </div>
             </div>

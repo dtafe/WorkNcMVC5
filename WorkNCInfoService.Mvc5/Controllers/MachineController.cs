@@ -17,13 +17,13 @@ namespace WorkNCInfoService.Mvc5.Controllers
         WorkNCDbContext db = new WorkNCDbContext();
         // GET: Machine
         private const int pageSize = 10;
-        public ActionResult Index(string sortOrder, string currentFilter, int? factoryId, string name, bool isDeleted=false, int? page=1)
+        public ActionResult Index(string sortOrder, string currentFilter, int? factoryId, string name, bool isDeleted = false, int? page = 1)
         {
             int pageNumber = (page ?? 1);
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_asc" : ";";
             ViewBag.NoSort = sortOrder == "No" ? "no_asc" : "no";
-            if (factoryId!=0 && name!=null)
+            if (factoryId != 0 && name != null)
             {
                 page = 1;
             }
@@ -49,76 +49,159 @@ namespace WorkNCInfoService.Mvc5.Controllers
                     break;
             }
 
-            //search by factoryId & isDeleted
-            if (factoryId != null)
-            {
-                if(isDeleted==true)
-                {
-                    return View(machine.Where(n => n.FactoryId == factoryId).ToPagedList(pageNumber, pageSize));
-                }
-                if(isDeleted==false)
-                {
-                    return View(machine.Where(n => n.FactoryId == factoryId && n.isDeleted.Equals(false)).ToPagedList(pageNumber, pageSize));
-                }
-            }
-            //search by factoryName & isDeleted
-            if (!String.IsNullOrEmpty(name))
-            {
-                if(isDeleted==true)
-                {
-                    return View(machine.Where(n => n.Name.Contains(name)).ToPagedList(pageNumber, pageSize));
-                }
-                if (isDeleted == false)
-                {
-                    return View(machine.Where(n => n.Name.Contains(name)&&n.isDeleted.Equals(false)).ToPagedList(pageNumber, pageSize));
-                }
+            //use when cookieCompany is null
+            var user = (from f in db.WorkNC_UserPermission
+                        where f.Username == User.Identity.Name
+                        select f).FirstOrDefault();
 
+            //search when rolo is Admin
+            if (User.IsInRole("Admin"))
+            {
+                int companyId;
+                HttpCookie cookie = Request.Cookies["cookieCompany"];
+                if (cookie != null)
+                {
+                    companyId = Convert.ToInt32(cookie.Value);
+                    if (factoryId != null)
+                    {
+                        if (isDeleted == true)
+                        {
+                            return View(machine.Where(n => n.FactoryId == factoryId
+                                        && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
+                        }
+                        if (isDeleted == false)
+                        {
+                            return View(machine.Where(n => n.FactoryId == factoryId
+                                        && n.isDeleted.Equals(false) && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
+                        }
+                    }
+                    //search by factoryName & isDeleted
+                    if (!String.IsNullOrEmpty(name))
+                    {
+                        if (isDeleted == true)
+                        {
+                            return View(machine.Where(n => n.Name.Contains(name)
+                                        && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
+                        }
+                        if (isDeleted == false)
+                        {
+                            return View(machine.Where(n => n.Name.Contains(name)
+                                        && n.isDeleted.Equals(false) && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
+                        }
+
+                    }
+                    return View(machine.Where(n => n.isDeleted.Equals(isDeleted)
+                                                && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
+                }
+                else
+                {
+                    if (factoryId != null)
+                    {
+                        if (isDeleted == true)
+                        {
+                            return View(machine.Where(n => n.FactoryId == factoryId
+                                        && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
+                        }
+                        if (isDeleted == false)
+                        {
+                            return View(machine.Where(n => n.FactoryId == factoryId
+                                        && n.isDeleted.Equals(false) && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
+                        }
+                    }
+                    //search by factoryName & isDeleted
+                    if (!String.IsNullOrEmpty(name))
+                    {
+                        if (isDeleted == true)
+                        {
+                            return View(machine.Where(n => n.Name.Contains(name)
+                                        && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
+                        }
+                        if (isDeleted == false)
+                        {
+                            return View(machine.Where(n => n.Name.Contains(name)
+                                        && n.isDeleted.Equals(false) && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
+                        }
+
+                    }
+                    return View(machine.Where(n => n.isDeleted.Equals(isDeleted)
+                                                && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
+                }
             }
-            return View(machine.Where(n=>n.isDeleted.Equals(isDeleted)).ToPagedList(pageNumber, pageSize));
+
+            //search when role is Chief, member
+            else
+            {
+                if (factoryId != null)
+                {
+                    if (isDeleted == true)
+                    {
+                        return View(machine.Where(n => n.FactoryId == factoryId
+                                    && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
+                    }
+                    if (isDeleted == false)
+                    {
+                        return View(machine.Where(n => n.FactoryId == factoryId
+                                    && n.isDeleted.Equals(false) && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
+                    }
+                }
+                //search by factoryName & isDeleted
+                if (!String.IsNullOrEmpty(name))
+                {
+                    if (isDeleted == true)
+                    {
+                        return View(machine.Where(n => n.Name.Contains(name)
+                                    && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
+                    }
+                    if (isDeleted == false)
+                    {
+                        return View(machine.Where(n => n.Name.Contains(name)
+                                    && n.isDeleted.Equals(false) && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
+                    }
+
+                }
+                return View(machine.Where(n => n.isDeleted.Equals(isDeleted)
+                                            && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
+            }
         }
 
-        public ActionResult GetAllMachines(SearchMachines searchMachines)
+        public JsonResult GetAllMachines(SearchMachines searchMachines)
         {
-
             var machine = from s in db.WorkNC_Machine select s;
-            if (searchMachines.FacrotyId!= 0)
+
+            var user = (from s in db.WorkNC_UserPermission
+                        where s.Username == User.Identity.Name
+                        select s).FirstOrDefault();
+
+            #region search with role is Admin
+            if (User.IsInRole("Admin"))
             {
-                if(searchMachines.isDeleted == true)
-                {
-                    return Json(machine, JsonRequestBehavior.AllowGet);
-                }
-                if(searchMachines.isDeleted == false)
-                {
-                    machine = machine.Where(n => n.FactoryId == searchMachines.FacrotyId && n.isDeleted.Equals(false));
-                    return Json(machine, JsonRequestBehavior.AllowGet);
-                }
+                int companyId;
+                HttpCookie cookie = Request.Cookies["cookieCompany"];
+                if (cookie != null)
+                    companyId = Convert.ToInt32(cookie.Value);
+                else
+                    companyId = user.CompanyId;
+
+                var machines = machine.Where(n => n.CompanyId == companyId
+                             && (searchMachines.FacrotyId == 0 || n.FactoryId == searchMachines.FacrotyId)
+                             && (String.IsNullOrEmpty(searchMachines.Name) || n.Name.Equals(searchMachines.Name))
+                             && (searchMachines.isDeleted == true || n.isDeleted == false))
+                            .Select(n => new { n.No, n.Name, n.isDeleted }).OrderBy(n => n.Name);
+                return Json(machines, JsonRequestBehavior.AllowGet);
             }
-            if(!String.IsNullOrEmpty(searchMachines.Name))
+            #endregion
+
+            #region search with role is Chief, Member
+            else
             {
-                if (searchMachines.isDeleted == true)
-                {
-                    machine = machine.Where(n => n.Name.Contains(searchMachines.Name));
-                    return Json(machine, JsonRequestBehavior.AllowGet);
-                }
-                   
-                if (searchMachines.isDeleted == false)
-                {
-                    machine = machine.Where(n => n.Name.Contains(searchMachines.Name) && n.isDeleted.Equals(false));
-                    return Json(machine, JsonRequestBehavior.AllowGet);
-                }
-                    
+                return Json(machine.Where(n => n.CompanyId == user.CompanyId
+                            && n.FactoryId == searchMachines.FacrotyId
+                            && (searchMachines.Name == string.Empty || n.Name.Equals(searchMachines.Name))
+                            && (searchMachines.isDeleted == true || n.isDeleted.Equals(false)))
+                            .Select(n => new { n.No, n.Name, n.isDeleted }).OrderBy(n => n.Name),
+                        JsonRequestBehavior.AllowGet);
             }
-            if(searchMachines.isDeleted == false)
-            {
-                machine = machine.Where(n=>n.isDeleted.Equals(false)).OrderBy(n=>n.Name);
-                return Json(machine, JsonRequestBehavior.AllowGet);
-            }
-            if(searchMachines.isDeleted == true)
-            {
-                machine = machine.OrderBy(n => n.Name);
-                return Json(machine, JsonRequestBehavior.AllowGet);
-            }
-            return Json(machine.Select(n=> new { n.No, n.Name, n.isDeleted}).OrderBy(n=>n.Name), JsonRequestBehavior.AllowGet);
+            #endregion
         }
         public ActionResult List()
         {
@@ -153,14 +236,14 @@ namespace WorkNCInfoService.Mvc5.Controllers
         {
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     db.Entry(machine).State = EntityState.Added;
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
                 return View(machine);
-                
+
             }
             catch
             {
@@ -185,7 +268,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
         {
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     db.Entry(machine).State = EntityState.Modified;
                     db.SaveChanges();
@@ -216,7 +299,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
         {
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     db.Entry(machine).State = EntityState.Deleted;
                     db.SaveChanges();

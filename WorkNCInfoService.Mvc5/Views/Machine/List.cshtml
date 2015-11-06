@@ -9,8 +9,8 @@
     <table id="tblMachines" class="simpleTable table">
         <tr class="td-border" style="background-color: green; color: white;">
             <th>&nbsp;</th>
-            <th><a id="lnkMachineNo" href="#">No</a></th>
-            <th><a id="lnkMachineName" href="#">Name</a></th>
+            <th><a id="linkMachineNo" href="#">No</a></th>
+            <th><a id="linkMachineName" href="#">Name</a></th>
             <th>Status</th>
         </tr>
     </table>
@@ -18,13 +18,48 @@
 
 @section scripts{
     <script language="javascript">
+        $(function () {
+            LoadTable();
+            //checked checkbox Deleted
+            $('#isDeletedMachine').change(function () {
+                if ($(this).is(":checked"))
+                    $("#isDeletedMachine").prop('checked', true);
+                else
+                    $("#isDeletedMachine").prop('checked', false);
+                
+            });
+            
+            // Link machine No click event handler
+            $('#linkMachineNo').click(function (e) {
+                e.preventDefault();
+                if (tableData != null) {
+                    // Sort data
+                    tableData.sort(function (a, b) {
+                        return a.No <= b.No ? -1 : 1;
+                    });
+                    PopulateTable(tableData, 1);
+                }
+            });
+
+            // Link machine Name click event handler
+            $('#linkMachineName').click(function (e) {
+                e.preventDefault();
+                if (tableData != null) {
+                    // Sort data
+                    tableData.sort(function (a, b) {
+                        return a.Name <= b.Name ? -1 : 1;
+                    });
+                    PopulateTable(tableData, 1);
+                }
+            });
+        });
+
         // Global variable for table data
         var tableData = null;
 
         function LoadTable() {
             // Populate categories when the page is loaded.
             $.getJSON('/Machine/GetAllMachines', function (data) {
-                debugger;
                 // Populate table from Json data returned from server.
                 PopulateTable(data, 1);
                 tableData = data.slice(0);
@@ -46,64 +81,30 @@
         }
 
         //isDeleted checkbox checked 
-        function CheckedStatus()
-        {
+        function CheckedStatus() {
+            var searchMachines = {
+                FactoryId: $('#machineFactoryId').val(),
+                Name: $('#machineName').val(),
+                isDeleted: $('#isDeletedMachine').val()
+            }
             $.ajax({
                 type: 'GET',
-                src: 'Machine/GetAllMachines',
+                url: '/Machine/GetAllMachines',
                 dataType: 'Json',
-                data: { isDeleted: $('#isDeleted').val() },
+                data: searchMachines,
                 success: function (data) {
-                    response = jQuery.parseJSON(data);
-                    LoadTable();
+                    PopulateTable(data, 1);
+                    tableData = data.slice(0);
                 }
             });
         }
 
-        $(document).ready(function () {
-            LoadTable();
-            //checked checkbox Deleted
-            $('#isDeleted').change(function (e) {
-                e.preventDefault();
-                if ($(this).is(":checked")) {
-                    $(e).prop('checked', true);
-                    LoadTable();
-                }
-                else {
-                    $(e).prop('checked', false);
-                    LoadTable();
-                }             
-            });
-
-            // Link machine No click event handler
-            $('#lnkMachineNo').click(function (e) {
-                e.preventDefault();
-                if (tableData != null) {
-                    // Sort data
-                    tableData.sort(function (a, b) {
-                        return a.No <= b.No ? -1 : 1;
-                    });
-                    PopulateTable(tableData, 1);
-                }
-            });
-
-            // Link machine Name click event handler
-            $('#lnkMachineName').click(function (e) {
-                e.preventDefault();
-                if (tableData != null) {
-                    // Sort data
-                    tableData.sort(function (a, b) {
-                        return a.Name <= b.Name ? -1 : 1;
-                    });
-                    PopulateTable(tableData, 1);
-                }
-            });
-        });
+        //search machine 
         function SearchMachine() {
             var searchMachines = {
-                FactoryId: $('#factoryId').val(),
+                FactoryId: $('#machineFactoryId').val(),
                 Name: $('#machineName').val(),
-                isDeleted: $('#isDeleted').val()
+                isDeleted: $('#isDeletedMachine').val()
             }
             $.ajax({
                 type: 'GET',
@@ -112,10 +113,9 @@
                 contentType: "application/json; charset=utf-8",
                 data: searchMachines,
                 success: function (data) {
-                    response = jQuery.parseJSON(data);
-                    
+                    PopulateTable(data, 1);
+                    tableData = data.slice(0);
                 }
-
             });
         }
         // Populate table with pager.

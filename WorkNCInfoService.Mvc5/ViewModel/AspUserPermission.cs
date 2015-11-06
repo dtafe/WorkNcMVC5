@@ -15,5 +15,6 @@ namespace WorkNCInfoService.Mvc5.ViewModel
         public string WebPermission { get; set; }
         public bool AppPermission { get; set; }
         public bool LockoutEnable { get; set; }
+        public int CompanyId { get; set; }
     }
 }

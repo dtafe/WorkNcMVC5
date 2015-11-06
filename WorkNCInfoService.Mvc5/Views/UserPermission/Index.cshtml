@@ -36,11 +36,12 @@
         <th>
             Reset Password
         </th>
+        <th style="display:none;"></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr data-username='@item.UserName' data-id='@item.Id' data-email='@item.EmailConfirmed'>
+        <tr data-username='@item.UserName' data-id='@item.Id' data-email='@item.EmailConfirmed' data-permission='@item.AppPermission'>
             <td class="td-border" style="display: none;">
                 @Html.HiddenFor(modelItem => item.Id, new { id = "aspnetUserId" })
             </td>
@@ -86,11 +87,14 @@
                                                                          new { id = "WebPermission", onchange = "SetWebPermission(this);" })
             </td>
             <td class="td-border">
-                @Html.CheckBoxFor(modelItem => item.AppPermission, new { id = "AppPermission", onclick = "SetAppPermission(this);" })
+                @Html.CheckBoxFor(modelItem => item.AppPermission, new { id= "AppPermission", onclick = "SetAppPermission(this);" })
                 @*<input id="AppPermission" type="checkbox" value="@item.EmailConfirm" onclick="SetAppPermission(this);"/>*@
             </td>
             <td class="td-border">
                 <a href="#" onclick="SetResetPassword(this);">Reset Password</a>
+            </td>
+            <td style="display: none;">
+                @Html.HiddenFor(modelItem=>item.CompanyId)
             </td>
         </tr>
     }
@@ -101,7 +105,6 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
 
 @section scripts{
     <script language="javascript">
-
         $(function () {
             //checkbox App Permission
             $('#AppPermission').change(function () {
@@ -112,7 +115,6 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
                     $('#AppPermission').prop('checked', false);
                 }
             });
-
             // checkbox Loukout User
             $('#lockoutUser').change(function () {
                 if ($(this).is(':checked')) {
@@ -127,7 +129,7 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
         function SetConfirmEmail(e) {
             var users = {
                 Id: $(e).parents('tr').data('id'),
-                EmailConfirmed: $(e).parent('tr').data('email')
+                EmailConfirmed: $(e).parents('tr').data('email')
             }
             $.ajax({
                 url: '/UserPermission/EmailConfirm',
@@ -161,17 +163,15 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
 
         //Set AppPermission
         function SetAppPermission(e) {
-
             var users = {
                 UserName: $(e).parents('tr').data('username'),
-                AppPermission: $(e).val()
+                AppPermission: $(e).parents('tr').data('permission')
             }
             $.ajax({
                 type: 'GET',
                 url: '/UserPermission/SetAppPermission',
                 contentType: "application/json; charset=utf-8",
                 data: users,
-                //dataType:'Json',
                 success: function (data) {
                     $('form').submit();
                 }

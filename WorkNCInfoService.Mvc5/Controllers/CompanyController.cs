@@ -124,6 +124,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
         {
             return PartialView("_SearchCompany");
         }
+
         public ActionResult CompanyDropdown()
         {
             if (!string.IsNullOrEmpty(User.Identity.Name))
@@ -154,9 +155,11 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 HttpCookie cookie = Request.Cookies["cookieCompany"];
                 if (cookie != null)
                 {
-                    //CompanyId = cookie.Value();
+                    //companyId = Convert.ToInt32(cookie.Value);
+                    
                 }
-                ViewBag.Company = new SelectList(list.OrderBy(n => n.CompanyName), "CompanyId", "CompanyName");
+                //ViewBag.CompanySelected = companyId;
+                ViewBag.Company = new SelectList(list, "CompanyId", "CompanyName");
                 
             }
 
@@ -164,7 +167,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
         }
 
         //change dropdownList Company 
-        public ActionResult ChangeDropdownCompany(int companyId)
+        public ActionResult ChangeDropdownCompany(string companyId)
         {
             if (!string.IsNullOrEmpty(User.Identity.Name))
             {
