@@ -21,7 +21,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
 
         // GET: WorkZone
         public ActionResult Index(string sortOrder, string currentFilter, string name = "", int factoryId = 0,
-                                    int machineId = 0, DateTime? startDate = null, DateTime? endDate = null, int? page = 1)
+                                  int machineId = 0, DateTime? startDate = null, DateTime? endDate = null, int? page = 1)
         {
             int pageNumber = (page ?? 1);
             ViewBag.CurrentSort = sortOrder;
@@ -55,100 +55,38 @@ namespace WorkNCInfoService.Mvc5.Controllers
             {
                 int companyId;
                 HttpCookie cookie = Request.Cookies["cookieCompany"];
-                if(cookie!=null)
-                {
+                if (cookie != null)
                     companyId = Convert.ToInt32(cookie.Value);
-                    if (!String.IsNullOrEmpty(name))
-                    {
-                        return View(workZone.Where(n => n.Name.Equals(name) && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
-                    }
-                    if (factoryId != 0)
-                    {
-                        return View(workZone.Where(n => n.FactoryId == factoryId && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
-                    }
-                    if (machineId != 0)
-                    {
-                        return View(workZone.Where(n => n.MachineId == machineId && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
-                    }
-                    if (startDate == null && endDate != null)
-                    {
-                        return View(workZone.Where(n => n.ProgramDate <= endDate && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
-                    }
-                    if (startDate != null && endDate == null)
-                    {
-                        return View(workZone.Where(n => n.ProgramDate >= startDate && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
-                    }
-                    if (startDate != null && endDate != null)
-                    {
-                        return View(workZone.Where(n => n.ProgramDate >= startDate && n.ProgramDate <= endDate
-                                                && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
-                    }
-                    return View(workZone.Where(n => n.CompanyId == 1).ToPagedList(pageNumber, pageSize));
-                }
                 else
-                {
-                    if (!String.IsNullOrEmpty(name))
-                    {
-                        return View(workZone.Where(n => n.Name.Equals(name) && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                    }
-                    if (factoryId != 0)
-                    {
-                        return View(workZone.Where(n => n.FactoryId == factoryId && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                    }
-                    if (machineId != 0)
-                    {
-                        return View(workZone.Where(n => n.MachineId == machineId && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                    }
-                    if (startDate == null && endDate != null)
-                    {
-                        return View(workZone.Where(n => n.ProgramDate <= endDate && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                    }
-                    if (startDate != null && endDate == null)
-                    {
-                        return View(workZone.Where(n => n.ProgramDate >= startDate && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                    }
-                    if (startDate != null && endDate != null)
-                    {
-                        return View(workZone.Where(n => n.ProgramDate >= startDate && n.ProgramDate <= endDate
-                                                && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                    }
-                    return View(workZone.Where(n => n.CompanyId == user.CompanyId && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                }
-
+                    companyId = user.CompanyId;
+                var result = workZone.Where(n => n.CompanyId == companyId
+                                            &&(String.IsNullOrEmpty(name)||n.Name.Contains(name))
+                                            &&(factoryId == 0 || n.FactoryId == factoryId)
+                                            &&(machineId == 0 || n.MachineId == machineId)
+                                            &&(
+                                            (startDate==null && n.ProgramDate<=endDate)
+                                            ||(endDate==null && n.ProgramDate>=startDate)
+                                            ||(n.ProgramDate >=startDate && n.ProgramDate <= endDate)
+                                            )
+                                            ).ToPagedList(pageNumber, pageSize);
+                return View(result);
             }
 
             else//Search with role Chief, member
             {
-                if (!String.IsNullOrEmpty(name))
-                {
-                    return View(workZone.Where(n => n.Name.Equals(name) && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                }
-                if (factoryId != 0)
-                {
-                    return View(workZone.Where(n => n.FactoryId == factoryId && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                }
-                if (machineId != 0)
-                {
-                    return View(workZone.Where(n => n.MachineId == machineId && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                }
-                if (startDate == null && endDate != null)
-                {
-                    return View(workZone.Where(n => n.ProgramDate <= endDate && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                }
-                if (startDate != null && endDate == null)
-                {
-                    return View(workZone.Where(n => n.ProgramDate >= startDate && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                }
-                if (startDate != null && endDate != null)
-                {
-                    return View(workZone.Where(n => n.ProgramDate >= startDate && n.ProgramDate <= endDate
-                                            && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                }
-                return View(workZone.Where(n => n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
+                var result = workZone.Where(n => n.CompanyId == user.CompanyId
+                                            && (String.IsNullOrEmpty(name) || n.Name.Contains(name))
+                                            && (factoryId == 0 || n.FactoryId == factoryId)
+                                            && (machineId == 0 || n.MachineId == machineId)
+                                            && (
+                                            (startDate == null && n.ProgramDate <= endDate)
+                                            || (endDate == null && n.ProgramDate >= startDate)
+                                            || (n.ProgramDate >= startDate && n.ProgramDate <= endDate)
+                                            )
+                                            ).ToPagedList(pageNumber, pageSize);
+                return View(result);
             }
         }
-
-       
         // GET: WorkZone/Details/5
         public ActionResult Details(int? id)
         {

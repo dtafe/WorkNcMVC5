@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using PagedList;
 using PagedList.Mvc;
 using WorkNCInfoService.Mvc5.Models.WorkModels;
+using WorkNCInfoService.Mvc5.ViewModel;
 
 namespace WorkNCInfoService.Mvc5.Controllers
 {
@@ -16,109 +17,41 @@ namespace WorkNCInfoService.Mvc5.Controllers
         private const int pageSize = 10;
         WorkNCDbContext db = new WorkNCDbContext();
         // GET: Factory
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, bool isDeleted = false, int? page = 1)
+        public ActionResult Index()
         {
-            int pageNumber = (page ?? 1);
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
-            ViewBag.NoSort = sortOrder == "No" ? "no_asc" : "no";
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
-
-            ViewBag.CurrentFilter = searchString;
-
-            var factory = from s in db.WorkNC_Factory select s;
-            
-            //sort machine 
-            switch (sortOrder)
-            {
-                case "name_asc":
-                    factory = factory.OrderBy(n => n.Name);
-                    break;
-                case "no_asc":
-                    factory = factory.OrderBy(n => n.No);
-                    break;
-                default:
-                    factory = factory.OrderBy(n => n.CompanyId);
-                    break;
-            }
-
-            //use when cookieCompany is null
+            return View();
+        }
+        public JsonResult GetAllFactories(SearchFactory searchFactory)
+        {
+            var factory = from f in db.WorkNC_Factory select f;
             var user = (from f in db.WorkNC_UserPermission
                         where f.Username == User.Identity.Name
                         select f).FirstOrDefault();
 
-            //search when role is admin
-            if (User.IsInRole("Admin"))
+            if(User.IsInRole("Admin"))
             {
-                //select List factory equal DropdownList Company
-                int companyId;
+                int companyId=0;
                 HttpCookie cookie = Request.Cookies["cookieCompany"];
-                if (cookie !=null)
-                {
+                if (cookie != null)
                     companyId = Convert.ToInt32(cookie.Value);
-                    if (!String.IsNullOrEmpty(searchString))
-                    {
-                        if (isDeleted == false)
-                        {
-                            return View(factory.Where(n => n.Name.Contains(searchString)
-                            && n.isDeleted.Equals(false) && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
-                        }
-                        if (isDeleted == true)
-                        {
-                            return View(factory.Where(n => n.Name.Contains(searchString)
-                            && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
-                        }
-                    }
-                    return View(factory.Where(n => n.isDeleted.Equals(isDeleted) && n.CompanyId==companyId).ToPagedList(pageNumber, pageSize));
-                }
                 else
-                {
-                    if (!String.IsNullOrEmpty(searchString))
-                    {
-                        if (isDeleted == false)
-                        {
-                            return View(factory.Where(n => n.Name.Contains(searchString)
-                            && n.isDeleted.Equals(false) && n.CompanyId==user.CompanyId).ToPagedList(pageNumber, pageSize));
-                        }
-                        if (isDeleted == true)
-                        {
-                            return View(factory.Where(n => n.Name.Contains(searchString)).ToPagedList(pageNumber, pageSize));
-                        }
-                    }
-                    return View(factory.Where(n => n.isDeleted.Equals(isDeleted) 
-                                &&n.CompanyId==user.CompanyId).ToPagedList(pageNumber, pageSize));
-                }
-            }
+                    companyId = user.CompanyId;
 
-            //search when role is chief, member
+                var resultFactory = factory.Where(n => n.CompanyId == companyId
+                                    &&(String.IsNullOrEmpty(searchFactory.Name) ||n.Name.Contains(searchFactory.Name))
+                                    &&(searchFactory.isDeleted==true||n.isDeleted==false)
+                                    ).Select(n=>new { n.No, n.Name, n.isDeleted}).OrderBy(n=>n.Name);
+                return Json(resultFactory, JsonRequestBehavior.AllowGet);
+            }
             else
             {
-                if (!String.IsNullOrEmpty(searchString))
-                {
-                    if (isDeleted == false)
-                    {
-                        return View(factory.Where(n => n.Name.Contains(searchString)
-                        && n.isDeleted.Equals(false) && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                    }
-                    if (isDeleted == true)
-                    {
-                        return View(factory.Where(n => n.Name.Contains(searchString)
-                        && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                    }
-                }
-                return View(factory.Where(n => n.isDeleted.Equals(isDeleted)
-                && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
+                var resultFactory = factory.Where(n => n.CompanyId == user.CompanyId
+                                    && (String.IsNullOrEmpty(searchFactory.Name) || n.Name.Contains(searchFactory.Name))
+                                    && (searchFactory.isDeleted == true || n.isDeleted == false)
+                                    ).Select(n => new { n.No, n.Name, n.isDeleted }).OrderBy(n => n.Name);
+                return Json(resultFactory, JsonRequestBehavior.AllowGet);
             }
-            
         }
-
         // GET: Factory/Details/5
         public ActionResult Details(int id)
         {

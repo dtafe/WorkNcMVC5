@@ -26,7 +26,7 @@
             @Html.LabelFor(model => model.isDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.CheckBoxFor(model => model.isDeleted, new { id = "isDeletedMachine", onclick = "CheckedStatus();" })
+                    @Html.CheckBoxFor(model => model.isDeleted, new { id = "isDeletedMachine" })
                     @Html.ValidationMessageFor(model => model.isDeleted, "", new { @class = "text-danger" })
                 </div>
             </div>

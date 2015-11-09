@@ -10,7 +10,7 @@ namespace WorkNCInfoService.Mvc5.ViewModel
     public class SearchFactory
     {
         [Display(Name ="Factory Name")]
-        public string SearchString { get; set; }
+        public string Name { get; set; }
 
         [Display(Name ="Deleted")]
         public bool isDeleted { get; set; }

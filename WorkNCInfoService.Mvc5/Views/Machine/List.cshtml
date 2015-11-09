@@ -19,14 +19,48 @@
 @section scripts{
     <script language="javascript">
         $(function () {
-            LoadTable();
             //checked checkbox Deleted
             $('#isDeletedMachine').change(function () {
-                if ($(this).is(":checked"))
-                    $("#isDeletedMachine").prop('checked', true);
-                else
-                    $("#isDeletedMachine").prop('checked', false);
-                
+                if ($(this).is(':checked'))
+                {
+                    var searchMachines = {
+                        FactoryId: $('#machineFactoryId').val(),
+                        Name: $('#txtFactoryName').val(),
+                        isDeleted: true
+                    }
+                    $.ajax({
+                        type: 'GET',
+                        url: '/Machine/GetAllMachines',
+                        dataType: 'Json',
+                        data: searchMachines,
+                        success: function (data) {
+                            PopulateTable(data, 1);
+                            tableData = data.slice(0);
+                        }
+                    });
+                }
+
+                //    $("#isDeletedMachine").prop('checked', true);
+                else        
+                {
+                    var searchMachines = {
+                        FactoryId: $('#machineFactoryId').val(),
+                        Name: $('#txtFactoryName').val(),
+                        isDeleted: false
+                    }
+                    $.ajax({
+                        type: 'GET',
+                        url: '/Machine/GetAllMachines',
+                        dataType: 'Json',
+                        data: searchMachines,
+                        success: function (data) {
+                            PopulateTable(data, 1);
+                            tableData = data.slice(0);
+                        }
+                    });
+                }
+                //    $("#isDeletedMachine").prop('checked', false);
+                //$(this).val($(this + ":checked").length > 0 ? true : false);
             });
             
             // Link machine No click event handler
@@ -52,6 +86,7 @@
                     PopulateTable(tableData, 1);
                 }
             });
+            LoadTable();
         });
 
         // Global variable for table data
@@ -84,7 +119,7 @@
         function CheckedStatus() {
             var searchMachines = {
                 FactoryId: $('#machineFactoryId').val(),
-                Name: $('#machineName').val(),
+                Name: $('#txtFactoryName').val(),
                 isDeleted: $('#isDeletedMachine').val()
             }
             $.ajax({
@@ -101,10 +136,18 @@
 
         //search machine 
         function SearchMachine() {
+            var deleted = false;
+            $('#isDeletedMachine').change(function () {
+                if ($(this).is(':checked'))
+                    deleted: true;
+                else
+                    deleted: false;
+            });
             var searchMachines = {
                 FactoryId: $('#machineFactoryId').val(),
                 Name: $('#machineName').val(),
-                isDeleted: $('#isDeletedMachine').val()
+                isDeleted: deleted
+                    //$('#isDeletedMachine').attr('checked')? true: false
             }
             $.ajax({
                 type: 'GET',
@@ -117,6 +160,42 @@
                     tableData = data.slice(0);
                 }
             });
+            //if ($('#isDeletedMachine').is(':checked')) {
+            //    var searchMachines = {
+            //        FactoryId: $('#machineFactoryId').val(),
+            //        Name: $('#txtFactoryName').val(),
+            //        isDeleted: true
+            //    }
+            //    $.ajax({
+            //        type: 'GET',
+            //        url: '/Machine/GetAllMachines',
+            //        dataType: 'Json',
+            //        data: searchMachines,
+            //        success: function (data) {
+            //            PopulateTable(data, 1);
+            //            tableData = data.slice(0);
+            //        }
+            //    });
+            //}
+
+            //    //    $("#isDeletedMachine").prop('checked', true);
+            //else {
+            //    var searchMachines = {
+            //        FactoryId: $('#machineFactoryId').val(),
+            //        Name: $('#txtFactoryName').val(),
+            //        isDeleted: false
+            //    }
+            //    $.ajax({
+            //        type: 'GET',
+            //        url: '/Machine/GetAllMachines',
+            //        dataType: 'Json',
+            //        data: searchMachines,
+            //        success: function (data) {
+            //            PopulateTable(data, 1);
+            //            tableData = data.slice(0);
+            //        }
+            //    });
+            //}
         }
         // Populate table with pager.
         // Parameters

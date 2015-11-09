@@ -10,6 +10,6 @@ namespace WorkNCInfoService.Mvc5.ViewModel
     {
         public int FacrotyId { get; set; }
         public string Name { get; set; }
-        public bool isDeleted { get; set; }
+        public bool? isDeleted { get; set; }
     }
 }

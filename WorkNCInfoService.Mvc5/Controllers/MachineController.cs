@@ -17,153 +17,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
         WorkNCDbContext db = new WorkNCDbContext();
         // GET: Machine
         private const int pageSize = 10;
-        public ActionResult Index(string sortOrder, string currentFilter, int? factoryId, string name, bool isDeleted = false, int? page = 1)
-        {
-            int pageNumber = (page ?? 1);
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_asc" : ";";
-            ViewBag.NoSort = sortOrder == "No" ? "no_asc" : "no";
-            if (factoryId != 0 && name != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                name = currentFilter;
-            }
-
-            ViewBag.CurrentFilter = name;
-            var machine = from s in db.WorkNC_Machine select s;
-
-            //sort machine
-            switch (sortOrder)
-            {
-                case "no_asc":
-                    machine = machine.OrderBy(n => n.No);
-                    break;
-                case "name_asc":
-                    machine = machine.OrderBy(n => n.Name);
-                    break;
-                default:
-                    machine = machine.OrderBy(n => n.MachineId);
-                    break;
-            }
-
-            //use when cookieCompany is null
-            var user = (from f in db.WorkNC_UserPermission
-                        where f.Username == User.Identity.Name
-                        select f).FirstOrDefault();
-
-            //search when rolo is Admin
-            if (User.IsInRole("Admin"))
-            {
-                int companyId;
-                HttpCookie cookie = Request.Cookies["cookieCompany"];
-                if (cookie != null)
-                {
-                    companyId = Convert.ToInt32(cookie.Value);
-                    if (factoryId != null)
-                    {
-                        if (isDeleted == true)
-                        {
-                            return View(machine.Where(n => n.FactoryId == factoryId
-                                        && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
-                        }
-                        if (isDeleted == false)
-                        {
-                            return View(machine.Where(n => n.FactoryId == factoryId
-                                        && n.isDeleted.Equals(false) && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
-                        }
-                    }
-                    //search by factoryName & isDeleted
-                    if (!String.IsNullOrEmpty(name))
-                    {
-                        if (isDeleted == true)
-                        {
-                            return View(machine.Where(n => n.Name.Contains(name)
-                                        && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
-                        }
-                        if (isDeleted == false)
-                        {
-                            return View(machine.Where(n => n.Name.Contains(name)
-                                        && n.isDeleted.Equals(false) && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
-                        }
-
-                    }
-                    return View(machine.Where(n => n.isDeleted.Equals(isDeleted)
-                                                && n.CompanyId == companyId).ToPagedList(pageNumber, pageSize));
-                }
-                else
-                {
-                    if (factoryId != null)
-                    {
-                        if (isDeleted == true)
-                        {
-                            return View(machine.Where(n => n.FactoryId == factoryId
-                                        && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                        }
-                        if (isDeleted == false)
-                        {
-                            return View(machine.Where(n => n.FactoryId == factoryId
-                                        && n.isDeleted.Equals(false) && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                        }
-                    }
-                    //search by factoryName & isDeleted
-                    if (!String.IsNullOrEmpty(name))
-                    {
-                        if (isDeleted == true)
-                        {
-                            return View(machine.Where(n => n.Name.Contains(name)
-                                        && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                        }
-                        if (isDeleted == false)
-                        {
-                            return View(machine.Where(n => n.Name.Contains(name)
-                                        && n.isDeleted.Equals(false) && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                        }
-
-                    }
-                    return View(machine.Where(n => n.isDeleted.Equals(isDeleted)
-                                                && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                }
-            }
-
-            //search when role is Chief, member
-            else
-            {
-                if (factoryId != null)
-                {
-                    if (isDeleted == true)
-                    {
-                        return View(machine.Where(n => n.FactoryId == factoryId
-                                    && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                    }
-                    if (isDeleted == false)
-                    {
-                        return View(machine.Where(n => n.FactoryId == factoryId
-                                    && n.isDeleted.Equals(false) && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                    }
-                }
-                //search by factoryName & isDeleted
-                if (!String.IsNullOrEmpty(name))
-                {
-                    if (isDeleted == true)
-                    {
-                        return View(machine.Where(n => n.Name.Contains(name)
-                                    && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                    }
-                    if (isDeleted == false)
-                    {
-                        return View(machine.Where(n => n.Name.Contains(name)
-                                    && n.isDeleted.Equals(false) && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-                    }
-
-                }
-                return View(machine.Where(n => n.isDeleted.Equals(isDeleted)
-                                            && n.CompanyId == user.CompanyId).ToPagedList(pageNumber, pageSize));
-            }
-        }
-
+        
         public JsonResult GetAllMachines(SearchMachines searchMachines)
         {
             var machine = from s in db.WorkNC_Machine select s;
@@ -182,12 +36,12 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 else
                     companyId = user.CompanyId;
 
-                var machines = machine.Where(n => n.CompanyId == companyId
+                var result = machine.Where(n => n.CompanyId == companyId
                              && (searchMachines.FacrotyId == 0 || n.FactoryId == searchMachines.FacrotyId)
-                             && (String.IsNullOrEmpty(searchMachines.Name) || n.Name.Equals(searchMachines.Name))
+                             && (String.IsNullOrEmpty(searchMachines.Name) || n.Name.Contains(searchMachines.Name))
                              && (searchMachines.isDeleted == true || n.isDeleted == false))
                             .Select(n => new { n.No, n.Name, n.isDeleted }).OrderBy(n => n.Name);
-                return Json(machines, JsonRequestBehavior.AllowGet);
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
             #endregion
 
@@ -196,7 +50,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
             {
                 return Json(machine.Where(n => n.CompanyId == user.CompanyId
                             && n.FactoryId == searchMachines.FacrotyId
-                            && (searchMachines.Name == string.Empty || n.Name.Equals(searchMachines.Name))
+                            && (searchMachines.Name == string.Empty || n.Name.Contains(searchMachines.Name))
                             && (searchMachines.isDeleted == true || n.isDeleted.Equals(false)))
                             .Select(n => new { n.No, n.Name, n.isDeleted }).OrderBy(n => n.Name),
                         JsonRequestBehavior.AllowGet);

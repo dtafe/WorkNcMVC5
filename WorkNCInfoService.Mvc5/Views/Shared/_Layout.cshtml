@@ -62,7 +62,7 @@
 
                         <li>@Html.ActionLink("About", "About", "Home")</li>
                     </ul>
-                    @Html.Action("CompanyDropdown", "Company")
+                    @Html.Action("FillDropDownCompany", "Company")
                 }
                 else
                 {
@@ -97,10 +97,10 @@
             $.ajax({
                 type: 'GET',
                 url: '/Company/ChangeDropdownCompany',
-                data: { companyId: $('#dopdownCompanyId').val() },
-                success: function (data) {
-                    //$('form').submit();
 
+                data: { companyId: $('#dropdownCompanyId').val() },
+                success: function (data) {
+                    window.location.reload();
                 }
             });
         }

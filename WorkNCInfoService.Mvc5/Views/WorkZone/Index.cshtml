@@ -61,6 +61,7 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td class="td-border">
+            @Html.HiddenFor(modelItem=>item.CompanyId)
             @Html.DisplayFor(modelItem => item.CompanyName)
         </td>
         <td class="td-border">

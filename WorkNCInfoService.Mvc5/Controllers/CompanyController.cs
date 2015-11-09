@@ -125,7 +125,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
             return PartialView("_SearchCompany");
         }
 
-        public ActionResult CompanyDropdown()
+        public ActionResult FillDropDownCompany()
         {
             if (!string.IsNullOrEmpty(User.Identity.Name))
             {
@@ -134,8 +134,6 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 {
                     listCompany = db.WorkNC_Company.ToList();
                 }
-                List<WorkNC_Company> list = new List<WorkNC_Company>();
-
                 var user = (from f in db.WorkNC_UserPermission
                             where f.Username == User.Identity.Name
                             select f).FirstOrDefault();
@@ -145,31 +143,29 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 {
                     if (User.IsInRole("Admin"))
                     {
-                        list = db.WorkNC_Company.ToList();
+                        int companyId;
+                        HttpCookie cookie = Request.Cookies["cookieCompany"];
+                        if (cookie != null)
+                            companyId = Convert.ToInt32(cookie.Value);
+                        else
+                            companyId = user.CompanyId;
+                        ViewBag.Company = new SelectList(listCompany, "CompanyId", "CompanyName", companyId);
                     }
                     else
                     {
-                        list = db.WorkNC_Company.Where(n => n.CompanyId == user.CompanyId && n.isDeleted == false).ToList();
+                        listCompany = db.WorkNC_Company.Where(n => n.CompanyId == user.CompanyId && n.isDeleted == false).ToList();
+                        ViewBag.Company = new SelectList(listCompany, "CompanyId", "CompanyName");
                     }
                 }
-                HttpCookie cookie = Request.Cookies["cookieCompany"];
-                if (cookie != null)
-                {
-                    //companyId = Convert.ToInt32(cookie.Value);
-                    
-                }
-                //ViewBag.CompanySelected = companyId;
-                ViewBag.Company = new SelectList(list, "CompanyId", "CompanyName");
                 
             }
-
             return PartialView("_CompanyPartial");
         }
 
         //change dropdownList Company 
         public ActionResult ChangeDropdownCompany(string companyId)
         {
-            if (!string.IsNullOrEmpty(User.Identity.Name))
+            if (!String.IsNullOrEmpty(User.Identity.Name))
             {
                 var user = (from f in db.WorkNC_UserPermission
                             where f.Username == User.Identity.Name
@@ -179,10 +175,9 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 {
                     cookie = new HttpCookie("cookieCompany");
                 }
-                cookie.Value = Convert.ToString(companyId);
+                cookie.Value = companyId;
                 Response.SetCookie(cookie);
             }
-            
             return Redirect(Request.RawUrl);
         }
     }
