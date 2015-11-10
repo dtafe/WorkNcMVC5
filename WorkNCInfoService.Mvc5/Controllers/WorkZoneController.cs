@@ -60,12 +60,12 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 else
                     companyId = user.CompanyId;
                 var result = workZone.Where(n => n.CompanyId == companyId
-                                            &&(String.IsNullOrEmpty(name)||n.Name.Contains(name))
+                                            &&(String.IsNullOrEmpty(name) || n.Name.Contains(name))
                                             &&(factoryId == 0 || n.FactoryId == factoryId)
                                             &&(machineId == 0 || n.MachineId == machineId)
                                             &&(
-                                            (startDate==null && n.ProgramDate<=endDate)
-                                            ||(endDate==null && n.ProgramDate>=startDate)
+                                            (startDate==null || n.ProgramDate<=endDate)
+                                            ||(endDate==null || n.ProgramDate>=startDate)
                                             ||(n.ProgramDate >=startDate && n.ProgramDate <= endDate)
                                             )
                                             ).ToPagedList(pageNumber, pageSize);
@@ -79,8 +79,8 @@ namespace WorkNCInfoService.Mvc5.Controllers
                                             && (factoryId == 0 || n.FactoryId == factoryId)
                                             && (machineId == 0 || n.MachineId == machineId)
                                             && (
-                                            (startDate == null && n.ProgramDate <= endDate)
-                                            || (endDate == null && n.ProgramDate >= startDate)
+                                            (startDate == null || n.ProgramDate <= endDate)
+                                            || (endDate == null || n.ProgramDate >= startDate)
                                             || (n.ProgramDate >= startDate && n.ProgramDate <= endDate)
                                             )
                                             ).ToPagedList(pageNumber, pageSize);

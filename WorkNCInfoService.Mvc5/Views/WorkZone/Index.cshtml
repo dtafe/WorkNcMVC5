@@ -8,119 +8,126 @@
 }
 
 @Html.Action("Search", "WorkZone")
-<button class="btn btn-success">@Html.ActionLink("Edit", "Edit", null, new { id = "workZone" })</button>
+
 @using (Html.BeginForm("Delete", "WorkZone", FormMethod.Post))
 {
-<input type="submit" value="Delete" class="btn btn-success" id="deleteWorkzone"/>
-<table class="table">
-    <tr class="td-border" style="background-color: green; color: white;">
-        <th></th>
-        <th>
-            <div class="colorSort">@Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSort, currentFilter = ViewBag.CurrentFilter })<span class="caret"></span></div>
-        </th>
-        <th>
-            <div class="colorSort">@Html.ActionLink("Company", "Index", new { sortOrder = ViewBag.CompanySort, currentFilter = ViewBag.CurrentFilter })<span class="caret"></span></div>
-        </th>
-        <th>
-            <p>Factory Name</p>
-        </th>
-        <th>
-            <p>Model Data Programer</p>
-        </th>
-        <th>
-            <p>NCData Programer</p>
-        </th>
-        <th>
-            <p>Program Date</p>        
-        </th>
-        <th>
-            <p>Model Name</p>
-        </th>
-        <th>
-            <p>Parts</p>
-        </th>
-        <th>
-            <p>Part Name</p>
-        </th>
-        <th>
-            <p>Machining Time Total</p>
-        </th>
-        <th>
-            <p>Status</p>
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model)
-{
-    <tr class="td-border" id="Row@{@item.WorkZoneId} ">
-        <td class="td-border">
-            <input type="checkbox" id="WorkZoneId" name="WorkZoneId" value="@item.WorkZoneId"/>
-        </td>
-        <td class="td-border">
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td class="td-border">
-            @Html.HiddenFor(modelItem=>item.CompanyId)
-            @Html.DisplayFor(modelItem => item.CompanyName)
-        </td>
-        <td class="td-border">
-            @Html.DisplayFor(modelItem => item.FactoryName)
-        </td>
-        <td class="td-border">
-            @Html.DisplayFor(modelItem => item.ModelDataProgramer)
-        </td>
-        <td class="td-border">
-            @Html.DisplayFor(modelItem => item.NCDataProgramer)
-        </td>
-        <td class="td-border">
-            @Html.DisplayFor(modelItem => item.ProgramDate)
-        </td>
-        <td class="td-border">
-            @Html.DisplayFor(modelItem => item.ModelName)
-        </td>
-        <td class="td-border">
-            @Html.DisplayFor(modelItem => item.Parts)
-        </td>
-        <td class="td-border">
-            @Html.DisplayFor(modelItem => item.PartName)
-        </td>
-        <td class="td-border">
-            @Html.DisplayFor(modelItem => item.MachiningTimeTotal)
-        </td>
-        <td class="td-border">
-            @if (item.Status == 0)
-            {
-                <p>In Process</p>
-            }
-            else if (item.Status == 1)
-            {
-                <p>Problem</p>
-            }
-            else
-            {
-                <p>Finished</p>
-            }
-        </td>
-        <td class="td-border">
-            @Html.ActionLink("Edit", "Edit", new { id = item.WorkZoneId })
-            @Html.ActionLink("Details", "Details", new { id = item.WorkZoneId })
-            @Html.ActionLink("Delete", "Delete", new { id = item.WorkZoneId })
-        </td>
-    </tr>
-}
-</table>
+    <table class="table">
+        <tr class="td-border" style="background-color: green; color: white;">
+            <th></th>
+            <th>
+                <div class="colorSort">@Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSort, currentFilter = ViewBag.CurrentFilter })<span class="caret"></span></div>
+            </th>
+            <th>
+                <div class="colorSort">@Html.ActionLink("Company", "Index", new { sortOrder = ViewBag.CompanySort, currentFilter = ViewBag.CurrentFilter })<span class="caret"></span></div>
+            </th>
+            <th>
+                <p>Factory Name</p>
+            </th>
+            <th>
+                <p>Model Data Programer</p>
+            </th>
+            <th>
+                <p>NCData Programer</p>
+            </th>
+            <th>
+                <p>Program Date</p>
+            </th>
+            <th>
+                <p>Model Name</p>
+            </th>
+            <th>
+                <p>Parts</p>
+            </th>
+            <th>
+                <p>Part Name</p>
+            </th>
+            <th>
+                <p>Machining Time Total</p>
+            </th>
+            <th>
+                <p>Status</p>
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class="td-border" id="Row@{@item.WorkZoneId} ">
+                <td class="td-border">
+                    <input type="checkbox" id="WorkZoneId" name="WorkZoneId" value="@item.WorkZoneId" />
+                </td>
+                <td class="td-border">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td class="td-border">
+                    @Html.HiddenFor(modelItem => item.CompanyId)
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                </td>
+                <td class="td-border">
+                    @Html.DisplayFor(modelItem => item.FactoryName)
+                </td>
+                <td class="td-border">
+                    @Html.DisplayFor(modelItem => item.ModelDataProgramer)
+                </td>
+                <td class="td-border">
+                    @Html.DisplayFor(modelItem => item.NCDataProgramer)
+                </td>
+                <td class="td-border">
+                    @Html.DisplayFor(modelItem => item.ProgramDate)
+                </td>
+                <td class="td-border">
+                    @Html.DisplayFor(modelItem => item.ModelName)
+                </td>
+                <td class="td-border">
+                    @Html.DisplayFor(modelItem => item.Parts)
+                </td>
+                <td class="td-border">
+                    @Html.DisplayFor(modelItem => item.PartName)
+                </td>
+                <td class="td-border">
+                    @Html.DisplayFor(modelItem => item.MachiningTimeTotal)
+                </td>
+                <td class="td-border">
+                    @if (item.Status == 0)
+                    {
+                        <p>In Process</p>
+                    }
+                    else if (item.Status == 1)
+                    {
+                        <p>Problem</p>
+                    }
+                    else
+                    {
+                        <p>Finished</p>
+                    }
+                </td>
+                <td class="td-border">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.WorkZoneId })
+                    @Html.ActionLink("Details", "Details", new { id = item.WorkZoneId })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.WorkZoneId })
+                </td>
+            </tr>
+        }
+        <tr>
+            <td colspan="13" class="td-border">
+                <button class="btn btn-success">@Html.ActionLink("Edit", "Edit", null, new { id = "workZone" })</button>
+                <input type="submit" value="Delete" class="btn btn-success" id="deleteWorkzone" />
+            </td>
+        </tr>
+    </table>
 }
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
 <style>
-    #pageList{
+    #pageList {
         display: inline;
     }
-    p.page-number{
+
+    p.page-number {
         color: forestgreen;
-        margin:5px 0 0 15px;
+        margin: 5px 0 0 15px;
         font-weight: bold;
     }
 </style>
@@ -128,29 +135,26 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
     <script language="javascript">
         //show dialog before delete
         $('#deleteWorkzone').bind('click', function (ev) {
-                var $btn = $(this);
-                ev.preventDefault();
-                $("<div />").html("Are you sure?").dialog({
-                    modal: true,
-                    title: "Confirmation",
-                    buttons: [{
-                        text: "Ok",
-                        click: function() {
-                            $btn.trigger("click.confirmed");
-                            $(this).dialog("close");
-                        }
-                    }, {
-                        text: "Cancel",
-                        click: function() {
-                            $(this).dialog("close");
-                        }
-                    }]
-                }).show();
+            var $btn = $(this);
+            ev.preventDefault();
+            $("<div/>").html("Are you sure?").dialog({
+                modal: true,
+                title: "Confirmation",
+                buttons: [{
+                    text: "Ok",
+                    click: function () {
+                        $btn.trigger("click.confirmed");
+                        $(this).dialog("close");
+                    }
+                }, {
+                    text: "Cancel",
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }]
+            }).show();
         });
-
         //edit
-        
-
         function LinkToEdit() {
             debugger;
             $('.WorkZoneId').live('click', function () {
@@ -164,7 +168,6 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
                     }
                 });
             });
-
         }
-    </script>    
+    </script>
 }

@@ -18,51 +18,8 @@
 
 @section scripts{
     <script language="javascript">
-        $(function () {
-            //checked checkbox Deleted
-            $('#isDeletedMachine').change(function () {
-                if ($(this).is(':checked'))
-                {
-                    var searchMachines = {
-                        FactoryId: $('#machineFactoryId').val(),
-                        Name: $('#txtFactoryName').val(),
-                        isDeleted: true
-                    }
-                    $.ajax({
-                        type: 'GET',
-                        url: '/Machine/GetAllMachines',
-                        dataType: 'Json',
-                        data: searchMachines,
-                        success: function (data) {
-                            PopulateTable(data, 1);
-                            tableData = data.slice(0);
-                        }
-                    });
-                }
 
-                //    $("#isDeletedMachine").prop('checked', true);
-                else        
-                {
-                    var searchMachines = {
-                        FactoryId: $('#machineFactoryId').val(),
-                        Name: $('#txtFactoryName').val(),
-                        isDeleted: false
-                    }
-                    $.ajax({
-                        type: 'GET',
-                        url: '/Machine/GetAllMachines',
-                        dataType: 'Json',
-                        data: searchMachines,
-                        success: function (data) {
-                            PopulateTable(data, 1);
-                            tableData = data.slice(0);
-                        }
-                    });
-                }
-                //    $("#isDeletedMachine").prop('checked', false);
-                //$(this).val($(this + ":checked").length > 0 ? true : false);
-            });
-            
+        $(function () {
             // Link machine No click event handler
             $('#linkMachineNo').click(function (e) {
                 e.preventDefault();
@@ -117,10 +74,11 @@
 
         //isDeleted checkbox checked 
         function CheckedStatus() {
+            
             var searchMachines = {
-                FactoryId: $('#machineFactoryId').val(),
-                Name: $('#txtFactoryName').val(),
-                isDeleted: $('#isDeletedMachine').val()
+                FactoryId: $('#dropdownFactoryId').val(),
+                Name: $('#txtMachineName').val(),
+                isDeleted: $('#isDeletedMachine').is(':checked') ? true: false
             }
             $.ajax({
                 type: 'GET',
@@ -134,20 +92,12 @@
             });
         }
 
-        //search machine 
+        //click button search machine 
         function SearchMachine() {
-            var deleted = false;
-            $('#isDeletedMachine').change(function () {
-                if ($(this).is(':checked'))
-                    deleted: true;
-                else
-                    deleted: false;
-            });
             var searchMachines = {
-                FactoryId: $('#machineFactoryId').val(),
-                Name: $('#machineName').val(),
-                isDeleted: deleted
-                    //$('#isDeletedMachine').attr('checked')? true: false
+                FactoryId: $('#dropdownFactoryId').val(),
+                Name: $('#txtMachineName').val(),
+                isDeleted: $('#isDeletedMachine').is(':checked') ? true : false
             }
             $.ajax({
                 type: 'GET',
@@ -160,42 +110,26 @@
                     tableData = data.slice(0);
                 }
             });
-            //if ($('#isDeletedMachine').is(':checked')) {
-            //    var searchMachines = {
-            //        FactoryId: $('#machineFactoryId').val(),
-            //        Name: $('#txtFactoryName').val(),
-            //        isDeleted: true
-            //    }
-            //    $.ajax({
-            //        type: 'GET',
-            //        url: '/Machine/GetAllMachines',
-            //        dataType: 'Json',
-            //        data: searchMachines,
-            //        success: function (data) {
-            //            PopulateTable(data, 1);
-            //            tableData = data.slice(0);
-            //        }
-            //    });
-            //}
-
-            //    //    $("#isDeletedMachine").prop('checked', true);
-            //else {
-            //    var searchMachines = {
-            //        FactoryId: $('#machineFactoryId').val(),
-            //        Name: $('#txtFactoryName').val(),
-            //        isDeleted: false
-            //    }
-            //    $.ajax({
-            //        type: 'GET',
-            //        url: '/Machine/GetAllMachines',
-            //        dataType: 'Json',
-            //        data: searchMachines,
-            //        success: function (data) {
-            //            PopulateTable(data, 1);
-            //            tableData = data.slice(0);
-            //        }
-            //    });
-            //}
+        }
+        //change dropdown list factory
+        function ChangeDropdownFactory()
+        {
+            var searchMachines = {
+                FactoryId: $('#dropdownFactoryId').val(),
+                Name: $('#txtMachineName').val(),
+                isDeleted: $('#isDeletedMachine').is(':checked') ? true : false
+            }
+            $.ajax({
+                type: 'GET',
+                url: '/Machine/GetAllMachines',
+                typeData: 'Json',
+                contentType: "application/json; charset=utf-8",
+                data: searchMachines,
+                success: function (data) {
+                    PopulateTable(data, 1);
+                    tableData = data.slice(0);
+                }
+            });
         }
         // Populate table with pager.
         // Parameters

@@ -18,7 +18,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
         // GET: Machine
         private const int pageSize = 10;
         
-        public JsonResult GetAllMachines(SearchMachines searchMachines)
+        public ActionResult GetAllMachines(SearchMachines searchMachines)
         {
             var machine = from s in db.WorkNC_Machine select s;
 
@@ -69,13 +69,21 @@ namespace WorkNCInfoService.Mvc5.Controllers
 
         public PartialViewResult SearchMachine()
         {
+            var user = (from f in db.WorkNC_UserPermission
+                        where f.Username == User.Identity.Name
+                        select f).FirstOrDefault();           
             List<WorkNC_Factory> listFactory = new List<WorkNC_Factory>();
             using (WorkNCDbContext context = new WorkNCDbContext())
             {
-                listFactory = context.WorkNC_Factory.ToList();
+                int companyId;
+                HttpCookie cookie = Request.Cookies["cookieCompany"];
+                if (cookie != null)
+                    companyId = Convert.ToInt32(cookie.Value);
+                else
+                    companyId = user.CompanyId;
+                listFactory = context.WorkNC_Factory.Where(n=>n.CompanyId == companyId).ToList();
             }
-            ViewBag.Factory = new SelectList(listFactory, "FactoryId", "Name");
-            //ViewBag.Factory = new SelectList(db.WorkNC_Factory.OrderBy(n => n.Name), "FactoryId", "Name");
+            ViewBag.FacrotyId = new SelectList(listFactory, "FactoryId", "Name");
             return PartialView("_SearchMachine");
         }
         // GET: Machine/Create

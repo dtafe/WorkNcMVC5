@@ -1,37 +1,43 @@
-﻿@model WorkNCInfoService.Mvc5.Models.WorkModels.WorkNC_Machine
+﻿@model WorkNCInfoService.Mvc5.ViewModel.SearchMachines
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("GetAllMachines", "Machine", FormMethod.Get))
 {
-    @Html.AntiForgeryToken()
-    
     <div class="form-horizontal">
-
         <div class="form-group">
-            @Html.LabelFor(model => model.FactoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="control-label col-md-2">
+                <label>Facroty</label>
+            </div>
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.FactoryId, @ViewBag.Factory as IEnumerable<SelectListItem>, "Select factory", new { id="machineFactoryId", @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.FactoryId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.FacrotyId, @ViewBag.FacrotyId as IEnumerable<SelectListItem>,"--select factory--" ,
+                new { @class = "form-control", id = "dropdownFactoryId", onchange = "ChangeDropdownFactory();" })
+                @Html.ValidationMessageFor(model => model.FacrotyId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class=" control-label col-md-2">
+                <label>Machine</label>
+            </div>
+            @*@Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Name, new { id= "machineName", @class = "form-control" } )
+                @Html.TextBoxFor(model => model.Name, new { id= "txtMachineName", @class = "form-control" } )
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.isDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="control-label col-md-2">
+                <label>Deleted</label>
+            </div>
+            @*@Html.LabelFor(model => model.isDeleted, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.CheckBoxFor(model => model.isDeleted, new { id = "isDeletedMachine" })
+                    @*@Html.CheckBoxFor(model => model.isDeleted, new { id = "isDeletedMachine"})*@
+                    <input type="checkbox" id="isDeletedMachine" onclick="CheckedStatus()"/>
                     @Html.ValidationMessageFor(model => model.isDeleted, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
-
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

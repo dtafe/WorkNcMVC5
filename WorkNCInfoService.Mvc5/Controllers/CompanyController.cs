@@ -178,7 +178,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 cookie.Value = companyId;
                 Response.SetCookie(cookie);
             }
-            return Redirect(Request.RawUrl);
+            return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);//Redirect(Request.RawUrl);
         }
     }
 }

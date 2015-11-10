@@ -2,11 +2,10 @@
 
 @using (Html.BeginForm("FillDropDownCompany", "Company", FormMethod.Get))
 {
-    @Html.AntiForgeryToken()
-
     <ul class="nav navbar-nav navbar-right  companyPartial">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.DropDownListFor(model => model.CompanyId, @ViewBag.Company as IEnumerable<SelectListItem>, new { @class = "form-control", id = "dropdownCompanyId", onchange = "ChangeDropdownCompany()" })
+        @Html.DropDownListFor(model => model.CompanyId, @ViewBag.Company as IEnumerable<SelectListItem>, 
+        new { @class = "form-control", id = "dropdownCompanyId", onchange = "ChangeDropdownCompany()" })
         @Html.ValidationMessageFor(model => model.CompanyId, "", new { @class = "text-danger" })
     </ul>
 }

@@ -97,10 +97,9 @@
             $.ajax({
                 type: 'GET',
                 url: '/Company/ChangeDropdownCompany',
-
                 data: { companyId: $('#dropdownCompanyId').val() },
                 success: function (data) {
-                    window.location.reload();
+                    setTimeout(function () { window.location = window.location }, 100);
                 }
             });
         }

@@ -27,14 +27,12 @@
 @section scripts{
     <script language="javascript">
         $(function () {
-
             //checked checkbox Deleted
             $('#isDeletedFactory').change(function () {
                 if ($(this).is(':checked'))
                     $("#isDeletedFactory").prop('checked', true);
                 else
                     $("#isDeletedFactory").prop('checked', false);
-                //$(this).val($(this + ":checked").length > 0 ? true : false);
             });
 
             // Link machine No click event handler
