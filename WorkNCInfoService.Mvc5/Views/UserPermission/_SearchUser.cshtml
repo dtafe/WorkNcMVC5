@@ -1,0 +1,26 @@
+﻿@model WorkNCInfoService.Mvc5.ViewModel.SearchUsername
+
+@using (Html.BeginForm("Index", "UserPermission", FormMethod.Get))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                <div class="onlineUser">
+                    @Html.CheckBoxFor(model => model.OnlineUser, new { id = "lockoutUser" }) Online
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Search" class="btn btn-success" />
+            </div>
+        </div>
+
+        
+    </div>
+}

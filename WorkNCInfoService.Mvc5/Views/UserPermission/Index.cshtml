@@ -2,16 +2,13 @@
 @model PagedList.IPagedList<AspUserWorkNc>
 @using PagedList.Mvc;
 
-
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @Html.Action("Search", "UserPermission")
-
 <input type="button" value="Create" class="btn btn-success" title="Create" onclick="location.href='@Url.Action("Register","UserPermission")'" />
-
 <table class="table">
     <tr class="td-border" style="background-color: green; color: white;">
         <th style="display:none;"></th>
@@ -46,7 +43,6 @@
                 @Html.HiddenFor(modelItem => item.Id, new { id = "aspnetUserId" })
             </td>
             <td class="td-border">
-                @*@Html.TextBoxFor(modelItem => item.UserName, new { id = "UserName", value=item.UserName, @readonly = "readonly" })*@
                 <input id="userName" name="userName" value="@item.UserName" type="text" readonly="readonly" />
             </td>
             <td class="td-border">
@@ -73,7 +69,6 @@
                 }
                 else
                 {
-                    @*@Html.ActionLink("Approve", "Index", new { onclick = "SetConfirmEmail(this);" })*@
                     <a href="#" onclick="SetConfirmEmail(this);">approve</a>
                 }
             </td>
@@ -88,7 +83,6 @@
             </td>
             <td class="td-border">
                 @Html.CheckBoxFor(modelItem => item.AppPermission, new { id= "AppPermission", onclick = "SetAppPermission(this);" })
-                @*<input id="AppPermission" type="checkbox" value="@item.EmailConfirm" onclick="SetAppPermission(this);"/>*@
             </td>
             <td class="td-border">
                 <a href="#" onclick="SetResetPassword(this);">Reset Password</a>
@@ -98,9 +92,9 @@
             </td>
         </tr>
     }
+        
 </table>
-
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+<p>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</p>
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
 @section scripts{

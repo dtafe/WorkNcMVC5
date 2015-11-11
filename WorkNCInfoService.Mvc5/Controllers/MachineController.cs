@@ -16,8 +16,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
     {
         WorkNCDbContext db = new WorkNCDbContext();
         // GET: Machine
-        private const int pageSize = 10;
-        
+
         public ActionResult GetAllMachines(SearchMachines searchMachines)
         {
             var machine = from s in db.WorkNC_Machine select s;
@@ -38,7 +37,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
 
                 var result = machine.Where(n => n.CompanyId == companyId
                              && (searchMachines.FacrotyId == 0 || n.FactoryId == searchMachines.FacrotyId)
-                             && (String.IsNullOrEmpty(searchMachines.Name) || n.Name.Contains(searchMachines.Name))
+                             && (String.IsNullOrEmpty(searchMachines.Name)|| n.Name.Contains(searchMachines.Name))
                              && (searchMachines.isDeleted == true || n.isDeleted == false))
                             .Select(n => new { n.No, n.Name, n.isDeleted }).OrderBy(n => n.Name);
                 return Json(result, JsonRequestBehavior.AllowGet);
@@ -49,15 +48,15 @@ namespace WorkNCInfoService.Mvc5.Controllers
             else
             {
                 return Json(machine.Where(n => n.CompanyId == user.CompanyId
-                            && n.FactoryId == searchMachines.FacrotyId
-                            && (searchMachines.Name == string.Empty || n.Name.Contains(searchMachines.Name))
+                            && (searchMachines.FacrotyId == 0 || n.FactoryId == searchMachines.FacrotyId)
+                            && (String.IsNullOrEmpty(searchMachines.Name) || n.Name.Contains(searchMachines.Name))
                             && (searchMachines.isDeleted == true || n.isDeleted.Equals(false)))
                             .Select(n => new { n.No, n.Name, n.isDeleted }).OrderBy(n => n.Name),
                         JsonRequestBehavior.AllowGet);
             }
             #endregion
         }
-        public ActionResult List()
+        public ActionResult Index()
         {
             return View();
         }

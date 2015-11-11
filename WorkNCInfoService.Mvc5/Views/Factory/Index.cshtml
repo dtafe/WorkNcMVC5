@@ -1,6 +1,5 @@
-﻿@using WorkNCInfoService.Mvc5.Models.WorkModels;
-@model PagedList.IPagedList<WorkNC_Factory>
-@using PagedList.Mvc;
+﻿
+@model IEnumerable<WorkNCInfoService.Mvc5.Models.WorkModels.WorkNC_Factory>
 
 @{
     ViewBag.Title = "Index";
@@ -10,54 +9,23 @@
     @Html.Action("Search","Factory")
 </div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <div>
     <table id="tblFactories" class="simpleTable table">
         <tr class="td-border" style="background-color: green; color: white;">
             <th>&nbsp;</th>
-            <th><a id="linkFactoryNo" href="#">No</a></th>
-            <th><a id="linkFactoryName" href="#">Name</a></th>
+            <th>No</th>
+            <th>Name</th>
             <th>Status</th>
         </tr>
     </table>
+    <button class="btn btn-success">@Html.ActionLink("Add new","Create")</button>
+    <button class="btn btn-success">@Html.ActionLink("Edit", "Edit")</button>
 </div>
+
 
 @section scripts{
     <script language="javascript">
         $(function () {
-            //checked checkbox Deleted
-            $('#isDeletedFactory').change(function () {
-                if ($(this).is(':checked'))
-                    $("#isDeletedFactory").prop('checked', true);
-                else
-                    $("#isDeletedFactory").prop('checked', false);
-            });
-
-            // Link machine No click event handler
-            $('#linkFactoryNo').click(function (e) {
-                e.preventDefault();
-                if (tableData != null) {
-                    // Sort data
-                    tableData.sort(function (a, b) {
-                        return a.No <= b.No ? -1 : 1;
-                    });
-                    PopulateTable(tableData, 1);
-                }
-            });
-
-            // Link machine Name click event handler
-            $('#linkFactoryName').click(function (e) {
-                e.preventDefault();
-                if (tableData != null) {
-                    // Sort data
-                    tableData.sort(function (a, b) {
-                        return a.Name <= b.Name ? -1 : 1;
-                    });
-                    PopulateTable(tableData, 1);
-                }
-            });
             LoadTable();
         });
 
@@ -76,22 +44,11 @@
             });
         }
 
-        function SearchTable() {
-            e.preventDefault();
-            if (tableData != null) {
-                // Sort data
-                tableData.sort(function (a, b) {
-                    return a.No <= b.No ? -1 : 1;
-                });
-                PopulateTable(tableData, 1);
-            }
-        }
-
         //isDeleted checkbox checked
-        function CheckedStatus(e) {
+        function CheckedStatus() {
             var searchFactory = {
                 Name: $('#txtFactoryName').val(),
-                isDeleted: $('#isDeletedFactory').val()
+                isDeleted: $('#isDeletedFactory').is(':checked') ? true : false
             }
             $.ajax({
                 type: 'GET',
@@ -109,7 +66,7 @@
         function SearchFactories() {
             var searchFactory = {
                 Name: $('#txtFactoryName').val(),
-                isDeleted: $('#isDeletedFactory').val()
+                isDeleted: $('#isDeletedFactory').is(':checked') ? true : false
             }
             $.ajax({
                 type: 'GET',

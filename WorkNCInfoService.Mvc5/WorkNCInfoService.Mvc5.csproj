@@ -218,6 +218,7 @@
     <Compile Include="Models\WorkModels\WorkNC_WorkZone.cs" />
     <Compile Include="Models\WorkModels\WorkNC_WorkZoneDetail.cs" />
     <Compile Include="Models\WorkModels\WorkNC_WorkZoneDetailProblem.cs" />
+    <Compile Include="ViewModel\SearchCompany.cs" />
     <Compile Include="ViewModel\SearchFactory.cs" />
     <Compile Include="ViewModel\SearchMachines.cs" />
     <Compile Include="ViewModel\SearchWorkZone.cs" />

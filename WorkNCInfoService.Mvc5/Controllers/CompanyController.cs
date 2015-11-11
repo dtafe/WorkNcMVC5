@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using PagedList;
 using PagedList.Mvc;
 using WorkNCInfoService.Mvc5.Models.WorkModels;
+using WorkNCInfoService.Mvc5.ViewModel;
 
 namespace WorkNCInfoService.Mvc5.Controllers
 {
@@ -16,39 +17,18 @@ namespace WorkNCInfoService.Mvc5.Controllers
 
         // GET: Company
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(string sortOrder, string currentFilter, string companyName, int? page)
+        public ActionResult Index()
         {
-            int pageNumber = (page ?? 1);
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
-            if (companyName != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                companyName = currentFilter;
-            }
-            ViewBag.CurrentFilter = companyName;
-
-            var company = from s in db.WorkNC_Company select s;
-
-            switch (sortOrder)
-            {
-                case "name_asc":
-                    company = company.OrderBy(n => n.CompanyName);
-                    break;
-                default:
-                    company = company.OrderBy(n => n.CompanyId);
-                    break;
-            }
-            if (!String.IsNullOrEmpty(companyName))
-            {
-                return View(company.Where(n => n.CompanyName.Contains(companyName)).ToPagedList(pageNumber,pageSize));
-            }
-            return View(company.ToPagedList(pageNumber, pageSize));
+            return View();
         }
-
+        public ActionResult GetAllCompanies(SearchCompany searchCompany)
+        {
+            var company = (from s in db.WorkNC_Company
+                          where ((String.IsNullOrEmpty(searchCompany.CompanyName) || s.CompanyName.Contains(searchCompany.CompanyName))
+                                && (searchCompany.isDeleted == true || s.isDeleted == false))
+                          select s).OrderBy(s=>s.CompanyName).ToList();
+                return Json(company, JsonRequestBehavior.AllowGet);
+        }
         // GET: Company/Details/5
         public ActionResult Details(int id)
         {
@@ -120,7 +100,7 @@ namespace WorkNCInfoService.Mvc5.Controllers
                 return View();
             }
         }
-        public ActionResult Search()
+        public PartialViewResult Search()
         {
             return PartialView("_SearchCompany");
         }
