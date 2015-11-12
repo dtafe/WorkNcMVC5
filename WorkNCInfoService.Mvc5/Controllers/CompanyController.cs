@@ -7,9 +7,11 @@ using PagedList;
 using PagedList.Mvc;
 using WorkNCInfoService.Mvc5.Models.WorkModels;
 using WorkNCInfoService.Mvc5.ViewModel;
+using System.Data.Entity;
 
 namespace WorkNCInfoService.Mvc5.Controllers
 {
+    [Authorize]
     public class CompanyController : Controller
     {
         WorkNCDbContext db = new WorkNCDbContext();
@@ -58,20 +60,32 @@ namespace WorkNCInfoService.Mvc5.Controllers
         }
 
         // GET: Company/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            if (id == null)
+                return Content("<script language='javascript' type='text/javascript'>alert('Please select a company')</script>");
+            WorkNC_Company company = db.WorkNC_Company.Find(id);
+            if (company == null)
+                return HttpNotFound();
+            return View(company);
         }
 
         // POST: Company/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(WorkNC_Company company)
         {
             try
             {
                 // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                if(ModelState.IsValid)
+                {
+                    company.ModifiedAccount = User.Identity.Name;
+                    company.ModifiedDate = DateTime.Now;
+                    db.Entry(company).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(company);
             }
             catch
             {

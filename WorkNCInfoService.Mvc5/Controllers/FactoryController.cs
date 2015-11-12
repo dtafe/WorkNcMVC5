@@ -12,6 +12,7 @@ using WorkNCInfoService.Mvc5.ViewModel;
 
 namespace WorkNCInfoService.Mvc5.Controllers
 {
+    [Authorize]
     public class FactoryController : Controller
     {
         private const int pageSize = 10;

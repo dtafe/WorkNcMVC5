@@ -9,6 +9,7 @@ using WorkNCInfoService.Mvc5.Models.WorkModels;
 
 namespace WorkNCInfoService.Mvc5.Controllers
 {
+    [Authorize]
     public class WorkZoneDetailController : Controller
     {
         WorkNCDbContext db = new WorkNCDbContext();

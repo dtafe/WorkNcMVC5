@@ -14,6 +14,7 @@ using System.IO;
 
 namespace WorkNCInfoService.Mvc5.Controllers
 {
+    [Authorize]
     public class WorkZoneController : Controller
     {
         private const int pageSize = 10;

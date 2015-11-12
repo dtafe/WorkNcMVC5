@@ -12,6 +12,7 @@ using WorkNCInfoService.Mvc5.ViewModel;
 
 namespace WorkNCInfoService.Mvc5.Controllers
 {
+    [Authorize]
     public class MachineController : Controller
     {
         WorkNCDbContext db = new WorkNCDbContext();
